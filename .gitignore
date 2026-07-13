@@ -1,0 +1,16 @@
+site/node_modules/
+site/dist/
+site/.github/
+site/.superpowers/
+site/docs/superpowers/
+site/tmp/
+site/*.log
+*.local
+.env
+.env.*
+!.env.example
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+

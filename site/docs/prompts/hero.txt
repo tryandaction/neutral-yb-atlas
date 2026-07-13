@@ -1,0 +1,9 @@
+Use case: scientific-educational
+Asset type: full-bleed website hero image
+Primary request: a physically plausible neutral ytterbium atom optical-tweezer experiment viewed through a high-numerical-aperture objective, with a sharply resolved small array of cold atoms and visible but restrained 399 nm blue, 556 nm green, and 302 nm ultraviolet beam paths
+Scene/backdrop: real modern atomic-physics laboratory, dark graphite optical enclosure with accurate metallic optomechanics and glass vacuum-cell details
+Style/medium: premium scientific editorial photography, photorealistic, not science fiction
+Composition/framing: 16:9 landscape, primary apparatus in the center-right, clean negative space around the left edge for code-native page copy, actual apparatus remains inspectable
+Lighting/mood: controlled laboratory lighting, neutral whites, subtle spectral color from real beams only
+Color palette: graphite, stainless steel, true white, restrained blue, green and violet beam accents
+Constraints: no text, no labels, no logos, no watermark, no people, no neon grids, no fantasy atom orbit, no excessive glow, no bokeh decoration

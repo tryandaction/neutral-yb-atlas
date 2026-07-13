@@ -1,0 +1,8 @@
+Use case: scientific-educational
+Asset type: experimental-workflow section image
+Primary request: an authentic neutral-ytterbium optical-tweezer laboratory platform showing a stainless-steel vacuum chamber, high-NA objective, stabilized laser delivery, AOM and AOD modules, cameras and timing electronics arranged as a coherent experiment
+Scene/backdrop: clean university atomic-physics laboratory, apparatus-focused
+Style/medium: high-end documentary scientific photography, technically credible, realistic cabling and optomechanics
+Composition/framing: wide landscape with the optical table leading toward the vacuum chamber; readable equipment hierarchy; no collage
+Lighting/mood: bright neutral task lighting with controlled contrast
+Constraints: no text, no logos, no watermark, no people, no futuristic decoration, no floating atoms, no impossible beam geometry

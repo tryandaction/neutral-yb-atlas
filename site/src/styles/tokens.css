@@ -1,0 +1,25 @@
+:root {
+  color-scheme: light;
+  --paper: #f7f8f5;
+  --white: #ffffff;
+  --ink: #16201f;
+  --muted: #65716e;
+  --faint: #8a9491;
+  --line: #d3dbd7;
+  --line-strong: #aebbb6;
+  --forest: #123f39;
+  --forest-2: #1d5e55;
+  --vermilion: #b64c33;
+  --violet: #6f48a5;
+  --blue: #2f6da2;
+  --yellow: #e7b84a;
+  --success: #2c765d;
+  --warning: #9a6724;
+  --danger: #a33e34;
+  --radius: 4px;
+  --max-width: 1480px;
+  --header-height: 68px;
+  --font-display: Georgia, 'Times New Roman', serif;
+  --font-sans: Inter, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+  --shadow-float: 0 18px 45px rgb(20 34 31 / 10%);
+}

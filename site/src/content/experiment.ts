@@ -1,0 +1,77 @@
+import type { ExperimentPhase } from '../types/content'
+
+const instrument = (
+  id: string,
+  zh: string,
+  en: string,
+  roleZh: string,
+  roleEn: string,
+  selectionZh: string,
+  selectionEn: string,
+) => ({ id, name: { zh, en }, role: { zh: roleZh, en: roleEn }, selection: { zh: selectionZh, en: selectionEn } })
+
+export const experimentPhases: ExperimentPhase[] = [
+  {
+    id: 'vacuum-source', order: 1,
+    title: { zh: '真空与原子源', en: 'Vacuum and atom source' },
+    objective: { zh: '建立可烘烤、低污染、具有高光学通量的 Yb 超高真空系统。', en: 'Build a bakeable, low-contamination Yb UHV system with high optical access.' },
+    durationWeeks: [8, 16], dependencies: [],
+    instruments: [instrument('vacuum', '真空计与残余气体分析仪', 'Vacuum gauge and RGA', '监测基压、泄漏与污染组分。', 'Monitor base pressure, leaks and contaminants.', '量程、烘烤温度、校准记录和磁场兼容性。', 'Range, bake temperature, calibration record and magnetic compatibility.'), instrument('oven', 'Yb 原子炉', 'Yb oven', '提供稳定原子束。', 'Provide stable atomic flux.', '温度均匀性、准直、快门与维护路径。', 'Temperature uniformity, collimation, shutter and service path.'), instrument('pump', '离子泵与 NEG 泵组', 'Ion and NEG pump set', '维持无油超高真空并提供冗余。', 'Maintain oil-free UHV with operational redundancy.', '抽速曲线、磁场、再生流程、振动和停电恢复。', 'Pumping curve, magnetic field, regeneration, vibration and power-loss recovery.')],
+    acceptance: [{ zh: '压力与单原子寿命达到项目基线，并完成 24 小时漂移记录。', en: 'Pressure and single-atom lifetime meet baseline with a 24-hour drift record.' }],
+    failureSignals: [{ zh: '升温后压力恢复缓慢或 RGA 出现持续水峰。', en: 'Slow pressure recovery after heating or a persistent water peak in the RGA.' }],
+  },
+  {
+    id: 'laser-infrastructure', order: 2,
+    title: { zh: '激光与频率基础设施', en: 'Laser and frequency infrastructure' },
+    objective: { zh: '独立验收冷却、成像、钟跃迁与 Rydberg 光源。', en: 'Accept cooling, imaging, clock and Rydberg sources independently.' },
+    durationWeeks: [10, 20], dependencies: ['vacuum-source'],
+    instruments: [instrument('wavemeter', '波长计与频率梳接口', 'Wavemeter and comb interface', '追踪绝对频率与长期漂移。', 'Track absolute frequency and long-term drift.', '短期精度、复校周期、通道数和数据接口。', 'Short-term accuracy, recalibration interval, channel count and data interface.'), instrument('lock', '参考腔与锁频电子学', 'Reference cavity and locking electronics', '压低线宽与频率噪声。', 'Reduce linewidth and frequency noise.', '腔漂移、振动敏感性、伺服带宽与残余误差信号。', 'Cavity drift, vibration sensitivity, servo bandwidth and residual error signal.'), instrument('noise-analyzer', '光电探测与噪声分析链', 'Photodetection and noise-analysis chain', '测量 RIN、频率噪声与伺服残差。', 'Measure RIN, frequency noise and servo residuals.', '探测带宽、噪声底、跨阻增益、饱和功率与绝对校准。', 'Detection bandwidth, noise floor, transimpedance gain, saturation and absolute calibration.')],
+    acceptance: [{ zh: '各波长功率、线宽、锁定时长和相对强度噪声形成基线报告。', en: 'Power, linewidth, lock duration and relative-intensity noise are baselined for each wavelength.' }],
+    failureSignals: [{ zh: '锁定状态正常但原子谱线随时间漂移，提示传输链路或参考漂移。', en: 'Locks appear healthy while atomic spectra drift, indicating delivery-path or reference drift.' }],
+  },
+  {
+    id: 'cooling-loading', order: 3,
+    title: { zh: '冷却、MOT 与光镊装载', en: 'Cooling, MOT and tweezer loading' },
+    objective: { zh: '获得可重复的低温单原子装载与成像。', en: 'Achieve repeatable low-temperature single-atom loading and imaging.' },
+    durationWeeks: [6, 12], dependencies: ['vacuum-source', 'laser-infrastructure'],
+    instruments: [instrument('camera', '低噪声科学相机', 'Low-noise scientific camera', '采集 MOT 与单原子荧光。', 'Acquire MOT and single-atom fluorescence.', '量子效率、读出噪声、帧率、触发抖动和像素尺寸。', 'Quantum efficiency, read noise, frame rate, trigger jitter and pixel size.'), instrument('objective', '高 NA 物镜', 'High-NA objective', '聚焦光镊并收集荧光。', 'Focus tweezers and collect fluorescence.', '工作距离、波段、波前误差、NA 与真空兼容性。', 'Working distance, wavelength range, wavefront error, NA and vacuum compatibility.'), instrument('wavefront', '波前传感与光束诊断', 'Wavefront and beam diagnostics', '量化像差、腰斑、指向和模式质量。', 'Quantify aberration, waist, pointing and mode quality.', '波段、空间采样、动态范围、参考面和可重复安装。', 'Wavelength range, spatial sampling, dynamic range, reference plane and repeatable mounting.')],
+    acceptance: [{ zh: '装载概率、温度、成像生存率和分类错误具有独立测量。', en: 'Loading probability, temperature, imaging survival and classification errors are measured independently.' }],
+    failureSignals: [{ zh: '荧光计数双峰不分离，或成像后重复占据率显著下降。', en: 'Fluorescence histograms do not separate or repeated occupancy drops after imaging.' }],
+  },
+  {
+    id: 'array-rearrangement', order: 4,
+    title: { zh: '阵列生成与重排', en: 'Array generation and rearrangement' },
+    objective: { zh: '从随机装载构建低缺陷、温升受控的目标几何。', en: 'Build low-defect target geometries from stochastic loading with controlled heating.' },
+    durationWeeks: [6, 10], dependencies: ['cooling-loading'],
+    instruments: [instrument('aod', 'AOD/射频多音驱动', 'AOD and multitone RF drive', '生成、移动与复用光镊。', 'Generate, move and multiplex tweezers.', '带宽、衍射效率、互调、刷新率和相位相干。', 'Bandwidth, diffraction efficiency, intermodulation, update rate and phase coherence.'), instrument('fpga', 'FPGA 实时控制器', 'FPGA real-time controller', '执行低延迟成像反馈与触发。', 'Execute low-latency imaging feedback and triggers.', 'I/O 数量、时序分辨率、确定性延迟和维护工具。', 'I/O count, timing resolution, deterministic latency and tooling.'), instrument('rf-analyzer', '射频频谱与功率分析仪', 'RF spectrum and power analyzer', '定位多音互调、杂散和通道增益漂移。', 'Locate multitone intermodulation, spurs and channel-gain drift.', '相位噪声、动态范围、实时带宽、触发和自动化接口。', 'Phase noise, dynamic range, real-time bandwidth, triggering and automation interface.')],
+    acceptance: [{ zh: '目标填充率、重排时间、原子损失与运动后温度在同一数据集中报告。', en: 'Target filling, rearrangement time, loss and post-motion temperature are reported together.' }],
+    failureSignals: [{ zh: '阵列边缘陷阱深度偏低或多音驱动出现位置相关加热。', en: 'Edge tweezers are shallow or multitone drive produces position-dependent heating.' }],
+  },
+  {
+    id: 'qubit-calibration', order: 5,
+    title: { zh: '量子比特制备与相干标定', en: 'Qubit preparation and coherence calibration' },
+    objective: { zh: '锁定光抽运、旋转、失谐、磁场和 AC Stark 参数。', en: 'Lock optical pumping, rotations, detuning, magnetic field and AC Stark parameters.' },
+    durationWeeks: [8, 16], dependencies: ['array-rearrangement'],
+    instruments: [instrument('awg', 'AWG 与微波/RF 链路', 'AWG and microwave/RF chain', '产生相干旋转与包络。', 'Produce coherent rotations and envelopes.', '采样率、相位噪声、通道同步、输出带宽与校准接口。', 'Sample rate, phase noise, channel sync, bandwidth and calibration interface.'), instrument('magnetic', '三轴线圈与磁场传感', 'Three-axis coils and field sensing', '定义量子化轴并抑制漂移。', 'Set the quantization axis and suppress drift.', '均匀性、热稳定、带宽和电流噪声。', 'Uniformity, thermal stability, bandwidth and current noise.'), instrument('current-source', '低噪声线圈电流源', 'Low-noise coil current source', '稳定偏置场并执行可重复磁场斜坡。', 'Stabilize bias fields and execute repeatable magnetic ramps.', '电流噪声、温漂、顺从电压、保护和监控回读。', 'Current noise, thermal drift, compliance voltage, protection and monitor readback.')],
+    acceptance: [{ zh: 'SPAM、Rabi、Ramsey、回波和逐站点串扰矩阵均有置信区间。', en: 'SPAM, Rabi, Ramsey, echo and site-resolved crosstalk matrices include confidence intervals.' }],
+    failureSignals: [{ zh: 'Rabi 对比度随阵列位置变化，且无法由功率监测解释。', en: 'Rabi contrast varies across the array without explanation from power monitoring.' }],
+  },
+  {
+    id: 'rydberg-blockade', order: 6,
+    title: { zh: 'Rydberg 光谱与阻塞', en: 'Rydberg spectroscopy and blockade' },
+    objective: { zh: '确认目标态、旁路耦合、寿命、光移和两原子相互作用。', en: 'Confirm the target state, spectator couplings, lifetime, light shifts and two-atom interaction.' },
+    durationWeeks: [10, 20], dependencies: ['qubit-calibration', 'laser-infrastructure'],
+    instruments: [instrument('uv', '302 nm 紫外光源与传输', '302 nm UV source and delivery', '单光子激发 3P0 到 Rydberg 态。', 'Drive single-photon 3P0-to-Rydberg excitation.', '线宽、功率噪声、光束指向、材料损伤和锁定余量。', 'Linewidth, power noise, pointing, material damage and lock margin.'), instrument('spectroscopy', '高动态范围光谱与计数链路', 'High-dynamic-range spectroscopy and counting', '分辨 Rydberg 线形、损失与离子信号。', 'Resolve Rydberg line shapes, loss and ion signals.', '动态范围、时间分辨、探测效率和误触发率。', 'Dynamic range, time resolution, efficiency and false-trigger rate.'), instrument('pointing', '紫外指向与功率稳定器', 'UV pointing and power stabilizer', '抑制焦点漂移与站点间 Rabi 不均匀。', 'Suppress focal drift and site-to-site Rabi inhomogeneity.', 'UV 兼容探测、执行器带宽、长期漂移、光损伤与失锁保护。', 'UV-compatible sensing, actuator bandwidth, long-term drift, optical damage and unlock protection.')],
+    acceptance: [{ zh: '单原子谱、双原子阻塞、寿命和失谐灵敏度由同一参数表驱动。', en: 'Single-atom spectra, two-atom blockade, lifetime and detuning sensitivity share one parameter table.' }],
+    failureSignals: [{ zh: '阻塞强度随角度或磁场变化，表明多通道相互作用不可忽略。', en: 'Blockade strength varies with angle or field, indicating non-negligible multichannel interactions.' }],
+  },
+  {
+    id: 'gate-readout', order: 7,
+    title: { zh: '量子门、读出与系统基准', en: 'Gates, readout and system benchmarks' },
+    objective: { zh: '在完整实验周期内验证门、擦除检测、读出和连续运行。', en: 'Validate gates, erasure detection, readout and continuous operation in the full cycle.' },
+    durationWeeks: [12, 24], dependencies: ['rydberg-blockade'],
+    instruments: [instrument('timing', '统一时钟与事件记录', 'Unified clock and event logging', '关联控制、相机、错误和环境数据。', 'Correlate controls, cameras, errors and environment.', '时间戳一致性、缓冲深度、丢包监测和可追溯格式。', 'Timestamp consistency, buffer depth, loss monitoring and traceable format.'), instrument('analysis', '在线分析与参数数据库', 'Online analysis and parameter registry', '执行拟合、趋势监测和证据分级。', 'Run fits, trend monitoring and evidence classification.', '版本、单位、审计记录、回滚和离线复现能力。', 'Versioning, units, audit trail, rollback and offline reproducibility.'), instrument('environment', '环境与联锁监控', 'Environmental and interlock monitoring', '记录温湿度、振动、冷却水、门禁与安全状态。', 'Record temperature, humidity, vibration, cooling water, access and safety state.', '采样同步、告警分级、历史保留、旁路审计和断电恢复。', 'Synchronized sampling, alarm levels, retention, bypass audit and power-loss recovery.')],
+    acceptance: [{ zh: '门指标明确损失、泄漏、SPAM 和条件化约定，并能跨天重复。', en: 'Gate metrics state loss, leakage, SPAM and conditioning conventions and repeat across days.' }],
+    failureSignals: [{ zh: '单次门保真度良好但完整循环退化，提示漂移或反馈时延被遗漏。', en: 'Single-shot gate fidelity is good while full-cycle performance degrades, indicating omitted drift or feedback latency.' }],
+  },
+]

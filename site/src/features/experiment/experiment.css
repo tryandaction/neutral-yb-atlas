@@ -1,0 +1,40 @@
+.experiment-workbench { padding: 76px max(6vw, 64px) 84px; background: var(--white); content-visibility: auto; contain-intrinsic-size: 0 1050px; }
+.experiment-workbench__header { display: grid; grid-template-columns: 1.1fr .9fr; align-items: end; gap: 54px; margin-bottom: 38px; }
+.experiment-workbench__header span { color: var(--vermilion); font-size: 10px; }
+.experiment-workbench__header h2 { max-width: 720px; margin: 9px 0 0; font: 400 clamp(38px, 4vw, 58px)/1.06 var(--font-display); }
+.experiment-workbench__header p { max-width: 560px; margin: 0; color: var(--muted); font-size: 14px; line-height: 1.75; }
+.experiment-timeline { display: grid; grid-template-columns: repeat(7, 1fr); border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); }
+.experiment-timeline button { position: relative; min-height: 164px; padding: 17px 13px; border: 0; border-right: 1px solid var(--line); background: transparent; color: var(--ink); text-align: left; cursor: pointer; }
+.experiment-timeline button:last-child { border-right: 0; }
+.experiment-timeline button.is-selected { background: var(--forest); color: var(--white); }
+.experiment-timeline button > span { color: var(--vermilion); font-size: 11px; }
+.experiment-timeline button i { position: absolute; top: -7px; left: 13px; width: 14px; height: 14px; display: grid; place-items: center; background: var(--white); color: var(--vermilion); }
+.experiment-timeline button i svg { width: 10px; height: 10px; }
+.experiment-timeline button strong { display: block; margin: 46px 0 10px; font: 400 18px/1.25 var(--font-display); }
+.experiment-timeline button small { color: var(--muted); font-size: 10px; }
+.experiment-timeline button.is-selected small { color: #a9c0ba; }
+.experiment-detail { margin-top: 1px; border: 1px solid var(--line); background: var(--paper); }
+.experiment-detail__summary { display: flex; align-items: end; justify-content: space-between; gap: 24px; padding: 32px 34px; border-bottom: 1px solid var(--line); }
+.experiment-detail__summary span { color: var(--vermilion); font-size: 10px; }
+.experiment-detail__summary h3 { margin: 7px 0 8px; font: 400 31px var(--font-display); }
+.experiment-detail__summary p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.65; }
+.experiment-detail__summary button { min-height: 40px; display: flex; align-items: center; gap: 8px; padding: 0 14px; border: 1px solid var(--forest); background: transparent; color: var(--forest); font-size: 11px; cursor: pointer; }
+.experiment-detail__summary button.is-complete { background: var(--forest); color: var(--white); }
+.experiment-detail__summary button svg { width: 13px; height: 13px; }
+.experiment-detail__dependencies { display: grid; grid-template-columns: 150px 1fr; padding: 15px 34px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 11px; }
+.experiment-detail__dependencies b { color: var(--ink); }
+.instrument-table__head, .instrument-table__row { display: grid; grid-template-columns: 1fr 1fr 1.7fr; gap: 28px; padding: 15px 34px; border-bottom: 1px solid var(--line); }
+.instrument-table__head { color: var(--faint); font-size: 10px; text-transform: uppercase; }
+.instrument-table__row { background: var(--white); color: var(--muted); font-size: 13px; line-height: 1.55; }
+.instrument-table__row strong { color: var(--ink); font: 400 17px var(--font-display); }
+.experiment-detail__bottom { display: grid; grid-template-columns: 1fr 1fr; }
+.acceptance-list, .failure-tree { padding: 26px 34px; }
+.acceptance-list { border-right: 1px solid var(--line); }
+.acceptance-list h4, .failure-tree strong { margin: 0; font: 400 17px var(--font-display); }
+.acceptance-list ul, .failure-tree ul { margin: 14px 0 0; padding-left: 17px; color: var(--muted); font-size: 13px; line-height: 1.7; }
+.failure-tree header { display: flex; align-items: center; gap: 8px; color: var(--danger); }
+.failure-tree header svg { width: 14px; height: 14px; }
+.failure-tree p { margin: 18px 0 0; padding-top: 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; line-height: 1.6; }
+.failure-tree p span { display: block; margin-bottom: 4px; color: var(--ink); font-weight: 700; }
+@media(max-width:1000px){.experiment-workbench__header{grid-template-columns:1fr;gap:22px}.experiment-timeline{grid-template-columns:repeat(2,1fr)}.experiment-timeline button{min-height:150px;border-bottom:1px solid var(--line)}.experiment-timeline button strong{margin-top:38px}}
+@media(max-width:720px){.experiment-workbench{padding:76px 18px}.experiment-timeline{grid-template-columns:1fr}.experiment-timeline button{min-height:116px;border-right:0}.experiment-detail__summary{align-items:flex-start;flex-direction:column}.instrument-table__head{display:none}.instrument-table__row,.experiment-detail__bottom{grid-template-columns:1fr}.instrument-table__row{gap:8px}.acceptance-list{border-right:0;border-bottom:1px solid var(--line)}}

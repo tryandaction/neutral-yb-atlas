@@ -1,0 +1,393 @@
+.atomic-reference {
+  padding: 70px max(6vw, 64px) 78px;
+  border-top: 1px solid var(--line);
+  background: var(--paper);
+}
+
+.atomic-reference > header {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(320px, .9fr);
+  align-items: end;
+  gap: 72px;
+  max-width: var(--max-width);
+  margin: 0 auto 34px;
+}
+
+.atomic-reference > header span {
+  display: block;
+  margin-bottom: 11px;
+  color: var(--vermilion);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.atomic-reference > header h2 {
+  margin: 0;
+  font: 400 45px/1.1 var(--font-display);
+}
+
+.atomic-reference > header p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.atomic-reference__body {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(640px, 1.4fr) minmax(300px, .6fr);
+  gap: 30px;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.atomic-reference figure {
+  margin: 0;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--line);
+  background: var(--white);
+}
+
+.atomic-reference__image-stage {
+  position: relative;
+  overflow: hidden;
+}
+
+.atomic-reference figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.reference-hotspot-overlay,
+.reference-hotspot-overlay > svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.reference-hotspot-overlay {
+  pointer-events: none;
+}
+
+.reference-hotspot-overlay > svg {
+  overflow: visible;
+}
+
+.reference-hotspot-arrow {
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-dasharray: 4 3;
+  filter: drop-shadow(0 1px 1px rgb(255 255 255 / 85%));
+}
+
+.reference-hotspot-ring {
+  fill: rgb(255 255 255 / 9%);
+  stroke: currentColor;
+  stroke-width: 2.5;
+  filter: drop-shadow(0 0 2px rgb(255 255 255 / 95%));
+}
+
+.reference-hotspot-target {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  transform: translate(-50%, -50%);
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  pointer-events: auto;
+  cursor: crosshair;
+}
+
+.reference-hotspot-target::after {
+  content: '';
+  position: absolute;
+  inset: 9px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 0 2px rgb(255 255 255 / 90%);
+  opacity: .62;
+}
+
+.reference-hotspot-target:hover::after,
+.reference-hotspot-target:focus-visible::after,
+.reference-hotspot-target[aria-pressed='true']::after {
+  opacity: 1;
+}
+
+.reference-hotspot-target:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.reference-hotspot-callout {
+  position: absolute;
+  display: grid;
+  gap: 1px;
+  min-width: 112px;
+  max-width: 150px;
+  padding: 7px 9px;
+  transform: translate(-50%, -50%);
+  border-left: 3px solid currentColor;
+  background: rgb(255 255 255 / 94%);
+  box-shadow: 0 3px 12px rgb(12 31 27 / 14%);
+  color: var(--ink);
+}
+
+.reference-hotspot-callout b {
+  color: currentColor;
+  font-size: 11px;
+}
+
+.reference-hotspot-callout span {
+  font-size: 9px;
+  line-height: 1.25;
+}
+
+.atomic-reference figcaption {
+  padding: 11px 14px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.atomic-reference__mobile-lens {
+  display: none;
+}
+
+.atomic-reference__expand {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  background: rgb(255 255 255 / 95%);
+  color: var(--forest);
+  cursor: pointer;
+}
+
+.atomic-reference__expand svg,
+.atomic-reference__lightbox button svg {
+  width: 16px;
+  height: 16px;
+}
+
+.atomic-reference aside {
+  align-self: start;
+  border-top: 1px solid var(--ink);
+}
+
+.atomic-reference aside h3 {
+  margin: 0;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+  font: 400 23px/1.2 var(--font-display);
+}
+
+.atomic-reference aside ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.atomic-reference aside li {
+  border-bottom: 1px solid var(--line);
+}
+
+.atomic-reference__channel {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 8px;
+  border: 0;
+  border-left: 3px solid transparent;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.atomic-reference__channel:hover,
+.atomic-reference__channel:focus-visible {
+  background: var(--wash);
+}
+
+.atomic-reference__channel[aria-pressed='true'] {
+  border-left-color: var(--vermilion);
+  background: color-mix(in srgb, var(--vermilion) 7%, var(--white));
+}
+
+.atomic-reference aside b {
+  color: var(--violet);
+  font-size: 12px;
+}
+
+.atomic-reference aside span {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.atomic-reference__detail {
+  padding: 19px 16px 20px;
+  background: var(--ink);
+  color: var(--white);
+}
+
+.atomic-reference__detail small {
+  display: block;
+  margin-bottom: 7px;
+  color: #a9c6bf;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.atomic-reference__detail strong {
+  display: block;
+  font: 400 19px/1.35 var(--font-display);
+}
+
+.atomic-reference__detail p {
+  margin: 9px 0 0;
+  color: #d1ddda;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.atomic-reference__lightbox {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 58px 28px 24px;
+  background: rgb(7 13 12 / 94%);
+}
+
+.atomic-reference__lightbox > button {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #52625f;
+  background: #13201e;
+  color: var(--white);
+  cursor: pointer;
+}
+
+.atomic-reference__lightbox > img {
+  max-width: 94vw;
+  max-height: calc(100vh - 88px);
+  object-fit: contain;
+  background: var(--white);
+}
+
+@media (max-width: 980px) {
+  .atomic-reference > header,
+  .atomic-reference__body {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .atomic-reference {
+    padding: 56px 20px 62px;
+  }
+
+  .atomic-reference > header {
+    gap: 18px;
+  }
+
+  .atomic-reference > header h2 {
+    font-size: 34px;
+  }
+
+  .atomic-reference__body {
+    gap: 22px;
+  }
+
+  .reference-hotspot-callout {
+    min-width: 86px;
+    max-width: 108px;
+    padding: 5px 6px;
+  }
+
+  .reference-hotspot-callout span {
+    display: none;
+  }
+
+  .atomic-reference__mobile-lens {
+    position: relative;
+    display: block;
+    aspect-ratio: 1296 / 1214;
+    border-top: 1px solid var(--line);
+    background-color: var(--white);
+    background-repeat: no-repeat;
+    background-size: 260% auto;
+    overflow: hidden;
+  }
+
+  .atomic-reference__mobile-lens::before,
+  .atomic-reference__mobile-lens::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .atomic-reference__mobile-lens::before {
+    width: 72px;
+    height: 72px;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px rgb(255 255 255 / 90%);
+  }
+
+  .atomic-reference__mobile-lens::after {
+    width: 8px;
+    height: 8px;
+    border: 2px solid var(--white);
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .atomic-reference__mobile-lens > span,
+  .atomic-reference__mobile-lens > b {
+    position: absolute;
+    z-index: 1;
+    left: 10px;
+    padding: 4px 7px;
+    background: rgb(255 255 255 / 94%);
+    color: var(--ink);
+  }
+
+  .atomic-reference__mobile-lens > span {
+    top: 10px;
+    color: var(--faint);
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .atomic-reference__mobile-lens > b {
+    bottom: 10px;
+    border-left: 3px solid currentColor;
+    font-size: 12px;
+  }
+}

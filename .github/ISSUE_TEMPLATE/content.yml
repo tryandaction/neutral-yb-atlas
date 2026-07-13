@@ -1,0 +1,48 @@
+name: Content correction
+description: Report a scientific, translation, formula or experimental-detail issue.
+title: "[Content]: "
+labels: [content]
+body:
+  - type: input
+    id: location
+    attributes:
+      label: Page or section
+      description: Provide the URL, anchor, Wiki term or knowledge file.
+    validations:
+      required: true
+  - type: dropdown
+    id: language
+    attributes:
+      label: Language
+      options: [Chinese, English, Both, Not applicable]
+    validations:
+      required: true
+  - type: textarea
+    id: current
+    attributes:
+      label: Current statement
+      description: Quote only the minimum text needed to locate the issue.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed correction
+      description: State the corrected formula, wording, value or experimental boundary.
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Sources
+      description: Add DOI, arXiv, official documentation or a stable publisher URL.
+    validations:
+      required: true
+  - type: checkboxes
+    id: rights
+    attributes:
+      label: Submission check
+      options:
+        - label: I have not attached copyrighted paper PDFs, credentials or private data.
+          required: true
+
