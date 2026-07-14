@@ -6,14 +6,16 @@ import ResearchEcosystem from './ResearchEcosystem'
 import RydbergGateTutor from './RydbergGateTutor'
 import YbEnergyTutor from './YbEnergyTutor'
 
-it('walks from quantum postulates to an experimentally testable Yb implementation', async () => {
+it('switches first-principles lenses and follows the physical-carrier deduction', async () => {
   const user = userEvent.setup()
   render(<FirstPrinciplesTree language="zh" />)
 
   expect(screen.getByRole('heading', { name: '第一性原理演绎树' })).toBeInTheDocument()
-  await user.click(screen.getByRole('button', { name: /开放系统与误差通道/ }))
-  expect(screen.getByRole('heading', { name: '开放系统与误差通道' })).toBeInTheDocument()
-  expect(screen.getByText(/物理机制.*门级故障.*逻辑错误率/)).toBeInTheDocument()
+  await user.click(screen.getByText('从物理载体出发', { selector: 'span' }).closest('button')!)
+  await user.click(screen.getByText('按需相互作用', { selector: 'strong' }).closest('button')!)
+  expect(screen.getByRole('heading', { name: '弱耦合存储，强耦合执行门' })).toBeInTheDocument()
+  expect(screen.getByText(/基态近似独立.*Rydberg/)).toBeInTheDocument()
+  expect(screen.getByText(/双原子谱.*条件相位/)).toBeInTheDocument()
 })
 
 it('links each Yb transition to its role, observable and laboratory hardware', async () => {

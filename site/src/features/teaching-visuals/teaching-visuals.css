@@ -117,10 +117,63 @@
   background: #f5f7f4;
 }
 
+.principles-lenses {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  max-width: var(--max-width);
+  margin: 0 auto;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+
+.principles-lenses button {
+  min-height: 94px;
+  padding: 15px 17px;
+  border: 0;
+  border-right: 1px solid var(--line);
+  background: var(--white);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+.principles-lenses button:last-child { border-right: 0; }
+.principles-lenses button:hover,
+.principles-lenses button:focus-visible,
+.principles-lenses button[aria-selected='true'] { background: var(--forest); color: var(--white); }
+.principles-lenses span,
+.principles-lenses small { display: block; }
+.principles-lenses span { font: 400 18px/1.2 var(--font-display); }
+.principles-lenses small { margin-top: 8px; color: var(--muted); font-size: 10px; line-height: 1.45; }
+.principles-lenses button[aria-selected='true'] small,
+.principles-lenses button:hover small,
+.principles-lenses button:focus-visible small { color: #c4d5d1; }
+
+.principles-tree__question,
+.principles-tree__conclusion {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  gap: 22px;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 17px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.principles-tree__question span,
+.principles-tree__conclusion span {
+  color: var(--vermilion);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.principles-tree__question p,
+.principles-tree__conclusion strong { margin: 0; font: 400 18px/1.45 var(--font-display); }
+
 .principles-tree__map {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(7, minmax(120px, 1fr));
+  grid-template-columns: repeat(5, minmax(150px, 1fr));
   gap: 10px;
   max-width: var(--max-width);
   margin: 0 auto;
@@ -139,7 +192,7 @@
 .principle-node {
   position: relative;
   z-index: 1;
-  min-height: 176px;
+  min-height: 164px;
   padding: 18px 14px 15px;
   border: 1px solid var(--line);
   border-top: 3px solid var(--node-color, var(--forest));
@@ -171,12 +224,6 @@
   color: var(--white);
   transform: translateY(-3px);
 }
-
-.principle-node--axiom { --node-color: var(--vermilion); }
-.principle-node--information { --node-color: var(--blue); }
-.principle-node--physics { --node-color: var(--violet); }
-.principle-node--hardware { --node-color: var(--success); }
-.principle-node--system { --node-color: var(--warning); }
 
 .principle-node > span {
   display: block;
@@ -214,7 +261,14 @@
 }
 
 .principles-tree .teaching-card {
-  grid-template-columns: minmax(250px, .55fr) minmax(390px, .9fr) minmax(360px, .8fr);
+  grid-template-columns: minmax(260px, .55fr) minmax(360px, .75fr) minmax(420px, 1.1fr);
+}
+
+.principles-card dl > div { grid-template-columns: 120px 1fr; }
+
+.principles-tree__conclusion {
+  margin-top: 0;
+  border-top: 1px solid var(--ink);
 }
 
 .teaching-card__equation .equation {
@@ -843,8 +897,15 @@
 }
 
 @media (max-width: 1180px) {
+  .principles-lenses {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .principles-lenses button:nth-child(2) { border-right: 0; }
+  .principles-lenses button:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+
   .principles-tree__map {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .principles-tree__spine {
@@ -979,6 +1040,7 @@
   }
 
   .principles-tree__map,
+  .principles-lenses,
   .pipeline-track,
   .transition-list,
   .ecosystem-map__nodes {
@@ -999,8 +1061,17 @@
   }
 
   .principles-tree .teaching-visual__header { order: 1; }
-  .principles-tree .teaching-card { order: 2; margin-top: 0; margin-bottom: 24px; }
-  .principles-tree__map { order: 3; }
+  .principles-lenses { order: 2; grid-template-columns: 1fr; }
+  .principles-tree__question { order: 3; }
+  .principles-tree .teaching-card { order: 4; margin-top: 24px; margin-bottom: 0; }
+  .principles-tree__map { order: 5; }
+  .principles-tree__conclusion { order: 6; }
+
+  .principles-lenses button,
+  .principles-lenses button:nth-child(n) { min-height: 76px; border-right: 0; border-bottom: 1px solid var(--line); }
+
+  .principles-tree__question,
+  .principles-tree__conclusion { grid-template-columns: 1fr; gap: 7px; padding: 16px 0; }
 
   .principle-node {
     min-height: 132px;

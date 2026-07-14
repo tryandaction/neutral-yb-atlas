@@ -19,6 +19,18 @@ it('keeps seven Chinese and English chapters paired', () => {
   }
 })
 
+it('organizes the opening chapters around physical computability and the Yb interface bundle', () => {
+  expect(chapters[0].question.zh).toBe('一个物理系统满足什么条件，才是在执行可验证的计算？')
+  expect(chapters[1].question.zh).toBe('原子为什么能够计算，中性原子怎样按需打开相互作用？')
+  expect(chapters[2].question.zh).toBe('171Yb 的接口组合解决了什么问题，又引入什么代价？')
+
+  const openingCopy = chapters.slice(0, 3).flatMap((chapter) => chapter.sections.map((section) => section.body.zh)).join('\n')
+  expect(openingCopy).toMatch(/可区分状态.*可组合变换.*条件动力学/s)
+  expect(openingCopy).toMatch(/同一同位素.*天然一致的内部态谱/)
+  expect(openingCopy).toMatch(/接口组合.*工程复杂度/)
+  expect(openingCopy).not.toMatch(/一次有效 shot 通常依次包含/)
+})
+
 it('requires a source and unit for confirmed numeric evidence', () => {
   const confirmed = evidenceEntries.filter((entry) =>
     entry.status.startsWith('confirmed'),

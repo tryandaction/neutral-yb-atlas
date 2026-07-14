@@ -30,6 +30,19 @@
   border-top: 1px solid #35534e;
 }
 
+.theory-scope {
+  margin: 0;
+  border-top: 1px solid #35534e;
+}
+
+.theory-scope > div {
+  padding: 15px 0;
+  border-bottom: 1px solid #35534e;
+}
+
+.theory-scope dt { color: var(--yellow); font-size: 10px; font-weight: 700; }
+.theory-scope dd { margin: 6px 0 0; color: #a6bbb6; font-size: 11px; line-height: 1.55; }
+
 .theory-workbench__nav nav button {
   width: 100%;
   display: grid;
@@ -116,6 +129,26 @@
   border: 1px solid #35534e;
   background: #35534e;
 }
+
+.theory-verdict {
+  display: grid;
+  grid-template-columns: 170px 170px minmax(0, 1fr);
+  gap: 1px;
+  margin-bottom: 16px;
+  border: 1px solid #35534e;
+  background: #35534e;
+}
+
+.theory-verdict > div,
+.theory-verdict > p { margin: 0; padding: 14px 16px; background: #173f3a; }
+.theory-verdict span,
+.theory-verdict strong { display: block; }
+.theory-verdict span { color: #87a49d; font-size: 10px; }
+.theory-verdict strong { margin-top: 5px; color: var(--yellow); font: 400 16px var(--font-display); }
+.theory-verdict p { color: #c5d6d2; font-size: 12px; line-height: 1.55; }
+.theory-verdict--outside { border-color: #8d4b43; background: #8d4b43; }
+.theory-verdict--outside strong { color: #ffb2a7; }
+.theory-verdict--marginal strong { color: #ffd37a; }
 
 .population-chart {
   min-height: 380px;
@@ -232,6 +265,21 @@
 .error-budget__track { height: 3px; margin-top: 12px; background: #35534e; }
 .error-budget__track i { height: 100%; display: block; background: var(--vermilion); }
 
+.theory-contract {
+  margin-top: 18px;
+  border-top: 1px solid #48635e;
+  border-bottom: 1px solid #48635e;
+}
+
+.theory-contract > header { display: flex; align-items: baseline; gap: 16px; padding: 16px 0; }
+.theory-contract > header span { color: var(--yellow); font-size: 10px; }
+.theory-contract h3 { margin: 0; font: 400 20px var(--font-display); }
+.theory-contract dl { display: grid; grid-template-columns: repeat(3, 1fr); margin: 0; border-top: 1px solid #35534e; }
+.theory-contract dl > div { min-height: 102px; padding: 16px; border-right: 1px solid #35534e; border-bottom: 1px solid #35534e; }
+.theory-contract dl > div:nth-child(3n) { border-right: 0; }
+.theory-contract dt { color: #87a49d; font-size: 10px; font-weight: 700; }
+.theory-contract dd { margin: 8px 0 0; color: #d9e5e2; font-size: 12px; line-height: 1.55; }
+
 @media (max-width: 1050px) {
   .theory-workbench { grid-template-columns: 1fr; }
   .theory-workbench__nav { display: none; }
@@ -245,4 +293,9 @@
   .population-chart svg { height: 260px; }
   .error-budget { grid-column: auto; grid-template-columns: 1fr; }
   .error-budget__header, .error-budget__row { border-right: 0; border-bottom: 1px solid #35534e; }
+  .theory-verdict { grid-template-columns: 1fr 1fr; }
+  .theory-verdict > p { grid-column: 1 / -1; }
+  .theory-contract dl { grid-template-columns: 1fr; }
+  .theory-contract dl > div,
+  .theory-contract dl > div:nth-child(3n) { min-height: 0; border-right: 0; }
 }

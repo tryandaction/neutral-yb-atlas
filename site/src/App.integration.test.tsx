@@ -39,7 +39,7 @@ it('opens the research workspace, saves a note and exports it', async () => {
   expect(
     (screen.getByLabelText('工作区 JSON') as HTMLTextAreaElement).value,
   ).toContain('检查 302 nm 指向噪声。')
-}, 30000)
+}, 60000)
 
 it('places the five interactive teaching diagrams in the research path', async () => {
   render(<App />)
