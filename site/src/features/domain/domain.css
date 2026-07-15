@@ -33,11 +33,9 @@
 }
 
 .domain-workbench {
-  width: min(100%, 1510px);
+  width: 100%;
   display: grid;
-  grid-template-columns: 220px minmax(0, 820px) minmax(300px, 360px);
-  justify-content: center;
-  margin: 0 auto;
+  grid-template-columns: clamp(200px, 13vw, 260px) minmax(0, 1fr) clamp(300px, 18vw, 380px);
 }
 
 .domain-outline,
@@ -246,11 +244,15 @@
     background: var(--white);
     box-shadow: -18px 0 48px rgb(19 32 30 / 16%);
     transform: translateX(105%);
+    visibility: hidden;
+    pointer-events: none;
     transition: transform 180ms ease;
   }
 
   .domain-context.is-open {
     transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
   }
 
   .domain-context-close {
