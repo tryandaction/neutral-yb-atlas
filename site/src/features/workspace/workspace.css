@@ -10,6 +10,10 @@
 .workspace-storage.is-offline { border-color:var(--warning); background:#f5efe5; }
 .workspace-storage>svg { width:17px; height:17px; color:var(--success); }
 .workspace-storage strong,.workspace-storage span { display:block; }.workspace-storage strong { font-size:13px; }.workspace-storage span { margin-top:3px; color:var(--muted); font-size:11px; line-height:1.5; }
+.workspace-actions { display:grid; grid-template-columns:1fr 1fr; gap:1px; margin-top:18px; background:var(--line); }
+.workspace-actions button,.workspace-actions a { min-height:44px; display:flex; align-items:center; justify-content:center; gap:8px; border:0; padding:0 10px; background:var(--white); color:var(--forest); font:650 11px/1 var(--font-sans); text-decoration:none; cursor:pointer; }
+.workspace-actions button.is-active { background:var(--forest); color:var(--white); }
+.workspace-actions svg { width:14px; height:14px; }
 .workspace-notes,.snapshot-list,.transfer-controls { margin-top:28px; }
 .workspace-notes label,.transfer-controls>label { display:block; margin-bottom:8px; color:var(--ink); font-size:11px; font-weight:750; text-transform:uppercase; }
 .workspace-notes textarea,.transfer-controls textarea { width:100%; resize:vertical; border:1px solid var(--line); border-radius:0; background:var(--white); color:var(--ink); font-size:13px; line-height:1.6; }

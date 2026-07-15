@@ -4,13 +4,55 @@
   z-index: 50;
   min-height: var(--header-height);
   display: grid;
-  grid-template-columns: 220px minmax(400px, 1fr) auto;
+  grid-template-columns: 196px minmax(620px, 1fr) auto;
   align-items: center;
   gap: 24px;
   padding: 0 28px;
   border-bottom: 1px solid var(--line);
-  background: rgb(247 248 245 / 94%);
+  background: rgb(255 255 255 / 94%);
   backdrop-filter: blur(14px);
+}
+
+.app-header--cover {
+  border-bottom-color: rgb(183 229 211 / 16%);
+  background: rgb(5 20 17 / 94%);
+}
+
+.app-header--cover .brand,
+.app-header--cover .primary-nav a,
+.app-header--cover .language-switch button[aria-pressed='true'] {
+  color: #e8f7f1;
+}
+
+.app-header--cover .brand-mark {
+  border-color: #78c8ad;
+  color: #a8e5d0;
+}
+
+.app-header--cover .primary-nav a:not([aria-current='page']),
+.app-header--cover .language-switch button,
+.app-header--cover .mode-switch button {
+  color: #92aaa2;
+}
+
+.app-header--cover .language-switch,
+.app-header--cover .mode-switch,
+.app-header--cover .icon-button {
+  border-color: rgb(183 229 211 / 20%);
+  background: rgb(13 39 33 / 76%);
+}
+
+.app-header--cover .icon-button {
+  color: #d8eee6;
+}
+
+.app-header--cover .mode-switch button[aria-pressed='true'] {
+  background: #cde9df;
+  color: #09231d;
+}
+
+.app-header--cover .language-switch span {
+  color: #536f66;
 }
 
 .brand {
@@ -49,7 +91,7 @@
 .primary-nav {
   display: flex;
   justify-content: center;
-  gap: 28px;
+  gap: clamp(12px, 1.5vw, 24px);
 }
 
 .primary-nav a {
@@ -60,12 +102,12 @@
   text-decoration: none;
 }
 
-.primary-nav a:first-child {
+.primary-nav a[aria-current='page'] {
   color: var(--ink);
   font-weight: 700;
 }
 
-.primary-nav a:first-child::after {
+.primary-nav a[aria-current='page']::after {
   position: absolute;
   right: 0;
   bottom: -1px;
@@ -160,10 +202,31 @@
 @media (max-width: 1120px) {
   .app-header {
     grid-template-columns: 1fr auto;
+    grid-template-rows: 58px 42px;
+    padding: 0 18px;
   }
 
   .primary-nav {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-content: flex-start;
+    gap: 24px;
+    overflow-x: auto;
+    border-top: 1px solid var(--line);
+    scrollbar-width: none;
+  }
+
+  .app-header--cover .primary-nav {
+    border-top-color: rgb(183 229 211 / 16%);
+  }
+
+  .primary-nav::-webkit-scrollbar {
     display: none;
+  }
+
+  .primary-nav a {
+    flex: 0 0 auto;
+    padding: 13px 0 12px;
   }
 }
 

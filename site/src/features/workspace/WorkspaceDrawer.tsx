@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { X, Database, FlaskConical, RotateCcw } from 'lucide-react'
+import { X, Database, FlaskConical, GitPullRequest, Pencil, RotateCcw } from 'lucide-react'
 import type { Language } from '../../types/content'
 import type { WorkspaceState } from './workspaceTypes'
 import ExportImportControls from './ExportImportControls'
@@ -10,14 +10,17 @@ interface WorkspaceDrawerProps {
   open: boolean
   workspace: WorkspaceState
   storageAvailable: boolean
+  editing?: boolean
+  contributionUrl?: string
   onClose: () => void
+  onEditingChange?: (editing: boolean) => void
   onNoteChange: (id: string, value: string) => void
   onExport: () => string
   onImport: (value: string) => void
   onResetAllArticleOverrides: () => void
 }
 
-export default function WorkspaceDrawer({ language, open, workspace, storageAvailable, onClose, onNoteChange, onExport, onImport, onResetAllArticleOverrides }: WorkspaceDrawerProps) {
+export default function WorkspaceDrawer({ language, open, workspace, storageAvailable, editing = false, contributionUrl, onClose, onEditingChange, onNoteChange, onExport, onImport, onResetAllArticleOverrides }: WorkspaceDrawerProps) {
   const [confirmReset, setConfirmReset] = useState(false)
   if (!open) return null
 
@@ -34,6 +37,23 @@ export default function WorkspaceDrawer({ language, open, workspace, storageAvai
           <Database aria-hidden="true" />
           <div><strong>{storageAvailable ? (language === 'zh' ? '本地保存正常' : 'Local storage active') : (language === 'zh' ? '仅当前会话' : 'Session only')}</strong><span>{language === 'zh' ? '内容保存在此浏览器，不会自动上传。' : 'Data stays in this browser and is never uploaded automatically.'}</span></div>
         </div>
+
+        {(onEditingChange || contributionUrl) ? (
+          <section className="workspace-actions" aria-label={language === 'zh' ? '内容操作' : 'Content actions'}>
+            {onEditingChange ? (
+              <button type="button" className={editing ? 'is-active' : ''} aria-pressed={editing} onClick={() => onEditingChange(!editing)}>
+                <Pencil aria-hidden="true" />
+                {language === 'zh' ? (editing ? '退出编辑' : '编辑正文') : (editing ? 'Exit editing' : 'Edit article')}
+              </button>
+            ) : null}
+            {contributionUrl ? (
+              <a href={contributionUrl} target="_blank" rel="noreferrer" aria-label={language === 'zh' ? '提交内容建议' : 'Submit content suggestion'}>
+                <GitPullRequest aria-hidden="true" />
+                {language === 'zh' ? '提交内容建议' : 'Submit suggestion'}
+              </a>
+            ) : null}
+          </section>
+        ) : null}
 
         <section className="workspace-notes">
           <label htmlFor="research-note">{language === 'zh' ? '研究笔记' : 'Research notes'}</label>

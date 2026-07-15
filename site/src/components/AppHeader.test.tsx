@@ -3,71 +3,67 @@ import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
 import AppHeader from './AppHeader'
 
-it('emits language and edit changes from explicit controls', async () => {
-  const user = userEvent.setup()
-  const onLanguageChange = vi.fn()
-  const onEditingChange = vi.fn()
+const baseProps = {
+  language: 'zh' as const,
+  mode: 'guided' as const,
+  route: 'yb-platform' as const,
+  onLanguageChange: vi.fn(),
+  onModeChange: vi.fn(),
+}
 
-  render(
-    <AppHeader
-      language="zh"
-      mode="guided"
-      editing={false}
-      onLanguageChange={onLanguageChange}
-      onModeChange={vi.fn()}
-      onEditingChange={onEditingChange}
-    />,
-  )
+it('marks the active research destination and exposes deep links', () => {
+  render(<AppHeader {...baseProps} />)
 
-  await user.click(screen.getByRole('button', { name: 'English' }))
-  await user.click(screen.getByRole('button', { name: '编辑正文' }))
-
-  expect(onLanguageChange).toHaveBeenCalledWith('en')
-  expect(onEditingChange).toHaveBeenCalledWith(true)
+  expect(screen.getByRole('banner')).not.toHaveClass('app-header--cover')
+  expect(screen.getByRole('link', { name: 'Yb 平台' })).toHaveAttribute('href', '#domain-yb-platform')
+  expect(screen.getByRole('link', { name: 'Yb 平台' })).toHaveAttribute('aria-current', 'page')
+  expect(screen.getByRole('link', { name: '容错与规模' })).toHaveAttribute('href', '#domain-fault-tolerance')
 })
 
-it('emits reference mode from the segmented control', async () => {
+it('uses the dark cover treatment only on the overview route', () => {
+  render(<AppHeader {...baseProps} route="overview" />)
+
+  expect(screen.getByRole('banner')).toHaveClass('app-header', 'app-header--cover')
+})
+
+it('emits language and reading-depth changes from explicit controls', async () => {
   const user = userEvent.setup()
+  const onLanguageChange = vi.fn()
   const onModeChange = vi.fn()
 
   render(
     <AppHeader
-      language="zh"
-      mode="guided"
-      editing={false}
-      onLanguageChange={vi.fn()}
+      {...baseProps}
+      onLanguageChange={onLanguageChange}
       onModeChange={onModeChange}
-      onEditingChange={vi.fn()}
     />,
   )
 
+  await user.click(screen.getByRole('button', { name: 'English' }))
   await user.click(screen.getByRole('button', { name: '研究索引' }))
 
+  expect(onLanguageChange).toHaveBeenCalledWith('en')
   expect(onModeChange).toHaveBeenCalledWith('reference')
 })
 
-it('shows a contribution link only when a repository URL is configured', () => {
-  const baseProps = {
-    language: 'zh' as const,
-    mode: 'guided' as const,
-    editing: false,
-    onLanguageChange: vi.fn(),
-    onModeChange: vi.fn(),
-    onEditingChange: vi.fn(),
-  }
+it('keeps Wiki and workspace as the only contextual header actions', async () => {
+  const user = userEvent.setup()
+  const onWikiOpen = vi.fn()
+  const onWorkspaceOpen = vi.fn()
 
-  const { rerender } = render(
+  render(
     <AppHeader
       {...baseProps}
-      contributionUrl="https://github.com/example/neutral-yb-atlas/issues/new?template=content.yml"
+      onWikiOpen={onWikiOpen}
+      onWorkspaceOpen={onWorkspaceOpen}
     />,
   )
 
-  const link = screen.getByRole('link', { name: '提交内容建议' })
-  expect(link).toHaveAttribute('target', '_blank')
-  expect(link).toHaveAttribute('rel', 'noreferrer')
-  expect(link).toHaveAttribute('href', 'https://github.com/example/neutral-yb-atlas/issues/new?template=content.yml')
+  await user.click(screen.getByRole('button', { name: '打开科研术语 Wiki' }))
+  await user.click(screen.getByRole('button', { name: '打开研究工作区' }))
 
-  rerender(<AppHeader {...baseProps} />)
+  expect(onWikiOpen).toHaveBeenCalledOnce()
+  expect(onWorkspaceOpen).toHaveBeenCalledOnce()
+  expect(screen.queryByRole('button', { name: '编辑正文' })).not.toBeInTheDocument()
   expect(screen.queryByRole('link', { name: '提交内容建议' })).not.toBeInTheDocument()
 })

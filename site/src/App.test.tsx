@@ -2,17 +2,19 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import App from './App'
 
-it('renders the bilingual atlas shell', () => {
+it('renders the bilingual atlas shell', async () => {
+  window.history.replaceState(null, '', '#/')
   render(<App />)
 
   expect(
-    screen.getByRole('heading', {
-      name: '中性镱原子计算的理论与实验基础',
-    }),
+    await screen.findByRole('heading', {
+      name: '中性 Yb 原子计算',
+    }, { timeout: 20000 }),
   ).toBeInTheDocument()
 })
 
 it('opens the bilingual research Wiki from the application header', async () => {
+  window.history.replaceState(null, '', '#/')
   const user = userEvent.setup()
   render(<App />)
 

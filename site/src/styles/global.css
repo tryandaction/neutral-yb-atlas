@@ -12,7 +12,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background: var(--paper);
+  background: var(--white);
   color: var(--ink);
   font-family: var(--font-sans);
   letter-spacing: 0;
@@ -50,13 +50,17 @@ a {
   overflow: clip;
 }
 
+.single-page-domain {
+  scroll-margin-top: var(--header-height);
+}
+
 .deep-content-loading {
   min-height: 220px;
   display: grid;
   place-items: center;
   border-top: 1px solid var(--line);
   color: var(--muted);
-  font-size: 11px;
+  font-size: 14px;
 }
 
 .sr-only {

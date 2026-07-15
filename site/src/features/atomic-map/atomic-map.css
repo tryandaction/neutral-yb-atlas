@@ -333,7 +333,7 @@
   .atomic-reference__mobile-lens {
     position: relative;
     display: block;
-    aspect-ratio: 1296 / 1214;
+    aspect-ratio: 1600 / 1480;
     border-top: 1px solid var(--line);
     background-color: var(--white);
     background-repeat: no-repeat;

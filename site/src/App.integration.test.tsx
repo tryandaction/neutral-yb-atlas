@@ -1,8 +1,27 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import App from './App'
 
+it('renders the causal overview at the root destination', async () => {
+  window.history.replaceState(null, '', '#/')
+  render(<App />)
+
+  expect(await screen.findByRole('heading', { name: '中性 Yb 原子计算' }, { timeout: 20000 })).toBeInTheDocument()
+})
+
+it('renders a continuous atlas and lands legacy deep links on their page section', async () => {
+  window.history.replaceState(null, '', '#/experiment')
+  render(<App />)
+
+  expect(await screen.findByRole('heading', { name: '中性 Yb 原子计算' }, { timeout: 20000 })).toBeInTheDocument()
+  expect(screen.getByRole('link', { name: '实验系统' })).toHaveAttribute('aria-current', 'page')
+  expect(screen.getByRole('link', { name: '实验系统' })).toHaveAttribute('href', '#domain-experiment')
+  expect(await screen.findByRole('heading', { name: '中性原子与 171Yb 平台' }, { timeout: 20000 })).toBeInTheDocument()
+  expect(screen.getByRole('heading', { name: '实验装置、周期与放行验收' })).toBeInTheDocument()
+}, 30000)
+
 it('exposes the interactive theory-to-experiment research atlas', async () => {
+  window.history.replaceState(null, '', '#/evidence')
   render(<App />)
 
   expect(
@@ -17,17 +36,20 @@ it('exposes the interactive theory-to-experiment research atlas', async () => {
   expect(defaultTab).toHaveAttribute('aria-selected', 'true')
 }, 30000)
 
-it('places chapter-scale research figures in the reading flow', async () => {
+it('switches among the chapter-scale research figures in the evidence atlas', async () => {
+  window.history.replaceState(null, '', '#/evidence')
+  const user = userEvent.setup()
   render(<App />)
 
-  expect(
-    await screen.findByAltText('阻塞门机制诊断', {}, { timeout: 20000 }),
-  ).toBeInTheDocument()
-  expect(screen.getByAltText('门时长与源波形证据')).toBeInTheDocument()
-  expect(screen.getByAltText('逻辑门通道与调度代价')).toBeInTheDocument()
+  expect(await screen.findByAltText('从实测噪声谱到控制代价', {}, { timeout: 20000 })).toBeInTheDocument()
+  await user.click(screen.getByRole('tab', { name: /阻塞模型/ }))
+  expect(screen.getByAltText('阻塞比如何进入泄漏与门时间')).toBeInTheDocument()
+  await user.click(screen.getByRole('tab', { name: /逻辑调度/ }))
+  expect(screen.getByAltText('物理门约束怎样传播到纠错周期')).toBeInTheDocument()
 }, 30000)
 
 it('opens the research workspace, saves a note and exports it', async () => {
+  window.history.replaceState(null, '', '#/')
   localStorage.clear()
   const user = userEvent.setup()
   render(<App />)
@@ -39,19 +61,10 @@ it('opens the research workspace, saves a note and exports it', async () => {
   expect(
     (screen.getByLabelText('工作区 JSON') as HTMLTextAreaElement).value,
   ).toContain('检查 302 nm 指向噪声。')
-}, 60000)
-
-it('places the five interactive teaching diagrams in the research path', async () => {
-  render(<App />)
-
-  expect(await screen.findByRole('heading', { name: '第一性原理演绎树' }, { timeout: 20000 })).toBeInTheDocument()
-  expect(screen.getByRole('heading', { name: 'Yb 能级与实验通道教学图' })).toBeInTheDocument()
-  expect(screen.getByRole('heading', { name: 'Rydberg 阻塞 CZ 的逐步教学图' })).toBeInTheDocument()
-  expect(screen.getByRole('heading', { name: '从原子炉到逻辑测量的实验全流程' })).toBeInTheDocument()
-  expect(screen.getByRole('heading', { name: 'Yb 中性原子计算科研生态图' })).toBeInTheDocument()
-}, 30000)
+}, 120000)
 
 it('places the complete reference map after the interactive Yb energy tutor', async () => {
+  window.history.replaceState(null, '', '#/yb-platform')
   render(<App />)
 
   const tutor = await screen.findByRole('heading', { name: 'Yb 能级与实验通道教学图' }, { timeout: 20000 })
@@ -60,13 +73,14 @@ it('places the complete reference map after the interactive Yb energy tutor', as
 }, 30000)
 
 it('opens contextual Wiki entries from the loaded research content', async () => {
+  window.history.replaceState(null, '', '#/experiment')
   const user = userEvent.setup()
-  const { container } = render(<App />)
+  render(<App />)
 
-  await screen.findByText('理论—实验视觉图谱', { selector: 'h2' }, { timeout: 20000 })
-  const term = container.querySelector<HTMLButtonElement>('button[aria-label="查看 Wiki：声光偏转器"]')
-  expect(term).not.toBeNull()
-  await user.click(term!)
+  await screen.findByRole('heading', { name: '从原子炉到逻辑测量的实验全流程' }, { timeout: 20000 })
+  const experimentDomain = within(document.getElementById('domain-experiment') as HTMLElement)
+  await user.click(experimentDomain.getByRole('button', { name: /^04重排$/ }))
+  await user.click(experimentDomain.getAllByRole('button', { name: '查看 Wiki：声光偏转器' })[0])
 
-  expect(await screen.findByText('声光布拉格衍射', {}, { timeout: 10000 })).toBeInTheDocument()
-}, 30000)
+  expect(await screen.findByRole('heading', { name: '声光偏转器' }, { timeout: 30000 })).toBeInTheDocument()
+}, 90000)

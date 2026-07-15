@@ -1,0 +1,215 @@
+.resource-estimator {
+  padding: 56px 42px 64px;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  background: var(--white);
+}
+
+.resource-estimator > header {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
+  align-items: end;
+  gap: 38px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid var(--ink);
+}
+
+.resource-estimator h2,
+.resource-estimator h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+
+.resource-estimator h2 {
+  font-size: 36px;
+  line-height: 1.16;
+}
+
+.resource-estimator > header p,
+.scale-cost-logic p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+.resource-estimator__controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-bottom: 1px solid var(--line);
+}
+
+.resource-number {
+  min-height: 94px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 18px 20px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.resource-number:nth-child(even) {
+  border-right: 0;
+}
+
+.resource-number span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.resource-number input {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid var(--line-strong);
+  border-radius: 0;
+  padding: 8px 0 5px;
+  background: transparent;
+  color: var(--ink);
+  font: 400 21px/1.2 var(--font-display);
+}
+
+.resource-estimator__result {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-bottom: 1px solid var(--ink);
+}
+
+.resource-estimator__result > div {
+  min-height: 112px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 18px 16px;
+  border-right: 1px solid var(--line);
+}
+
+.resource-estimator__result > div:last-child {
+  border-right: 0;
+}
+
+.resource-estimator__result span {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.resource-estimator__result output {
+  color: var(--forest);
+  font: 400 27px/1.1 var(--font-display);
+}
+
+.resource-estimator__warning {
+  margin: 0;
+  padding: 24px 20px;
+  border-bottom: 1px solid var(--danger);
+  color: var(--danger);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.resource-estimator__assumptions {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 24px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.resource-estimator__assumptions > strong {
+  color: var(--vermilion);
+  font-size: 12px;
+}
+
+.resource-estimator__assumptions ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.resource-estimator__assumptions li {
+  padding: 7px 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.scale-cost-logic > section {
+  padding: 42px 0 8px;
+}
+
+.scale-cost-logic h3 {
+  margin-bottom: 22px;
+  font-size: 28px;
+}
+
+.scale-cost-logic__sequence {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+
+.scale-cost-logic__sequence span {
+  min-height: 94px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 13px 10px;
+  border-right: 1px solid var(--line);
+  color: var(--vermilion);
+  font-size: 10px;
+}
+
+.scale-cost-logic__sequence span:last-child {
+  border-right: 0;
+}
+
+.scale-cost-logic__sequence b {
+  color: var(--ink);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.scale-cost-logic section > p {
+  margin-top: 20px;
+}
+
+.scale-cost-logic__formula {
+  overflow-x: auto;
+  padding: 24px 18px;
+  border-left: 2px solid var(--violet);
+  background: #f4f2f8;
+  color: #292033;
+  font: 400 22px/1.4 var(--font-display);
+  text-align: center;
+}
+
+@media (max-width: 760px) {
+  .resource-estimator {
+    padding: 44px 20px 52px;
+  }
+
+  .resource-estimator > header,
+  .resource-estimator__controls,
+  .resource-estimator__result,
+  .resource-estimator__assumptions {
+    grid-template-columns: 1fr;
+  }
+
+  .resource-number {
+    border-right: 0;
+  }
+
+  .resource-estimator__result > div {
+    min-height: 88px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .scale-cost-logic__sequence {
+    overflow-x: auto;
+    grid-template-columns: repeat(6, 132px);
+  }
+}

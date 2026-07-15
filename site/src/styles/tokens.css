@@ -18,8 +18,14 @@
   --danger: #a33e34;
   --radius: 4px;
   --max-width: 1480px;
-  --header-height: 68px;
+  --header-height: 64px;
   --font-display: Georgia, 'Times New Roman', serif;
   --font-sans: Inter, 'Segoe UI', 'Microsoft YaHei', sans-serif;
   --shadow-float: 0 18px 45px rgb(20 34 31 / 10%);
+}
+
+@media (max-width: 1120px) {
+  :root {
+    --header-height: 100px;
+  }
 }

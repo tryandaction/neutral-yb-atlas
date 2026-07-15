@@ -1,5 +1,5 @@
-import { BookOpen, GitPullRequest, NotebookTabs, Pencil, X } from 'lucide-react'
-import { siteCopy } from '../content/site'
+import { BookOpen, NotebookTabs } from 'lucide-react'
+import { routeHref, routes, type RouteId } from '../navigation/routes'
 import type { Language, ReadingMode } from '../types/content'
 import LanguageSwitch from './LanguageSwitch'
 import ModeSwitch from './ModeSwitch'
@@ -8,11 +8,9 @@ import './app-header.css'
 interface AppHeaderProps {
   language: Language
   mode: ReadingMode
-  editing: boolean
+  route: RouteId
   onLanguageChange: (language: Language) => void
   onModeChange: (mode: ReadingMode) => void
-  onEditingChange: (editing: boolean) => void
-  contributionUrl?: string
   onWikiOpen?: () => void
   onWorkspaceOpen?: () => void
 }
@@ -20,27 +18,23 @@ interface AppHeaderProps {
 export default function AppHeader({
   language,
   mode,
-  editing,
+  route,
   onLanguageChange,
   onModeChange,
-  onEditingChange,
-  contributionUrl,
   onWikiOpen,
   onWorkspaceOpen,
 }: AppHeaderProps) {
-  const editLabel = language === 'zh' ? (editing ? '退出编辑' : '编辑正文') : editing ? 'Exit editing' : 'Edit article'
-
   return (
-    <header className="app-header">
+    <header className={`app-header${route === 'overview' ? ' app-header--cover' : ''}`}>
       <a className="brand" href="#top" aria-label="Neutral Yb Atlas">
         <span className="brand-mark" aria-hidden="true"><i />Yb</span>
         <span className="brand-name">NEUTRAL YB ATLAS</span>
       </a>
 
       <nav className="primary-nav" aria-label={language === 'zh' ? '主导航' : 'Primary navigation'}>
-        {siteCopy.nav.map((item, index) => (
-          <a key={item.en} href={['#foundations', '#yb-platform', '#theory', '#experiment'][index]}>
-            {item[language]}
+        {routes.map((item) => (
+          <a key={item.id} href={routeHref(item.id)} aria-current={item.id === route ? 'page' : undefined}>
+            {item.label[language]}
           </a>
         ))}
       </nav>
@@ -58,28 +52,6 @@ export default function AppHeader({
             <NotebookTabs aria-hidden="true" />
           </button>
         ) : null}
-        {contributionUrl ? (
-          <a
-            className="icon-button"
-            href={contributionUrl}
-            target="_blank"
-            rel="noreferrer"
-            aria-label={language === 'zh' ? '提交内容建议' : 'Submit content suggestion'}
-            title={language === 'zh' ? '提交内容建议' : 'Submit content suggestion'}
-          >
-            <GitPullRequest aria-hidden="true" />
-          </a>
-        ) : null}
-        <button
-          className={`icon-button${editing ? ' is-active' : ''}`}
-          type="button"
-          aria-label={editLabel}
-          title={editLabel}
-          aria-pressed={editing}
-          onClick={() => onEditingChange(!editing)}
-        >
-          {editing ? <X aria-hidden="true" /> : <Pencil aria-hidden="true" />}
-        </button>
       </div>
     </header>
   )
