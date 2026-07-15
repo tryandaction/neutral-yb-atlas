@@ -4,6 +4,10 @@ Neutral Yb Atlas 是面向中性镱原子量子计算的双语、可交互科研
 
 Neutral Yb Atlas is a bilingual, interactive research guide connecting first-principles quantum mechanics, neutral-Yb hardware, Rydberg gates, laboratory engineering, error analysis and fault-tolerant architectures.
 
+## Website
+
+Visit the public atlas at [neutral-yb-atlas.pages.dev](https://neutral-yb-atlas.pages.dev/).
+
 ## Repository
 
 ```text
@@ -52,4 +56,3 @@ Browser editing remains local to the reader. It does not directly change the pub
 - Code and build configuration: [Apache License 2.0](LICENSE).
 - Project-authored text and figures: [CC BY 4.0](LICENSE-CONTENT.md).
 - Third-party material remains under its original terms and is not covered unless explicitly stated.
-
