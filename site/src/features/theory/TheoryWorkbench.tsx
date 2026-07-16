@@ -1,16 +1,10 @@
-import { Save, RotateCcw } from 'lucide-react'
+import { RotateCcw } from 'lucide-react'
 import { useState } from 'react'
 import type { Language } from '../../types/content'
-import type { ParameterSnapshot } from '../workspace/workspaceTypes'
 import ErrorBudget from './ErrorBudget'
 import PopulationChart from './PopulationChart'
 import { analyzeOperatingPoint, blockadeRatio, buildErrorBudget, type NextMeasurement } from './model'
 import './theory.css'
-
-interface TheoryWorkbenchProps {
-  language: Language
-  onSaveSnapshot: (snapshot: ParameterSnapshot) => void
-}
 
 const defaults = { omegaMHz: 3, interactionMHz: 45, detuningMHz: 0, temperatureUk: 2.9, rydbergLifetimeUs: 120, gateTimeUs: 1.24 }
 
@@ -29,7 +23,7 @@ const dominantCopy = {
   control: { zh: '控制链路', en: 'Control chain' },
 } as const
 
-export default function TheoryWorkbench({ language, onSaveSnapshot }: TheoryWorkbenchProps) {
+export default function TheoryWorkbench({ language }: { language: Language }) {
   const [parameters, setParameters] = useState(defaults)
   const ratio = blockadeRatio(parameters)
   const budget = buildErrorBudget(parameters)
@@ -44,15 +38,6 @@ export default function TheoryWorkbench({ language, onSaveSnapshot }: TheoryWork
         : { label: { zh: '超出当前工作区', en: 'Outside current region' }, tone: 'outside' }
 
   const setParameter = (key: keyof typeof parameters, value: number) => setParameters((current) => ({ ...current, [key]: value }))
-  const save = () => onSaveSnapshot({
-    id: `blockade-${Date.now()}`,
-    name: `V/Omega ${ratio.toFixed(1)}`,
-    createdAt: new Date().toISOString(),
-    modelId: 'two-level-blockade-teaching-v1',
-    values: parameters,
-    note: 'Teaching model; not a paper-level reproduction.',
-  })
-
   return (
     <section className="theory-workbench" id="theory">
       <aside className="theory-workbench__nav">
@@ -69,7 +54,6 @@ export default function TheoryWorkbench({ language, onSaveSnapshot }: TheoryWork
           <div><span>H(t) → U(T) → Favg · Pleak · εdecay · εDoppler</span><h2>{language === 'zh' ? '从哈密顿量到可测保真度' : 'From Hamiltonian to measured fidelity'}</h2></div>
           <div className="theory-workbench__commands">
             <button type="button" onClick={() => setParameters(defaults)} title={language === 'zh' ? '恢复默认参数' : 'Reset parameters'} aria-label={language === 'zh' ? '恢复默认参数' : 'Reset parameters'}><RotateCcw aria-hidden="true" /></button>
-            <button type="button" onClick={save} title={language === 'zh' ? '保存参数快照' : 'Save parameter snapshot'} aria-label={language === 'zh' ? '保存参数快照' : 'Save parameter snapshot'}><Save aria-hidden="true" /></button>
           </div>
         </header>
 

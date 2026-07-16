@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react'
 import AppHeader from './components/AppHeader'
-import { useWorkspace } from './features/workspace/useWorkspace'
+import ContributionFooter from './features/contribution/ContributionFooter'
+import { usePreferences } from './features/preferences/usePreferences'
 import { useWiki } from './features/wiki/WikiContext'
 import { WikiProvider } from './features/wiki/WikiProvider'
 import { contentRoutes, routeSectionId } from './navigation/routes'
@@ -11,19 +12,20 @@ const OverviewPage = lazy(() => import('./features/overview/OverviewPage'))
 const WikiDrawer = lazy(() => import('./features/wiki/WikiDrawer'))
 
 function AppContent() {
-  const workspaceApi = useWorkspace()
+  const preferencesApi = usePreferences()
   const wiki = useWiki()
-  const { workspace } = workspaceApi
+  const { preferences } = preferencesApi
   const activeRoute = useActiveSection()
 
   return (
     <div className="app-shell">
-      <AppHeader language={workspace.language} mode={workspace.mode} route={activeRoute} onLanguageChange={workspaceApi.setLanguage} onModeChange={workspaceApi.setMode} onWikiOpen={wiki.openIndex} />
+      <AppHeader language={preferences.language} mode={preferences.mode} route={activeRoute} onLanguageChange={preferencesApi.setLanguage} onModeChange={preferencesApi.setMode} onWikiOpen={wiki.openIndex} />
       <main>
-        <section id={routeSectionId('overview')} className="single-page-domain single-page-domain--overview"><Suspense fallback={<div className="deep-content-loading">Loading overview...</div>}><OverviewPage language={workspace.language} /></Suspense></section>
-        {contentRoutes.map((route) => <section id={routeSectionId(route)} className="single-page-domain" key={route}><Suspense fallback={<div className="deep-content-loading">Loading learning path...</div>}><RouteContent route={route} language={workspace.language} mode={workspace.mode} editing={workspace.editing} articleOverrides={workspace.articleOverrides} notes={workspace.notes} completedExperimentPhases={workspace.completedExperimentPhases} onArticleChange={workspaceApi.setArticleOverride} onArticleReset={workspaceApi.resetArticleOverride} onSaveSnapshot={workspaceApi.saveSnapshot} onNoteChange={workspaceApi.setNote} onToggleExperimentPhase={workspaceApi.toggleExperimentPhase} /></Suspense></section>)}
+        <section id={routeSectionId('overview')} className="single-page-domain single-page-domain--overview"><Suspense fallback={<div className="deep-content-loading">Loading overview...</div>}><OverviewPage language={preferences.language} /></Suspense></section>
+        {contentRoutes.map((route) => <section id={routeSectionId(route)} className="single-page-domain" key={route}><Suspense fallback={<div className="deep-content-loading">Loading learning path...</div>}><RouteContent route={route} language={preferences.language} mode={preferences.mode} /></Suspense></section>)}
       </main>
-      {wiki.open ? <Suspense fallback={null}><WikiDrawer language={workspace.language} /></Suspense> : null}
+      <ContributionFooter language={preferences.language} />
+      {wiki.open ? <Suspense fallback={null}><WikiDrawer language={preferences.language} /></Suspense> : null}
     </div>
   )
 }

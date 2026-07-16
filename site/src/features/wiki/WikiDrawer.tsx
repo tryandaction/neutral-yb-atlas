@@ -114,7 +114,7 @@ export default function WikiDrawer({ language }: { language: Language }) {
   return (
     <div className="wiki-layer">
       <button type="button" className="wiki-layer__backdrop" aria-label={language === 'zh' ? '关闭 Wiki' : 'Close Wiki'} onClick={closeWiki} />
-      <aside className="wiki-drawer" role="dialog" aria-modal="true" aria-label={language === 'zh' ? '科研术语 Wiki' : 'Research term Wiki'}>
+      <aside className="wiki-drawer" role="dialog" aria-modal="true" aria-label={language === 'zh' ? '术语索引' : 'Term index'}>
         <header className="wiki-drawer__toolbar">
           <button type="button" aria-label={history.length ? (language === 'zh' ? '返回上一词条' : 'Back to previous entry') : (language === 'zh' ? '返回 Wiki 索引' : 'Back to Wiki index')} onClick={history.length ? goBack : resetToIndex} disabled={!active && !query}><ArrowLeft aria-hidden="true" /></button>
           <button type="button" className="wiki-drawer__identity" onClick={resetToIndex}><BookOpen aria-hidden="true" /><span>Yb Wiki</span><small>{wikiEntries.length}</small></button>

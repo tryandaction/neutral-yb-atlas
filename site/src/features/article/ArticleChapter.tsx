@@ -5,13 +5,9 @@ import ArticleSection from './ArticleSection'
 interface ArticleChapterProps {
   chapter: Chapter
   language: Language
-  editing: boolean
-  overrides: Record<string, string>
-  onChange: (id: string, value: string) => void
-  onReset: (id: string) => void
 }
 
-export default function ArticleChapter({ chapter, language, editing, overrides, onChange, onReset }: ArticleChapterProps) {
+export default function ArticleChapter({ chapter, language }: ArticleChapterProps) {
   return (
     <article className="article-chapter" id={chapter.id === 'why-yb' ? 'yb-platform' : chapter.id}>
       <SectionRail number={chapter.number} label={chapter.shortTitle[language]} />
@@ -26,10 +22,6 @@ export default function ArticleChapter({ chapter, language, editing, overrides, 
             key={section.id}
             language={language}
             section={section}
-            editing={editing}
-            override={overrides[section.id]}
-            onChange={onChange}
-            onReset={onReset}
           />
         ))}
       </div>

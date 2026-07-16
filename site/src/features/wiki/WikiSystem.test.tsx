@@ -34,7 +34,7 @@ it('opens an entry, follows related concepts, returns through history and closes
   render(<TestApp />)
 
   await user.click(screen.getByRole('button', { name: '查看 Wiki：声光偏转器' }))
-  expect(screen.getByRole('dialog', { name: '科研术语 Wiki' })).toBeInTheDocument()
+  expect(screen.getByRole('dialog', { name: '术语索引' })).toBeInTheDocument()
   expect(screen.getByRole('heading', { name: '声光偏转器' })).toBeInTheDocument()
   expect(screen.getByText('声光布拉格衍射')).toBeInTheDocument()
 
@@ -45,7 +45,7 @@ it('opens an entry, follows related concepts, returns through history and closes
   expect(screen.getByRole('heading', { name: '声光偏转器' })).toBeInTheDocument()
 
   await user.keyboard('{Escape}')
-  expect(screen.queryByRole('dialog', { name: '科研术语 Wiki' })).not.toBeInTheDocument()
+  expect(screen.queryByRole('dialog', { name: '术语索引' })).not.toBeInTheDocument()
 })
 
 it('searches bilingual aliases and filters the index by category', async () => {

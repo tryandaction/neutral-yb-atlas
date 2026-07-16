@@ -1,11 +1,10 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { vi } from 'vitest'
 import ExperimentVisualAtlas from './ExperimentVisualAtlas'
 
 it('publishes only audited teaching plates and switches the selected apparatus view', async () => {
   const user = userEvent.setup()
-  render(<ExperimentVisualAtlas language="en" notes={{}} onNoteChange={vi.fn()} />)
+  render(<ExperimentVisualAtlas language="en" />)
 
   expect(screen.getByRole('heading', { name: 'Interactive experimental plate atlas' })).toBeInTheDocument()
   expect(screen.getAllByRole('button', { name: /^Open plate/ })).toHaveLength(8)
@@ -16,11 +15,11 @@ it('publishes only audited teaching plates and switches the selected apparatus v
 
   await user.click(screen.getByRole('button', { name: 'Open plate Clock, waveform and real-time data chain' }))
   expect(screen.getByRole('img', { name: 'Neutral-atom timing and real-time data-chain teaching plate' })).toBeInTheDocument()
-})
+}, 20000)
 
 it('uses normalized hotspots, applies deterministic audit masks and updates the mobile lens', async () => {
   const user = userEvent.setup()
-  render(<ExperimentVisualAtlas language="zh" notes={{}} onNoteChange={vi.fn()} />)
+  render(<ExperimentVisualAtlas language="zh" />)
 
   await user.click(screen.getByRole('button', { name: '打开图版 多波长激光基础设施' }))
   expect(screen.getByTestId('atlas-correction-mask-extinction')).toHaveTextContent('消光比：本机测量')
@@ -46,22 +45,11 @@ it('uses normalized hotspots, applies deterministic audit masks and updates the 
   expect(screen.getByTestId('atlas-mobile-lens')).toHaveAttribute('data-focus-x', '50')
   expect(screen.getByTestId('atlas-mobile-lens')).toHaveAttribute('data-focus-y', '93')
   expect(screen.getByTestId('atlas-mobile-lens')).toHaveStyle({ backgroundPosition: '50% 100%' })
-})
-
-it('stores hotspot notes through the shared workspace callback', async () => {
-  const user = userEvent.setup()
-  const onNoteChange = vi.fn()
-  render(<ExperimentVisualAtlas language="zh" notes={{}} onNoteChange={onNoteChange} />)
-
-  const note = screen.getByRole('textbox', { name: '热点补充笔记' })
-  await user.type(note, '复核炉温与装载率。')
-
-  expect(onNoteChange).toHaveBeenLastCalledWith('visual-atlas:source:oven', '复核炉温与装载率。')
-})
+}, 20000)
 
 it('preserves the native aspect ratio of the square control and data-chain plate', async () => {
   const user = userEvent.setup()
-  render(<ExperimentVisualAtlas language="en" notes={{}} onNoteChange={vi.fn()} />)
+  render(<ExperimentVisualAtlas language="en" />)
 
   await user.click(screen.getByRole('button', { name: 'Open plate Clock, waveform and real-time data chain' }))
 

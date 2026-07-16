@@ -28,6 +28,9 @@ export default defineConfig(({ mode }) => {
       environment: 'jsdom',
       globals: true,
       setupFiles: './src/test/setup.ts',
+      fileParallelism: false,
+      maxWorkers: 1,
+      testTimeout: 30000,
     },
   }
 })

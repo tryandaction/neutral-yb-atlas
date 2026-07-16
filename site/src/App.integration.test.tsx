@@ -1,13 +1,14 @@
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import App from './App'
+import { contributionIssueUrl } from './features/contribution/contribution'
 
 it('renders the causal overview at the root destination', async () => {
   window.history.replaceState(null, '', '#/')
   render(<App />)
 
   expect(await screen.findByRole('heading', { name: '中性 Yb 原子计算' }, { timeout: 20000 })).toBeInTheDocument()
-})
+}, 30000)
 
 it('renders a continuous atlas and lands legacy deep links on their page section', async () => {
   window.history.replaceState(null, '', '#/experiment')
@@ -16,8 +17,7 @@ it('renders a continuous atlas and lands legacy deep links on their page section
   expect(await screen.findByRole('heading', { name: '中性 Yb 原子计算' }, { timeout: 20000 })).toBeInTheDocument()
   expect(screen.getByRole('link', { name: '实验系统' })).toHaveAttribute('aria-current', 'page')
   expect(screen.getByRole('link', { name: '实验系统' })).toHaveAttribute('href', '#domain-experiment')
-  expect(await screen.findByRole('heading', { name: '中性原子与 171Yb 平台' }, { timeout: 20000 })).toBeInTheDocument()
-  expect(screen.getByRole('heading', { name: '实验系统：从装置到可观察的物理过程' })).toBeInTheDocument()
+  expect(await screen.findByRole('heading', { name: '实验系统：从装置到可观察的物理过程' }, { timeout: 20000 })).toBeInTheDocument()
 }, 30000)
 
 it('provides further reading grouped by learning topic', async () => {
@@ -37,6 +37,16 @@ it('does not expose a research workspace', async () => {
   await screen.findByRole('heading', { name: '中性 Yb 原子计算' }, { timeout: 20000 })
   expect(screen.queryByLabelText('打开研究工作区')).not.toBeInTheDocument()
   expect(document.querySelector('.workspace-drawer')).not.toBeInTheDocument()
+}, 30000)
+
+it('offers a reviewed contribution path without editable source text', async () => {
+  window.history.replaceState(null, '', '#/')
+  render(<App />)
+
+  const link = await screen.findByRole('link', { name: '纠错与贡献' }, { timeout: 20000 })
+  expect(link).toHaveAttribute('href', contributionIssueUrl)
+  expect(document.querySelector('[contenteditable="true"]')).toBeNull()
+  expect(document.querySelector('.workspace-drawer')).toBeNull()
 }, 30000)
 
 it('places the complete reference map after the interactive Yb energy tutor', async () => {

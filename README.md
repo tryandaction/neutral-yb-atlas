@@ -16,7 +16,7 @@ scripts/     Public-boundary checks
 
 ## Contributing
 
-Public improvements are welcome. Use a GitHub Issue to report a correction or start a discussion, then open a Pull Request for an approved change. Each scientific correction must identify the page or section, quote the minimal affected statement, and include a DOI, arXiv record, official database or stable publisher URL.
+Public improvements are welcome. Use the website's **纠错与贡献 / Contribute** link or a GitHub Issue to report a correction, then open a Pull Request for an approved change. Browser sessions cannot edit published text, create commits, or write to GitHub. Each scientific correction must identify the page or section, quote the minimal affected statement, and include a DOI, arXiv record, official database or stable publisher URL.
 
 Read [CONTRIBUTING.md](CONTRIBUTING.md) for the full workflow, source requirements, translation guidance and local checks. The website does not accept browser-side edits, research notes, parameter snapshots or private data.
 

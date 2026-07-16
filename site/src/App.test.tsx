@@ -13,15 +13,15 @@ it('renders the bilingual atlas shell', async () => {
   ).toBeInTheDocument()
 })
 
-it('opens the bilingual research Wiki from the application header', async () => {
+it('opens the bilingual term index from the application header', async () => {
   window.history.replaceState(null, '', '#/')
   const user = userEvent.setup()
   render(<App />)
 
-  await user.click(screen.getByRole('button', { name: '打开科研术语 Wiki' }))
+  await user.click(screen.getByRole('button', { name: '打开术语索引' }))
 
   expect(
-    await screen.findByRole('dialog', { name: '科研术语 Wiki' }, { timeout: 5000 }),
+    await screen.findByRole('dialog', { name: '术语索引' }, { timeout: 5000 }),
   ).toBeInTheDocument()
   expect(screen.getByRole('searchbox', { name: '搜索术语、缩写或原理' })).toBeInTheDocument()
 })

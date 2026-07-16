@@ -27,7 +27,7 @@ export default function AppHeader({ language, mode, route, onLanguageChange, onM
       <div className="header-tools">
         <ModeSwitch language={language} mode={mode} onChange={onModeChange} />
         <LanguageSwitch language={language} onChange={onLanguageChange} />
-        {onWikiOpen ? <button className="icon-button" type="button" aria-label={language === 'zh' ? '打开术语索引' : 'Open research term Wiki'} title={language === 'zh' ? '术语索引' : 'Term index'} onClick={onWikiOpen}><BookOpen aria-hidden="true" /></button> : null}
+        {onWikiOpen ? <button className="icon-button" type="button" aria-label={language === 'zh' ? '打开术语索引' : 'Open term index'} title={language === 'zh' ? '术语索引' : 'Term index'} onClick={onWikiOpen}><BookOpen aria-hidden="true" /></button> : null}
       </div>
     </header>
   )

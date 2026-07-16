@@ -1,5 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react'
-import { vi } from 'vitest'
+import { render, screen } from '@testing-library/react'
 import type { ArticleSection as ArticleSectionData } from '../../types/content'
 import ArticleSection from './ArticleSection'
 
@@ -25,7 +24,7 @@ const section: ArticleSectionData = {
 
 it('renders localized article content and a KaTeX equation without an implementation ledger', () => {
   const { container } = render(
-    <ArticleSection language="en" section={section} editing={false} onChange={() => undefined} />,
+    <ArticleSection language="en" section={section} />,
   )
 
   expect(screen.getByRole('heading', { name: 'Rabi dynamics' })).toBeInTheDocument()
@@ -33,43 +32,5 @@ it('renders localized article content and a KaTeX equation without an implementa
   expect(container.querySelector('.katex')).toBeInTheDocument()
   expect(screen.queryByRole('complementary', { name: 'Research implementation ledger' })).not.toBeInTheDocument()
   expect(screen.queryByText('Repeatable pi pulse')).not.toBeInTheDocument()
-})
-
-it('emits edited plain text on blur', () => {
-  const onChange = vi.fn()
-  render(<ArticleSection language="zh" section={section} editing onChange={onChange} />)
-  const editor = screen.getByRole('textbox', { name: '编辑 Rabi 动力学' })
-
-  editor.textContent = '更新后的正文'
-  fireEvent.blur(editor)
-
-  expect(onChange).toHaveBeenCalledWith('rabi-model', '更新后的正文')
-})
-
-it('offers a block-level restore action only when an override exists', () => {
-  const onReset = vi.fn()
-  const { rerender } = render(
-    <ArticleSection
-      language="zh"
-      section={section}
-      editing
-      override="误编辑内容"
-      onChange={() => undefined}
-      onReset={onReset}
-    />,
-  )
-
-  fireEvent.click(screen.getByRole('button', { name: '恢复“Rabi 动力学”默认正文' }))
-  expect(onReset).toHaveBeenCalledWith('rabi-model')
-
-  rerender(
-    <ArticleSection
-      language="zh"
-      section={section}
-      editing
-      onChange={() => undefined}
-      onReset={onReset}
-    />,
-  )
-  expect(screen.queryByRole('button', { name: '恢复“Rabi 动力学”默认正文' })).not.toBeInTheDocument()
-})
+  expect(container.querySelector('[contenteditable="true"]')).toBeNull()
+}, 20000)

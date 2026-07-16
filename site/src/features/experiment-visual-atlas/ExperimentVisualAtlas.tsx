@@ -5,12 +5,6 @@ import WikiText from '../wiki/WikiText'
 import { atlasPlates, type AtlasPlate } from './visualAtlasData'
 import './experiment-visual-atlas.css'
 
-interface ExperimentVisualAtlasProps {
-  language: Language
-  notes: Record<string, string>
-  onNoteChange: (id: string, value: string) => void
-}
-
 const lensScale = 2.5
 
 function lensAxisPosition(coordinate: number) {
@@ -92,13 +86,12 @@ function ImageStage({ plate, selectedId, language, onSelect }: {
   )
 }
 
-export default function ExperimentVisualAtlas({ language, notes, onNoteChange }: ExperimentVisualAtlasProps) {
+export default function ExperimentVisualAtlas({ language }: { language: Language }) {
   const [plateId, setPlateId] = useState(atlasPlates[0].id)
   const [hotspotId, setHotspotId] = useState(atlasPlates[0].hotspots[0].id)
   const [fullOpen, setFullOpen] = useState(false)
   const plate = atlasPlates.find((item) => item.id === plateId) ?? atlasPlates[0]
   const selected = plate.hotspots.find((hotspot) => hotspot.id === hotspotId) ?? plate.hotspots[0]
-  const noteKey = `visual-atlas:${plate.id}:${selected.id}`
 
   useEffect(() => {
     if (!fullOpen) return
@@ -192,16 +185,6 @@ export default function ExperimentVisualAtlas({ language, notes, onNoteChange }:
               </button>
             ))}
           </div>
-          <label className="visual-atlas__note">
-            <span>{language === 'zh' ? '热点补充笔记' : 'Hotspot research note'}</span>
-            <textarea
-              key={noteKey}
-              aria-label={language === 'zh' ? '热点补充笔记' : 'Hotspot research note'}
-              defaultValue={notes[noteKey] ?? ''}
-              placeholder={language === 'zh' ? '记录本机参数、复核结果或待办…' : 'Record local parameters, verification results or follow-up…'}
-              onChange={(event) => onNoteChange(noteKey, event.target.value)}
-            />
-          </label>
         </aside>
       </div>
 

@@ -27,7 +27,7 @@ it('keeps the term index and omits research workspace controls', async () => {
   const onWikiOpen = vi.fn()
   render(<AppHeader {...baseProps} onWikiOpen={onWikiOpen} />)
 
-  await user.click(screen.getByRole('button', { name: 'Open research term Wiki' }))
+  await user.click(screen.getByRole('button', { name: 'Open term index' }))
   expect(onWikiOpen).toHaveBeenCalledOnce()
   expect(screen.queryByRole('button', { name: 'Open research workspace' })).not.toBeInTheDocument()
 })

@@ -1,0 +1,43 @@
+name: Content correction
+description: Report a correction or a source-backed learning improvement.
+title: "[Correction]: "
+labels:
+  - content-correction
+body:
+  - type: markdown
+    attributes:
+      value: "Use this form for a source-backed correction, translation improvement, or clarification. Do not include private data, unpublished results, or copyrighted material without redistribution rights."
+  - type: input
+    id: location
+    attributes:
+      label: Page or section
+      description: Provide the page URL, heading, or anchor.
+      placeholder: https://neutral-yb-atlas.pages.dev/#domain-yb-platform
+    validations:
+      required: true
+  - type: textarea
+    id: original
+    attributes:
+      label: Current text or figure label
+      description: Quote only the minimum affected content.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed revision
+      description: Include Chinese and English wording when both need changing.
+    validations:
+      required: true
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Reason for the change
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: DOI, arXiv, official database, or stable publisher URL
+    validations:
+      required: true

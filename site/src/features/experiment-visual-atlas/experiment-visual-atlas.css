@@ -268,12 +268,6 @@
   grid-row: 1 / span 2;
 }
 
-.visual-atlas__note {
-  grid-column: 3;
-  grid-row: 3;
-  display: none;
-}
-
 .visual-atlas__scope {
   display: flex;
   align-items: center;
@@ -371,35 +365,6 @@
   font-weight: 800;
 }
 
-.visual-atlas__note {
-  display: grid;
-  gap: 7px;
-  margin-top: 18px;
-}
-
-.visual-atlas__note > span {
-  color: var(--faint);
-  font-size: 10px;
-  font-weight: 800;
-}
-
-.visual-atlas__note textarea {
-  width: 100%;
-  min-height: 92px;
-  resize: vertical;
-  padding: 10px 11px;
-  border: 1px solid var(--line-strong);
-  border-radius: 0;
-  background: var(--paper);
-  color: var(--ink);
-  font: 12px/1.55 var(--font-sans);
-}
-
-.visual-atlas__note textarea:focus {
-  outline: 2px solid var(--forest);
-  outline-offset: 2px;
-}
-
 .visual-atlas__lightbox {
   position: fixed;
   z-index: 120;
@@ -452,8 +417,7 @@
     grid-column: 1;
   }
 
-  .visual-atlas__hotspot-list,
-  .visual-atlas__note {
+  .visual-atlas__hotspot-list {
     grid-column: 2;
   }
 
