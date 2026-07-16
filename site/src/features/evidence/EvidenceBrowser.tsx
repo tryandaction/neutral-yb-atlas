@@ -1,26 +1,46 @@
-import { useDeferredValue, useState } from 'react'
-import type { EvidenceEntry, EvidenceStatus, Language } from '../../types/content'
+import type { EvidenceEntry, Language } from '../../types/content'
 import './evidence.css'
 
 interface EvidenceBrowserProps { language: Language; entries: EvidenceEntry[] }
 
-const statusLabels: Record<EvidenceStatus, string> = {
-  confirmed: 'confirmed', confirmed_from_official_source_data: 'source data', derived_confirmed: 'derived', candidate: 'candidate', candidate_digitized: 'digitized', missing: 'missing', unavailable: 'unavailable',
+const domainLabels: Record<EvidenceEntry['domain'], Record<Language, string>> = {
+  atomic: { zh: '原子与能级', en: 'Atoms and levels' },
+  gate: { zh: '量子门与相互作用', en: 'Gates and interactions' },
+  experiment: { zh: '实验系统', en: 'Experimental systems' },
+  architecture: { zh: '容错与架构', en: 'Fault tolerance and architecture' },
 }
 
 export default function EvidenceBrowser({ language, entries }: EvidenceBrowserProps) {
-  const [status, setStatus] = useState<EvidenceStatus | 'all'>('all')
-  const [query, setQuery] = useState('')
-  const deferredQuery = useDeferredValue(query.trim().toLowerCase())
-  const filtered = entries.filter((entry) => (status === 'all' || entry.status === status) && (!deferredQuery || `${entry.label.zh} ${entry.label.en} ${entry.note.zh} ${entry.note.en}`.toLowerCase().includes(deferredQuery)))
+  const groups = (Object.keys(domainLabels) as EvidenceEntry['domain'][])
+    .map((domain) => ({ domain, entries: entries.filter((entry) => entry.domain === domain) }))
+    .filter((group) => group.entries.length)
 
   return (
     <section className="evidence-browser" id="evidence">
-      <header><div><span>EVIDENCE REGISTRY</span><h2>{language === 'zh' ? '每个数字都应知道自己从哪里来' : 'Every number should know where it came from'}</h2></div><p>{language === 'zh' ? '确认值、派生值、候选值和缺失项使用不同声明边界。筛选不会改变来源记录。' : 'Confirmed, derived, candidate and missing values carry distinct claim boundaries. Filtering never changes provenance.'}</p></header>
-      <div className="evidence-browser__tools"><label><span>{language === 'zh' ? '搜索' : 'Search'}</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={language === 'zh' ? '波长、门、仪器…' : 'wavelength, gate, instrument…'} /></label><label><span>{language === 'zh' ? '证据状态' : 'Evidence status'}</span><select aria-label={language === 'zh' ? '证据状态' : 'Evidence status'} value={status} onChange={(event) => setStatus(event.target.value as EvidenceStatus | 'all')}><option value="all">{language === 'zh' ? '全部' : 'All'}</option><option value="confirmed">confirmed</option><option value="confirmed_from_official_source_data">source data</option><option value="derived_confirmed">derived</option><option value="candidate">candidate</option><option value="missing">missing</option></select></label></div>
-      <div className="evidence-table" role="table">
-        <div className="evidence-table__head" role="row"><span role="columnheader">{language === 'zh' ? '参数 / 结论' : 'Parameter / claim'}</span><span role="columnheader">{language === 'zh' ? '值' : 'Value'}</span><span role="columnheader">Status</span><span role="columnheader">{language === 'zh' ? '来源与边界' : 'Source and boundary'}</span></div>
-        {filtered.map((entry) => <div className="evidence-table__row" role="row" key={entry.id}><strong role="cell">{entry.label[language]}</strong><span role="cell" className="evidence-value">{entry.value} {entry.unit}</span><span role="cell"><i data-status={entry.status}>{statusLabels[entry.status]}</i></span><span role="cell"><a href={entry.source.url} target="_blank" rel="noreferrer">{entry.source.citation}</a><small>{entry.note[language]}</small></span></div>)}
+      <header>
+        <div><h2>{language === 'zh' ? '延伸阅读与出处' : 'Further reading and sources'}</h2></div>
+        <p>{language === 'zh' ? '每一条阅读都对应页面中的一个概念、数值或物理过程。先理解正文，再按需要回到原始论文和权威数据库。' : 'Each entry traces a concept, value or physical process used in the atlas. Read the lesson first, then follow the original paper or authoritative database when needed.'}</p>
+      </header>
+      <div className="reading-list">
+        {groups.map((group) => (
+          <section key={group.domain} className="reading-list__group" aria-labelledby={`reading-${group.domain}`}>
+            <h3 id={`reading-${group.domain}`}>{domainLabels[group.domain][language]}</h3>
+            <ol>
+              {group.entries.map((entry) => (
+                <li key={entry.id}>
+                  <div>
+                    <h4>{entry.label[language]}</h4>
+                    <p>{entry.note[language]}</p>
+                  </div>
+                  <div className="reading-list__source">
+                    <span>{entry.value}{entry.unit ? ` ${entry.unit}` : ''}</span>
+                    <a href={entry.source.url} target="_blank" rel="noreferrer">{entry.source.citation}</a>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </section>
+        ))}
       </div>
     </section>
   )

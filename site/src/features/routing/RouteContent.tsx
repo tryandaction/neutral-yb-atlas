@@ -14,9 +14,7 @@ import ExperimentWorkbench from '../experiment/ExperimentWorkbench'
 import ExperimentVisualAtlas from '../experiment-visual-atlas/ExperimentVisualAtlas'
 import ResourceEstimator from '../fault-tolerance/ResourceEstimator'
 import OverviewPage from '../overview/OverviewPage'
-import ResearchAtlas from '../research-atlas/ResearchAtlas'
 import ExperimentPipeline from '../teaching-visuals/ExperimentPipeline'
-import ResearchEcosystem from '../teaching-visuals/ResearchEcosystem'
 import RydbergGateTutor from '../teaching-visuals/RydbergGateTutor'
 import YbEnergyTutor from '../teaching-visuals/YbEnergyTutor'
 import TheoryWorkbench from '../theory/TheoryWorkbench'
@@ -72,7 +70,7 @@ function RouteContent(props: RouteContentProps) {
       content = <>{article(6)}<ResourceEstimator language={language} /></>
       break
     case 'evidence':
-      content = <><ResearchAtlas language={language} /><ResearchEcosystem language={language} /><EvidenceBrowser language={language} entries={evidenceEntries} /></>
+      content = <EvidenceBrowser language={language} entries={evidenceEntries} />
       break
   }
 

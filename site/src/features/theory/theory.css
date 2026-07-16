@@ -116,6 +116,10 @@
   cursor: pointer;
 }
 
+.theory-workbench__commands button:last-child {
+  display: none;
+}
+
 .theory-workbench__commands svg {
   width: 14px;
   height: 14px;

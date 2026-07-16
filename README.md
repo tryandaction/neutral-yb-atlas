@@ -1,23 +1,24 @@
 # Neutral Yb Atlas
 
-Neutral Yb Atlas 是面向中性镱原子量子计算的双语、可交互科研指南，连接第一性原理、Yb 原子结构、Rydberg 门、实验工程、误差分析和容错架构。
-
-Neutral Yb Atlas is a bilingual, interactive research guide connecting first-principles quantum mechanics, neutral-Yb hardware, Rydberg gates, laboratory engineering, error analysis and fault-tolerant architectures.
+Neutral Yb Atlas is a bilingual learning atlas for neutral-ytterbium quantum computing. It connects quantum foundations, Yb atomic structure, Rydberg gates, experimental systems and fault-tolerant architectures through guided explanations, interactive diagrams and source-linked reading.
 
 ## Website
 
-Visit the public atlas at [neutral-yb-atlas.pages.dev](https://neutral-yb-atlas.pages.dev/).
+Visit the atlas at [neutral-yb-atlas.pages.dev](https://neutral-yb-atlas.pages.dev/).
 
 ## Repository
 
 ```text
-site/                  React + TypeScript website
-knowledge/concepts/    Research notes and one reference image
-knowledge/index.json   Content status and provenance registry
-scripts/               Public-boundary checks
+site/        React + TypeScript learning atlas
+knowledge/   Source material and content metadata
+scripts/     Public-boundary checks
 ```
 
-`Categorized Papers` and all locally collected paper PDFs are intentionally excluded from this repository.
+## Contributing
+
+Public improvements are welcome. Use a GitHub Issue to report a correction or start a discussion, then open a Pull Request for an approved change. Each scientific correction must identify the page or section, quote the minimal affected statement, and include a DOI, arXiv record, official database or stable publisher URL.
+
+Read [CONTRIBUTING.md](CONTRIBUTING.md) for the full workflow, source requirements, translation guidance and local checks. The website does not accept browser-side edits, research notes, parameter snapshots or private data.
 
 ## Local Development
 
@@ -27,32 +28,14 @@ npm ci
 npm run dev
 ```
 
-Quality checks:
-
 ```powershell
-npm run test:public
-npm run check:public
 npm test -- --run
 npm run lint
 npm run build
 ```
 
-## Content Status
-
-- `draft`: public working note; sources or scientific review may be incomplete.
-- `reviewed`: core definitions and claims have authoritative sources.
-- `verified`: parameters, boundaries and recent claims have been checked against primary sources.
-
-All imported Concept notes begin as `draft`. See [knowledge/index.json](knowledge/index.json) for the current status.
-
-## Contributing
-
-Corrections to formulas, experimental parameters, translations, diagrams and code are welcome through GitHub Issues and Pull Requests. Read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting changes.
-
-Browser editing remains local to the reader. It does not directly change the public repository or bypass review.
-
 ## License
 
 - Code and build configuration: [Apache License 2.0](LICENSE).
 - Project-authored text and figures: [CC BY 4.0](LICENSE-CONTENT.md).
-- Third-party material remains under its original terms and is not covered unless explicitly stated.
+- Third-party material remains under its original terms.

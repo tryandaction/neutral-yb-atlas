@@ -271,6 +271,7 @@
 .visual-atlas__note {
   grid-column: 3;
   grid-row: 3;
+  display: none;
 }
 
 .visual-atlas__scope {
