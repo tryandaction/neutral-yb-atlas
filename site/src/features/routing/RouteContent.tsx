@@ -10,7 +10,6 @@ import SpeciesComparison from '../comparison/SpeciesComparison'
 import DomainPage from '../domain/DomainPage'
 import { domainDefinitions } from '../domain/domainDefinitions'
 import EvidenceBrowser from '../evidence/EvidenceBrowser'
-import ExperimentWorkbench from '../experiment/ExperimentWorkbench'
 import ExperimentVisualAtlas from '../experiment-visual-atlas/ExperimentVisualAtlas'
 import ResourceEstimator from '../fault-tolerance/ResourceEstimator'
 import OverviewPage from '../overview/OverviewPage'
@@ -64,7 +63,7 @@ function RouteContent(props: RouteContentProps) {
       content = <>{article(3)}<RydbergGateTutor language={language} /><TheoryWorkbench language={language} onSaveSnapshot={props.onSaveSnapshot} />{article(5)}</>
       break
     case 'experiment':
-      content = <>{article(4)}<ExperimentPipeline language={language} /><ExperimentVisualAtlas language={language} notes={props.notes} onNoteChange={props.onNoteChange} /><div id="experiment-workbench"><ExperimentWorkbench language={language} completedPhases={props.completedExperimentPhases} onTogglePhase={props.onToggleExperimentPhase} /></div></>
+      content = <>{article(4)}<ExperimentPipeline language={language} /><ExperimentVisualAtlas language={language} notes={props.notes} onNoteChange={props.onNoteChange} /></>
       break
     case 'fault-tolerance':
       content = <>{article(6)}<ResourceEstimator language={language} /></>

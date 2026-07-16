@@ -2,7 +2,6 @@ import type { ArticleSection as ArticleSectionData, Language } from '../../types
 import { RotateCcw } from 'lucide-react'
 import EditableBlock from './EditableBlock'
 import Equation from './Equation'
-import ResearchLedger from './ResearchLedger'
 import WikiText from '../wiki/WikiText'
 import './article.css'
 
@@ -43,7 +42,6 @@ export default function ArticleSection({ language, section, editing, override, o
         ) : <p className="editable-block"><WikiText text={override ?? section.body[language]} language={language} /></p>}
         {section.equation ? <Equation source={section.equation} /> : null}
         {section.takeaway ? <blockquote>{section.takeaway[language]}</blockquote> : null}
-        {section.research ? <ResearchLedger detail={section.research} language={language} /> : null}
       </div>
     </section>
   )

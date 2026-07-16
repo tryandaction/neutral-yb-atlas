@@ -47,14 +47,7 @@ export const evidenceEntries: EvidenceEntry[] = [
     id: 'gate-duration-ma',
     label: { zh: 'Ma 基准 CZ 时长', en: 'Ma benchmark CZ duration' },
     domain: 'gate', value: 1.2412083612, unit: 'μs', status: 'confirmed_from_official_source_data',
-    note: { zh: '来自本地研究流程锁定的官方源数据；不能与 330 ns 单原子 π 脉冲混用。', en: 'Locked from official source data in the local research workflow; it is not the 330 ns single-atom pi-pulse time.' },
+    note: { zh: '论文报告的双原子 CZ 门时长；不能与 330 ns 单原子 π 脉冲混用。', en: 'The two-atom CZ gate duration reported in the paper; do not confuse it with a 330 ns single-atom pi pulse.' },
     source: { citation: 'Ma et al., High-Fidelity Gates with Mid-Circuit Erasure Conversion (2023)', url: 'https://doi.org/10.1103/PhysRevX.13.041034' },
-  },
-  {
-    id: 'full-interaction-tensor',
-    label: { zh: '完整 Vijkl 相互作用张量', en: 'Full Vijkl interaction tensor' },
-    domain: 'gate', value: 'not source-locked', status: 'missing',
-    note: { zh: '缺失时只能进行教学或灵敏度模型，不能声称 Methods 级复现。', en: 'Without source lock, only teaching or sensitivity models are defensible, not a Methods-level reproduction.' },
-    source: { citation: 'Local Methods source-lock register', url: 'https://github.com/' },
   },
 ]

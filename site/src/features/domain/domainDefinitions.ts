@@ -71,22 +71,21 @@ export const domainDefinitions: Record<Exclude<RouteId, 'overview'>, DomainDefin
     ],
   },
   experiment: {
-    title: { zh: '实验装置、周期与放行验收', en: 'Apparatus, operating cycle and release acceptance' },
+    title: { zh: '实验系统：从装置到可观察的物理过程', en: 'Experimental systems: from apparatus to observable physics' },
     thesis: {
-      zh: '实验系统的交付物是可重复周期：每个阶段都有前置依赖、测量记录和进入下一阶段的放行条件。',
-      en: 'The experimental deliverable is a repeatable cycle: every phase has prerequisites, measurement records and release conditions.',
+      zh: '沿着装置流程、图版热点和实际信号，理解每个子系统怎样准备、操控和读出原子状态。',
+      en: 'Follow the apparatus flow, plate hotspots and physical signals to understand how each subsystem prepares, controls and reads out atomic states.',
     },
     outline: [
-      { id: 'experiment', label: { zh: '工程基础设施', en: 'Engineering infrastructure' } },
-      { id: 'experiment-pipeline-tutor', label: { zh: '装置与周期链', en: 'Apparatus and cycle chain' } },
+      { id: 'experiment', label: { zh: '装置基础', en: 'Apparatus fundamentals' } },
+      { id: 'experiment-pipeline-tutor', label: { zh: '装置与原子过程', en: 'Apparatus and atomic process' } },
       { id: 'experiment-visual-atlas', label: { zh: '实验教学图谱', en: 'Experimental plate atlas' } },
-      { id: 'experiment-workbench', label: { zh: '阶段验收', en: 'Phase acceptance' } },
     ],
-    contextTitle: { zh: '运行记录', en: 'Operating record' },
+    contextTitle: { zh: '学习提示', en: 'Learning prompts' },
     contextItems: [
-      { zh: '每个 shot 绑定配置哈希、时间戳、锁定状态与异常位。', en: 'Bind every shot to configuration hash, timestamp, lock state and exception bits.' },
-      { zh: '比较设定时序与实际物理响应。', en: 'Compare commanded timing with the physical response.' },
-      { zh: '维护后必须执行分层复标，不能直接放行正式数据。', en: 'Maintenance requires layered recalibration before production data.' },
+      { zh: '先问每个装置控制哪一个物理量，再看它在序列中的位置。', en: 'First ask which physical quantity a component controls, then locate it in the sequence.' },
+      { zh: '把设定时序与实际物理响应并排理解。', en: 'Read the programmed sequence alongside the physical response.' },
+      { zh: '图中标记对应的是概念位置；实际参数需回到原始论文与实验说明核对。', en: 'Markers identify conceptual locations; verify actual parameters against the cited paper and experimental documentation.' },
     ],
   },
   'fault-tolerance': {
@@ -109,21 +108,19 @@ export const domainDefinitions: Record<Exclude<RouteId, 'overview'>, DomainDefin
     ],
   },
   evidence: {
-    title: { zh: '研究图谱、参数与证据来源', en: 'Research figures, parameters and evidence provenance' },
+    title: { zh: '延伸阅读与出处', en: 'Further reading and sources' },
     thesis: {
-      zh: '每个数值必须保留定义、状态、来源和适用边界；图像只在能够支持机制判断时进入证据链。',
-      en: 'Every number retains its definition, status, source and scope; figures enter the evidence chain only when they support a mechanistic judgment.',
+      zh: '按学习主题回到原始论文、综述和权威数据库，区分教学概念、实验结果与可查证的出处。',
+      en: 'Return to original papers, reviews and authoritative databases by learning topic, distinguishing teaching concepts, experimental results and traceable sources.',
     },
     outline: [
-      { id: 'research-atlas', label: { zh: '理论—实验图谱', en: 'Theory–experiment atlas' } },
-      { id: 'research-ecosystem', label: { zh: '科研生态', en: 'Research ecosystem' } },
-      { id: 'evidence', label: { zh: '证据登记', en: 'Evidence registry' } },
+      { id: 'evidence', label: { zh: '按主题阅读', en: 'Read by topic' } },
     ],
-    contextTitle: { zh: '证据边界', en: 'Evidence boundary' },
+    contextTitle: { zh: '阅读方法', en: 'How to read' },
     contextItems: [
-      { zh: '确认值、派生值、候选值和缺失项分开声明。', en: 'Declare confirmed, derived, candidate and missing values separately.' },
-      { zh: '文献装置参数不能无条件替代本机标定。', en: 'Literature apparatus values cannot replace local calibration unconditionally.' },
-      { zh: '每个比较必须锁定同一指标定义。', en: 'Every comparison must lock a common metric definition.' },
+      { zh: '先读综述建立问题框架，再回到原始论文核对具体结论。', en: 'Use reviews to establish the question, then return to original papers for specific claims.' },
+      { zh: '阅读参数时同时确认定义、实验条件和测量方法。', en: 'When reading a parameter, check its definition, experimental conditions and measurement method together.' },
+      { zh: '本页链接用于追溯来源，不替代完整论文与补充材料。', en: 'Links on this page provide traceability; they do not replace the full paper and supplementary material.' },
     ],
   },
 }

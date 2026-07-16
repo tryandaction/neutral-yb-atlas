@@ -23,7 +23,7 @@ const section: ArticleSectionData = {
   },
 }
 
-it('renders localized article content and a KaTeX equation', () => {
+it('renders localized article content and a KaTeX equation without an implementation ledger', () => {
   const { container } = render(
     <ArticleSection language="en" section={section} editing={false} onChange={() => undefined} />,
   )
@@ -31,12 +31,8 @@ it('renders localized article content and a KaTeX equation', () => {
   expect(screen.getByRole('heading', { name: 'Rabi dynamics' })).toBeInTheDocument()
   expect(screen.getByText(section.body.en)).toBeInTheDocument()
   expect(container.querySelector('.katex')).toBeInTheDocument()
-  expect(screen.getByRole('complementary', { name: 'Research implementation ledger' })).toBeInTheDocument()
-  expect(screen.getByText('Repeatable pi pulse')).toBeInTheDocument()
-  expect(screen.getByText('AWG and photodiode')).toBeInTheDocument()
-  expect(screen.getByText('01')).toBeInTheDocument()
-  expect(screen.getByText('Rabi frequency with confidence interval.')).toBeInTheDocument()
-  expect(container.querySelectorAll('.research-ledger .katex')).toHaveLength(1)
+  expect(screen.queryByRole('complementary', { name: 'Research implementation ledger' })).not.toBeInTheDocument()
+  expect(screen.queryByText('Repeatable pi pulse')).not.toBeInTheDocument()
 })
 
 it('emits edited plain text on blur', () => {

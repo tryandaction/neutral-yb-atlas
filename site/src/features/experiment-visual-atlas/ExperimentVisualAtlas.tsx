@@ -119,8 +119,8 @@ export default function ExperimentVisualAtlas({ language, notes, onNoteChange }:
       <header className="visual-atlas__header">
         <h2>{language === 'zh' ? '交互实验图谱' : 'Interactive experimental plate atlas'}</h2>
         <p>{language === 'zh'
-          ? '八张经过科学内容审计的图版，把真实设备、内部结构、操作顺序和记录量连接到同一学习路径。点击图中区域查看边界与本机复标要求。'
-          : 'Eight scientifically audited plates connect real apparatus, internal structure, operating sequence and recorded evidence. Select a region to inspect its scope and local calibration requirements.'}</p>
+          ? '八张图版把真实设备、内部结构与操作顺序连接到同一学习路径。点击图中区域，查看它控制的物理过程、可观察信号与理解边界。'
+          : 'Eight plates connect real apparatus, internal structure and operating sequence in one learning path. Select a region to inspect its physical role, observable signal and scope.'}</p>
       </header>
 
       <nav className="visual-atlas__plate-rail" aria-label={language === 'zh' ? '实验图版选择' : 'Experimental plate selection'}>
@@ -176,7 +176,7 @@ export default function ExperimentVisualAtlas({ language, notes, onNoteChange }:
           <p className="visual-atlas__summary"><WikiText text={selected.summary[language]} language={language} /></p>
           <dl>
             <div><dt>{language === 'zh' ? '操作' : 'Action'}</dt><dd><WikiText text={selected.action[language]} language={language} /></dd></div>
-            <div><dt>{language === 'zh' ? '记录' : 'Record'}</dt><dd><WikiText text={selected.record[language]} language={language} /></dd></div>
+            <div><dt>{language === 'zh' ? '学习线索' : 'Learning clue'}</dt><dd><WikiText text={selected.record[language]} language={language} /></dd></div>
             <div><dt>{language === 'zh' ? '边界' : 'Boundary'}</dt><dd><WikiText text={selected.boundary[language]} language={language} /></dd></div>
           </dl>
           <div className="visual-atlas__hotspot-list">

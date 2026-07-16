@@ -17,51 +17,27 @@ it('renders a continuous atlas and lands legacy deep links on their page section
   expect(screen.getByRole('link', { name: '实验系统' })).toHaveAttribute('aria-current', 'page')
   expect(screen.getByRole('link', { name: '实验系统' })).toHaveAttribute('href', '#domain-experiment')
   expect(await screen.findByRole('heading', { name: '中性原子与 171Yb 平台' }, { timeout: 20000 })).toBeInTheDocument()
-  expect(screen.getByRole('heading', { name: '实验装置、周期与放行验收' })).toBeInTheDocument()
+  expect(screen.getByRole('heading', { name: '实验系统：从装置到可观察的物理过程' })).toBeInTheDocument()
 }, 30000)
 
-it('exposes the interactive theory-to-experiment research atlas', async () => {
+it('provides further reading grouped by learning topic', async () => {
   window.history.replaceState(null, '', '#/evidence')
   render(<App />)
 
-  expect(
-    await screen.findByText(
-      '理论—实验视觉图谱',
-      { selector: 'h2' },
-      { timeout: 20000 },
-    ),
-  ).toBeInTheDocument()
-  const defaultTab = screen.getByText('噪声响应', { selector: 'button' })
-  expect(defaultTab).toHaveAttribute('role', 'tab')
-  expect(defaultTab).toHaveAttribute('aria-selected', 'true')
+  expect(await screen.findByRole('heading', { name: '延伸阅读与出处', level: 1 }, { timeout: 20000 })).toBeInTheDocument()
+  expect(screen.getByRole('heading', { name: '原子与能级' })).toBeInTheDocument()
+  expect(screen.getByRole('link', { name: /Ytterbium Nuclear-Spin Qubits/ })).toBeInTheDocument()
+  expect(document.querySelector('.evidence-table')).not.toBeInTheDocument()
 }, 30000)
 
-it('switches among the chapter-scale research figures in the evidence atlas', async () => {
-  window.history.replaceState(null, '', '#/evidence')
-  const user = userEvent.setup()
-  render(<App />)
-
-  expect(await screen.findByAltText('从实测噪声谱到控制代价', {}, { timeout: 20000 })).toBeInTheDocument()
-  await user.click(screen.getByRole('tab', { name: /阻塞模型/ }))
-  expect(screen.getByAltText('阻塞比如何进入泄漏与门时间')).toBeInTheDocument()
-  await user.click(screen.getByRole('tab', { name: /逻辑调度/ }))
-  expect(screen.getByAltText('物理门约束怎样传播到纠错周期')).toBeInTheDocument()
-}, 30000)
-
-it('opens the research workspace, saves a note and exports it', async () => {
+it('does not expose a research workspace', async () => {
   window.history.replaceState(null, '', '#/')
-  localStorage.clear()
-  const user = userEvent.setup()
   render(<App />)
 
-  await user.click(screen.getByLabelText('打开研究工作区'))
-  await user.type(screen.getByLabelText('研究笔记'), '检查 302 nm 指向噪声。')
-  await user.click(screen.getByRole('button', { name: '导出 JSON' }))
-
-  expect(
-    (screen.getByLabelText('工作区 JSON') as HTMLTextAreaElement).value,
-  ).toContain('检查 302 nm 指向噪声。')
-}, 120000)
+  await screen.findByRole('heading', { name: '中性 Yb 原子计算' }, { timeout: 20000 })
+  expect(screen.queryByLabelText('打开研究工作区')).not.toBeInTheDocument()
+  expect(document.querySelector('.workspace-drawer')).not.toBeInTheDocument()
+}, 30000)
 
 it('places the complete reference map after the interactive Yb energy tutor', async () => {
   window.history.replaceState(null, '', '#/yb-platform')
