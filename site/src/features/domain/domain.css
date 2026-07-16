@@ -158,6 +158,19 @@
   padding: 56px 42px 64px;
 }
 
+.domain-main .atomic-reference {
+  padding: 56px clamp(24px, 4vw, 48px) 64px;
+}
+
+.domain-main .atomic-reference__body {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.domain-main .atomic-reference aside ol {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .domain-main .teaching-visual__header {
   grid-template-columns: 1fr;
   gap: 22px;
@@ -295,6 +308,10 @@
   .domain-main .article-section {
     grid-template-columns: 1fr;
     gap: 12px;
+  }
+
+  .domain-main .atomic-reference aside ol {
+    grid-template-columns: 1fr;
   }
 }
 
