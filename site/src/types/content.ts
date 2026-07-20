@@ -11,6 +11,19 @@ export interface ArticleKeyPoint {
   body: LocalizedText
 }
 
+export interface LearningEquation {
+  expression: string
+  role: LocalizedText
+  symbols: LocalizedText[]
+  assumptions: LocalizedText[]
+}
+
+export interface LearningSource {
+  id: string
+  citation: string
+  url: string
+}
+
 export interface ResearchEquation {
   expression: string
   explanation: LocalizedText
@@ -36,9 +49,16 @@ export interface ResearchDetail {
 export interface ArticleSection {
   id: string
   title: LocalizedText
-  body: LocalizedText
+  question?: LocalizedText
+  answer?: LocalizedText
+  reasoning?: LocalizedText[]
+  measurement?: LocalizedText
+  boundary?: LocalizedText
+  sources?: LearningSource[]
+  nextQuestion?: LocalizedText
+  body?: LocalizedText
   keyPoints?: ArticleKeyPoint[]
-  equation?: string
+  equation?: string | LearningEquation
   equationNote?: LocalizedText
   takeaway?: LocalizedText
   research?: ResearchDetail

@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import type { ArticleSection as ArticleSectionData } from '../../types/content'
 import ArticleSection from './ArticleSection'
 
@@ -30,6 +30,44 @@ const explainedSection = {
   },
 } as ArticleSectionData
 
+const causalSection = {
+  id: 'physical-output',
+  title: { zh: '物理输出', en: 'Physical output' },
+  question: { zh: '为什么计算必须产生物理输出？', en: 'Why is a physical output required?' },
+  answer: {
+    zh: '计算必须以可独立检验的记录结束。',
+    en: 'A computation must end in an independently testable record.',
+  },
+  reasoning: [
+    { zh: '输入必须由物理状态表示。', en: 'An input must be represented by a physical state.' },
+    { zh: '允许操作必须改变这一表示。', en: 'Allowed operations must transform that representation.' },
+    { zh: '输出记录必须支持预先定义的验收。', en: 'The output record must support a predeclared acceptance test.' },
+  ],
+  equation: {
+    expression: String.raw`y=f(x)`,
+    role: { zh: '定义确定性输入—输出规则。', en: 'Defines a deterministic input-output rule.' },
+    symbols: [{ zh: 'x 是输入，y 是输出。', en: 'x is the input and y is the output.' }],
+    assumptions: [{ zh: '规则与验收条件预先给定。', en: 'The rule and acceptance criterion are fixed in advance.' }],
+  },
+  measurement: {
+    zh: '重复输入并检查记录是否满足验收条件。',
+    en: 'Repeat the input and test whether the record satisfies the acceptance criterion.',
+  },
+  boundary: {
+    zh: '这里定义计算，不假设量子动力学。',
+    en: 'This defines computation without assuming quantum dynamics.',
+  },
+  sources: [{
+    id: 'divincenzo-2000',
+    citation: 'DiVincenzo, The Physical Implementation of Quantum Computation (2000)',
+    url: 'https://arxiv.org/abs/quant-ph/0002077',
+  }],
+  nextQuestion: {
+    zh: '量子结构怎样改变这一映射？',
+    en: 'What quantum structure changes this map?',
+  },
+} as unknown as ArticleSectionData
+
 it('renders localized article content and a KaTeX equation without an implementation ledger', () => {
   const { container } = render(
     <ArticleSection language="en" section={section} />,
@@ -48,4 +86,17 @@ it('renders the physical interpretation directly below an equation', () => {
 
   expect(screen.getByText(/resonant two-level approximation/)).toBeInTheDocument()
   expect(screen.getByText(/decay and detuning are omitted/)).toBeInTheDocument()
+})
+
+it('renders one causal learning section in pedagogical order', () => {
+  render(<ArticleSection language="en" section={causalSection} />)
+
+  expect(screen.getByText('Why is a physical output required?')).toBeInTheDocument()
+  expect(screen.getByText('A computation must end in an independently testable record.')).toBeInTheDocument()
+  expect(within(screen.getByRole('list', { name: 'Reasoning steps' })).getAllByRole('listitem')).toHaveLength(3)
+  expect(screen.getByText('What quantum structure changes this map?')).toBeInTheDocument()
+  expect(screen.getByRole('link', { name: /DiVincenzo/ })).toHaveAttribute(
+    'href',
+    expect.stringContaining('quant-ph/0002077'),
+  )
 })

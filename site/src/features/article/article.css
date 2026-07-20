@@ -117,6 +117,49 @@
   background: var(--white);
 }
 
+.article-section__question {
+  margin: 0 0 10px;
+  color: var(--vermilion);
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.article-section__answer {
+  margin: 0;
+  color: var(--ink);
+  font: 400 21px/1.6 var(--font-display);
+}
+
+.article-section__reasoning {
+  display: grid;
+  gap: 0;
+  margin: 26px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--line-strong);
+  list-style: none;
+  counter-reset: reasoning-step;
+}
+
+.article-section__reasoning li {
+  position: relative;
+  padding: 14px 16px 14px 48px;
+  border-bottom: 1px solid var(--line);
+  color: #40504c;
+  font-size: 15px;
+  line-height: 1.7;
+  counter-increment: reasoning-step;
+}
+
+.article-section__reasoning li::before {
+  position: absolute;
+  top: 17px;
+  left: 16px;
+  color: var(--vermilion);
+  content: counter(reasoning-step, decimal-leading-zero);
+  font-size: 10px;
+  font-weight: 800;
+}
+
 .article-section__key-points {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -167,6 +210,36 @@
 }
 
 .equation-note strong { display: block; margin-bottom: 5px; color: var(--forest); font-size: 11px; }
+
+.article-section__equation-guide,
+.article-section__evidence {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 14px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.article-section__equation-guide > div,
+.article-section__evidence > div {
+  min-width: 0;
+  padding: 14px 16px;
+  border-right: 1px solid var(--line);
+}
+
+.article-section__equation-guide > div:last-child,
+.article-section__evidence > div:last-child { border-right: 0; }
+.article-section__equation-guide strong,
+.article-section__evidence strong,
+.article-section__next strong { display: block; margin-bottom: 5px; color: var(--forest); font-size: 11px; }
+.article-section__equation-guide p,
+.article-section__equation-guide ul,
+.article-section__evidence p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.65; }
+.article-section__equation-guide ul { padding-left: 16px; }
+.article-section__evidence { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 28px; }
+.article-section__sources a { display: block; color: var(--forest); font-size: 12px; line-height: 1.55; }
+.article-section__sources a + a { margin-top: 6px; }
+.article-section__next { margin: 24px 0 0; padding: 14px 16px; border-left: 2px solid var(--vermilion); background: var(--paper); color: var(--ink); font-size: 14px; line-height: 1.6; }
 
 .equation--error {
   color: var(--danger);
@@ -413,4 +486,11 @@
   .article-section__key-points li:nth-child(2n),
   .article-section__key-points li:nth-last-child(-n + 2) { border-right: 0; border-bottom: 1px solid var(--line); }
   .article-section__key-points li:last-child { border-bottom: 0; }
+
+  .article-section__equation-guide,
+  .article-section__evidence { grid-template-columns: 1fr; }
+  .article-section__equation-guide > div,
+  .article-section__evidence > div { border-right: 0; border-bottom: 1px solid var(--line); }
+  .article-section__equation-guide > div:last-child,
+  .article-section__evidence > div:last-child { border-bottom: 0; }
 }
