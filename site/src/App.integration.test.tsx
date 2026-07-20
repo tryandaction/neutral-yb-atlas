@@ -17,7 +17,7 @@ it('renders a continuous atlas and lands legacy deep links on their page section
   expect(await screen.findByRole('heading', { name: '中性 Yb 原子计算' }, { timeout: 20000 })).toBeInTheDocument()
   expect(screen.getByRole('link', { name: '实验系统' })).toHaveAttribute('aria-current', 'page')
   expect(screen.getByRole('link', { name: '实验系统' })).toHaveAttribute('href', '#domain-experiment')
-  expect(await screen.findByRole('heading', { name: '实验系统：从装置到可观察的物理过程' }, { timeout: 20000 })).toBeInTheDocument()
+  expect(await screen.findByRole('heading', { name: '实验循环：原子状态怎样被准备、控制和读出' }, { timeout: 20000 })).toBeInTheDocument()
 }, 30000)
 
 it('provides further reading grouped by learning topic', async () => {
@@ -26,7 +26,9 @@ it('provides further reading grouped by learning topic', async () => {
 
   expect(await screen.findByRole('heading', { name: '延伸阅读与出处', level: 1 }, { timeout: 20000 })).toBeInTheDocument()
   expect(screen.getByRole('heading', { name: '原子与能级' })).toBeInTheDocument()
-  expect(screen.getByRole('link', { name: /Ytterbium Nuclear-Spin Qubits/ })).toBeInTheDocument()
+  expect(screen.getAllByRole('link', { name: /Ytterbium Nuclear-Spin Qubits/ }).every(
+    (link) => link.getAttribute('href') === 'https://doi.org/10.1103/PRXQuantum.3.020315',
+  )).toBe(true)
   expect(document.querySelector('.evidence-table')).not.toBeInTheDocument()
 }, 30000)
 

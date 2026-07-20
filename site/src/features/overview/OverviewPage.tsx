@@ -35,16 +35,16 @@ const domainBands: DomainBand[] = [
   {
     route: 'gates-theory',
     number: '03',
-    title: { zh: '怎样从能级得到可验收的量子门', en: 'How atomic levels become an accepted quantum gate' },
-    claim: { zh: '理论必须把目标幺正映射为可产生的哈密顿量，再把误差项映射为可区分的测量。', en: 'Theory maps a target unitary to a realizable Hamiltonian, then maps error terms to discriminating measurements.' },
-    question: { zh: '下一项实验怎样最大程度地区分竞争误差机制？', en: 'Which next measurement best separates competing error mechanisms?' },
+    title: { zh: '怎样从原子结构得到可验证的纠缠门', en: 'How atomic structure becomes a measurable entangling gate' },
+    claim: { zh: '能级与选择定则确定可驱动通道，双原子哈密顿量把 Rydberg 阻塞转成条件相位；布居、相位、泄漏与损失必须分别测量。', en: 'Levels and selection rules determine accessible drives, while a two-atom Hamiltonian turns Rydberg blockade into conditional phase; population, phase, leakage and loss must be measured separately.' },
+    question: { zh: '观测到的偏差来自有限阻塞、衰变、Doppler 相移，还是控制失配？', en: 'Does an observed deviation come from finite blockade, decay, Doppler phase or control mismatch?' },
   },
   {
     route: 'experiment',
     number: '04',
-    title: { zh: '怎样把单次演示变成稳定运行周期', en: 'How a demonstration becomes a stable operating cycle' },
-    claim: { zh: '装载、重排、门操作、成像、译码和补原子必须共享时间基准与放行记录。', en: 'Loading, rearrangement, gates, imaging, decoding and replacement must share timing and release records.' },
-    question: { zh: '哪个阶段限制当前周期吞吐与可用率？', en: 'Which phase limits present cycle throughput and availability?' },
+    title: { zh: '一个原子阵列怎样完成可重复计算周期', en: 'How an atomic array completes a repeatable computation cycle' },
+    claim: { zh: '随机装载先经成像与重排变成目标阵列，再依次完成编码、相干控制、纠缠、测量、解码、复位和补原子；前一阶段的输出就是后一阶段的物理初态。', en: 'Stochastic loading becomes a target array through imaging and rearrangement, followed by encoding, coherent control, entanglement, measurement, decoding, reset and replacement; each stage physically prepares the next.' },
+    question: { zh: '每个周期结束后，计算子空间、原子占据和经典错误记录是否都已更新？', en: 'At cycle end, have the computational subspace, atom occupancy and classical fault record all been updated?' },
   },
   {
     route: 'fault-tolerance',

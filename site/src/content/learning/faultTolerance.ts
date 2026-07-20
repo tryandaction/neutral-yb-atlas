@@ -5,7 +5,7 @@ const logicalSource = { id: 'fault-tolerant-neutral-atoms-2025', citation: 'A fa
 
 export const faultToleranceChapter: Chapter = {
   id: 'fault-tolerance',
-  number: 7,
+  number: 6,
   title: { zh: '怎样从物理故障得到可信计算成本', en: 'How physical faults become the cost of trustworthy computation' },
   shortTitle: { zh: '容错与规模', en: 'Fault tolerance' },
   question: { zh: '物理机制怎样经过周期通道、综合征和解码形成逻辑错误，并最终决定规模、时间和成本？', en: 'How do physical mechanisms pass through cycle channels, syndromes and decoding to form logical error and determine scale, time and cost?' },

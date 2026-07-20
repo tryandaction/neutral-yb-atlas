@@ -115,7 +115,7 @@ export default function ExperimentPipeline({ language }: { language: Language })
     <section className="teaching-visual experiment-pipeline" id="experiment-pipeline-tutor">
       <header className="teaching-visual__header">
         <div><span>APPARATUS / ACCEPTANCE PIPELINE</span><h2>{language === 'zh' ? '从原子炉到逻辑测量的实验全流程' : 'Full experiment path from oven to logical measurement'}</h2></div>
-        <p>{language === 'zh' ? '每个阶段都必须交付可复用记录，下一阶段不能只接收“系统看起来能工作”。选择节点查看物理、仪器、验收和周期。' : 'Each phase must hand off reusable records; the next phase cannot accept “it seems to work.” Select a node for physics, instrumentation, acceptance and schedule.'}</p>
+        <p>{language === 'zh' ? '按原子真正经历的顺序阅读：每一步说明初态怎样被装置改变、怎样检验，以及它为下一步准备了什么。' : 'Read in the order experienced by the atom: each step shows how apparatus changes the initial state, how that change is tested and what it prepares next.'}</p>
       </header>
 
       <figure className="apparatus-schematic">

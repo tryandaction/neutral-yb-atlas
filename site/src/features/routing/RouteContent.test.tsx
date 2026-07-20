@@ -30,5 +30,13 @@ it('presents source-linked further reading without research registry controls', 
 it('connects fault tolerance to an interactive resource estimate', () => {
   renderRoute('fault-tolerance')
 
+  expect(screen.getByRole('heading', { name: 'How physical faults become the cost of trustworthy computation' })).toBeInTheDocument()
   expect(screen.getByRole('spinbutton', { name: 'Physical operation error' })).toBeInTheDocument()
+})
+
+it('keeps the gate route on one causal teaching chain without the legacy delivery contract', () => {
+  renderRoute('gates-theory')
+
+  expect(screen.getByRole('heading', { name: 'How atomic structure becomes a measurable entangling gate' })).toBeInTheDocument()
+  expect(screen.queryByText(/theory delivery contract/i)).not.toBeInTheDocument()
 })

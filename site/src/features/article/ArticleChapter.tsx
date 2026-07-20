@@ -13,7 +13,7 @@ export default function ArticleChapter({ chapter, language }: ArticleChapterProp
       <SectionRail number={chapter.number} label={chapter.shortTitle[language]} />
       <div className="article-chapter__body">
         <header className="chapter-header">
-          <p>{String(chapter.number).padStart(2, '0')} / 07</p>
+          <p>{String(chapter.number).padStart(2, '0')} / 06</p>
           <h2>{chapter.title[language]}</h2>
           <strong>{chapter.question[language]}</strong>
         </header>

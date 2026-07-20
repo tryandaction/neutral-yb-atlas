@@ -46,13 +46,13 @@ function RouteContent(props: RouteContentProps) {
       content = <>{article(2)}<YbEnergyTutor language={language} /><AtomicMap language={language} /><div id="species-comparison"><SpeciesComparison language={language} /></div></>
       break
     case 'gates-theory':
-      content = <>{article(3)}<RydbergGateTutor language={language} /><TheoryWorkbench language={language} />{article(5)}</>
+      content = <>{article(3)}<RydbergGateTutor language={language} /><TheoryWorkbench language={language} /></>
       break
     case 'experiment':
       content = <>{article(4)}<ExperimentPipeline language={language} /><ExperimentVisualAtlas language={language} /></>
       break
     case 'fault-tolerance':
-      content = <>{article(6)}<ResourceEstimator language={language} /></>
+      content = <>{article(5)}<ResourceEstimator language={language} /></>
       break
     case 'evidence':
       content = <EvidenceBrowser language={language} entries={evidenceEntries} />

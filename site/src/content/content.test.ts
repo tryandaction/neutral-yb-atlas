@@ -2,8 +2,9 @@ import { chapters } from './chapters'
 import { evidenceEntries } from './evidence'
 import { experimentPhases } from './experiment'
 
-it('keeps seven Chinese and English chapters paired', () => {
-  expect(chapters).toHaveLength(7)
+it('keeps six Chinese and English causal chapters paired', () => {
+  expect(chapters).toHaveLength(6)
+  expect(chapters.map((chapter) => chapter.number)).toEqual([1, 2, 3, 4, 5, 6])
 
   for (const chapter of chapters) {
     expect(chapter.title.zh).toBeTruthy()

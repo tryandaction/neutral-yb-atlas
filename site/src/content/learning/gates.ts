@@ -6,7 +6,7 @@ const gateSource = { id: 'ma-2023', citation: 'Ma et al., High-fidelity gates an
 export const gatesChapter: Chapter = {
   id: 'gates',
   number: 4,
-  title: { zh: '怎样从能级得到可验收的量子门', en: 'How atomic levels become an accepted quantum gate' },
+  title: { zh: '怎样从原子结构得到可验证的纠缠门', en: 'How atomic structure becomes a measurable entangling gate' },
   shortTitle: { zh: '量子门', en: 'Gates' },
   question: { zh: '激光控制怎样从原子能级产生条件相位，并由实验区分正确门、泄漏、损失和相干误差？', en: 'How does laser control turn atomic levels into conditional phase, and how does experiment separate a correct gate from leakage, loss and coherent error?' },
   sections: [
