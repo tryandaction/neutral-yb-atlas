@@ -21,3 +21,14 @@ it('separates DiVincenzo implementation criteria from the fault-tolerance chain'
   expect(screen.getByRole('heading', { name: 'Universal computation needs a second chain' })).toBeInTheDocument()
   expect(screen.getByText('decoder-visible record')).toBeInTheDocument()
 })
+
+it('shows when erasure conversion is overwhelmed by detection latency', () => {
+  render(<ResourceEstimator language="en" />)
+
+  expect(screen.getByRole('heading', { name: 'When does an erasure flag reduce hidden error?' })).toBeInTheDocument()
+  expect(screen.getByText('Conditional advantage')).toBeInTheDocument()
+
+  fireEvent.change(screen.getByLabelText('Detection overhead'), { target: { value: '120' } })
+
+  expect(screen.getByText('Overhead dominates')).toBeInTheDocument()
+})

@@ -1,5 +1,6 @@
 import { Maximize2, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import type { CSSProperties } from 'react'
 import energyDiagram from '../../../assets/yb-energy-levels-reference.svg'
 import type { Language } from '../../types/content'
 import './atomic-map.css'
@@ -199,7 +200,10 @@ export default function AtomicMap({ language }: { language: Language }) {
               ))}
               <div
                 className="reference-hotspot-callout"
-                style={{ left: `${selected.labelX}%`, top: `${selected.labelY}%` }}
+                style={{
+                  '--hotspot-label-x': `${selected.labelX}%`,
+                  top: `${selected.labelY}%`,
+                } as CSSProperties}
                 aria-hidden="true"
               >
                 <b>{selected.wavelength}</b>

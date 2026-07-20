@@ -12,7 +12,6 @@ const nextMeasurementCopy: Record<NextMeasurement, Record<Language, string>> = {
   'pair-spectroscopy': { zh: '优先执行双原子距离与角度扫描，联合测双原子谱、双激发抑制与条件相位。', en: 'Prioritize a two-atom separation/angle scan with spectra, double-excitation suppression and conditional phase.' },
   'rydberg-lifetime': { zh: '优先测量 Rydberg 寿命与门内布居，区分本征衰变和脉冲驻留时间。', en: 'Prioritize Rydberg lifetime and in-gate population to separate intrinsic decay from pulse dwell time.' },
   'temperature-scan': { zh: '优先交错扫描温度与失谐，检验 Doppler 与运动采样项。', en: 'Prioritize interleaved temperature and detuning scans to test Doppler and motional sampling.' },
-  'control-transfer': { zh: '优先测量 AWG 到原子面的幅相传递函数与重复脉冲漂移。', en: 'Prioritize the amplitude/phase transfer function from AWG to atoms and repeated-pulse drift.' },
   'detuning-scan': { zh: '优先做单原子失谐扫描并锁定 AC Stark、磁场与激光频率基线。', en: 'Prioritize a single-atom detuning scan and lock AC Stark, field and laser-frequency baselines.' },
 }
 
@@ -21,7 +20,6 @@ const dominantCopy = {
   decay: { zh: 'Rydberg 衰变', en: 'Rydberg decay' },
   doppler: { zh: 'Doppler / 运动', en: 'Doppler / motion' },
   detuning: { zh: '条件相位失配', en: 'Conditional-phase mismatch' },
-  control: { zh: '控制链路', en: 'Control chain' },
 } as const
 
 export default function TheoryWorkbench({ language }: { language: Language }) {
@@ -48,12 +46,12 @@ export default function TheoryWorkbench({ language }: { language: Language }) {
           <div><dt>{language === 'zh' ? '回答' : 'Answers'}</dt><dd>{language === 'zh' ? '参数趋势、误差竞争和下一项测量。' : 'Parameter trends, competing errors and the next measurement.'}</dd></div>
           <div><dt>{language === 'zh' ? '不回答' : 'Does not answer'}</dt><dd>{language === 'zh' ? '未锁定 Vijkl 时的 Methods 级门复现。' : 'Methods-level gate reproduction without source-locked Vijkl.'}</dd></div>
         </dl>
-        <p><b>{language === 'zh' ? '声明边界' : 'Claim boundary'}</b>{language === 'zh' ? '有效两原子教学模型；数值是工作区判断，不是实验保真度声明。' : 'An effective two-atom teaching model; numbers classify a regime rather than claim experimental fidelity.'}</p>
+        <p><b>{language === 'zh' ? '声明边界' : 'Claim boundary'}</b>{language === 'zh' ? '解析双原子教学模型；Qteach 是已列机制的灵敏度代理，不是实测保真度。' : 'An analytical two-atom teaching model; Qteach is a sensitivity proxy over the listed mechanisms, not measured fidelity.'}</p>
       </aside>
 
       <div className="theory-workbench__main">
         <header>
-          <div><span>H(t) → U(T) → Prr · εφ · exposure · εmodel</span><h2>{language === 'zh' ? '从哈密顿量到可测门证据' : 'From Hamiltonian to measurable gate evidence'}</h2></div>
+          <div><span>H(t) → Prr · εφ · Edecay · EDoppler → Qteach</span><h2>{language === 'zh' ? '从控制参数到可检验的物理趋势' : 'From controls to testable physical trends'}</h2></div>
           <div className="theory-workbench__commands">
             <button type="button" onClick={() => setParameters(defaults)} title={language === 'zh' ? '恢复默认参数' : 'Reset parameters'} aria-label={language === 'zh' ? '恢复默认参数' : 'Reset parameters'}><RotateCcw aria-hidden="true" /></button>
           </div>
@@ -66,24 +64,26 @@ export default function TheoryWorkbench({ language }: { language: Language }) {
         </section>
 
         <div className="theory-workbench__surface">
-          <PopulationChart omegaMHz={parameters.omegaMHz} detuningMHz={parameters.detuningMHz} gateTimeUs={parameters.gateTimeUs} />
+          <PopulationChart parameters={parameters} language={language} />
           <div className="theory-controls">
             <div className="theory-metrics">
               <div><small>V / Ω</small><strong>{ratio.toFixed(1)}</strong></div>
-              <div aria-label={language === 'zh' ? '预测门质量' : 'Predicted gate quality'}><small>{language === 'zh' ? '预测门质量' : 'Predicted gate quality'}</small><strong>{(observables.gateQuality * 100).toFixed(2)}%</strong></div>
+              <div aria-label={language === 'zh' ? '教学质量代理' : 'Teaching quality proxy'}><small>Q<sub>teach</sub></small><strong>{(observables.teachingQuality * 100).toFixed(2)}%</strong></div>
             </div>
             <div className="theory-observables" aria-label={language === 'zh' ? '模型可观测量' : 'Model observables'}>
-              <div><span>{language === 'zh' ? '双激发' : 'Double excitation'}</span><strong>{observables.doubleExcitation.toExponential(2)}</strong></div>
-              <div><span>{language === 'zh' ? '条件相位失配' : 'Conditional-phase mismatch'}</span><strong>{observables.phaseError.toExponential(2)}</strong></div>
-              <div><span>{language === 'zh' ? 'Rydberg 暴露' : 'Rydberg exposure'}</span><strong>{observables.rydbergExposure.toExponential(2)}</strong></div>
+              <Observable label={language === 'zh' ? '双激发代理' : 'Double-excitation proxy'} symbol="Prr" value={observables.doubleExcitation} scale={0.04} />
+              <Observable label={language === 'zh' ? '相位失配代理' : 'Phase-mismatch proxy'} symbol="εφ" value={observables.phaseMismatch} scale={0.25} />
+              <Observable label={language === 'zh' ? '衰变暴露代理' : 'Decay-exposure proxy'} symbol="Edecay" value={observables.decayExposure} scale={0.04} />
+              <Observable label={language === 'zh' ? 'Doppler 代理' : 'Doppler proxy'} symbol="ED" value={observables.dopplerSensitivity} scale={0.002} detail={`${observables.dopplerRmsKhz.toFixed(1)} kHz rms`} />
             </div>
+            <p className="theory-proxy-note">{language === 'zh' ? 'Qteach = 1 − ΣE，仅汇总图中四项教学代理；不是实测保真度，也不包含 SPAM、激光噪声或完整脉冲误差。' : 'Qteach = 1 − ΣE over the four displayed teaching proxies only; it is not measured fidelity and excludes SPAM, laser noise and full pulse errors.'}</p>
             <h3>{language === 'zh' ? '模型参数' : 'Model parameters'}</h3>
-            <Parameter label="Ωmax / 2π" value={parameters.omegaMHz} min={1} max={8} step={0.1} unit="MHz" onChange={(value) => setParameter('omegaMHz', value)} />
-            <Parameter label="V / 2π" value={parameters.interactionMHz} min={10} max={100} step={1} unit="MHz" onChange={(value) => setParameter('interactionMHz', value)} />
-            <Parameter label="Δ / 2π" value={parameters.detuningMHz} min={-5} max={5} step={0.1} unit="MHz" onChange={(value) => setParameter('detuningMHz', value)} />
-            <Parameter label={language === 'zh' ? '温度' : 'Temperature'} value={parameters.temperatureUk} min={1} max={15} step={0.1} unit="μK" onChange={(value) => setParameter('temperatureUk', value)} />
-            <Parameter label={language === 'zh' ? 'Rydberg 寿命' : 'Rydberg lifetime'} value={parameters.rydbergLifetimeUs} min={40} max={250} step={5} unit="μs" onChange={(value) => setParameter('rydbergLifetimeUs', value)} />
-            <Parameter label={language === 'zh' ? '门时长' : 'Gate duration'} value={parameters.gateTimeUs} min={0.2} max={4} step={0.02} unit="μs" onChange={(value) => setParameter('gateTimeUs', value)} />
+            <Parameter label="Ωmax / 2π" affects="Prr · εφ · ED · trajectory" value={parameters.omegaMHz} min={1} max={8} step={0.1} unit="MHz" onChange={(value) => setParameter('omegaMHz', value)} />
+            <Parameter label="V / 2π" affects="Prr · |rr⟩" value={parameters.interactionMHz} min={10} max={100} step={1} unit="MHz" onChange={(value) => setParameter('interactionMHz', value)} />
+            <Parameter label="Δ / 2π" affects="εφ · trajectory" value={parameters.detuningMHz} min={-5} max={5} step={0.1} unit="MHz" onChange={(value) => setParameter('detuningMHz', value)} />
+            <Parameter label={language === 'zh' ? '温度' : 'Temperature'} affects="ED · envelope" value={parameters.temperatureUk} min={1} max={15} step={0.1} unit="μK" onChange={(value) => setParameter('temperatureUk', value)} />
+            <Parameter label={language === 'zh' ? 'Rydberg 寿命' : 'Rydberg lifetime'} affects="Edecay · envelope" value={parameters.rydbergLifetimeUs} min={40} max={250} step={5} unit="μs" onChange={(value) => setParameter('rydbergLifetimeUs', value)} />
+            <Parameter label={language === 'zh' ? '门时长' : 'Gate duration'} affects="Edecay · trajectory window" value={parameters.gateTimeUs} min={0.2} max={4} step={0.02} unit="μs" onChange={(value) => setParameter('gateTimeUs', value)} />
           </div>
           <ErrorBudget language={language} budget={budget} />
         </div>
@@ -108,9 +108,21 @@ function Contract({ label, value, language }: { label: Record<Language, string>;
   return <div><dt>{label[language]}</dt><dd>{value[language]}</dd></div>
 }
 
-interface ParameterProps { label: string; value: number; min: number; max: number; step: number; unit: string; onChange: (value: number) => void }
+function Observable({ label, symbol, value, scale, detail }: { label: string; symbol: string; value: number; scale: number; detail?: string }) {
+  const width = Math.min(100, Math.max(value > 0 ? 2 : 0, value / scale * 100))
+  return (
+    <div aria-label={label}>
+      <span><b>{symbol}</b>{label}</span>
+      <strong>{(value * 100).toFixed(3)}%</strong>
+      <i className="theory-observables__track" aria-hidden="true"><i style={{ width: `${width}%` }} /></i>
+      {detail && <small>{detail}</small>}
+    </div>
+  )
+}
 
-function Parameter({ label, value, min, max, step, unit, onChange }: ParameterProps) {
+interface ParameterProps { label: string; affects: string; value: number; min: number; max: number; step: number; unit: string; onChange: (value: number) => void }
+
+function Parameter({ label, affects, value, min, max, step, unit, onChange }: ParameterProps) {
   const id = `parameter-${label.replaceAll(/[^a-zA-Z]/g, '')}`
-  return <div className="theory-parameter"><label htmlFor={id}><span>{label}</span><b>{value.toFixed(step < 1 ? 1 : 0)} {unit}</b></label><input id={id} type="range" min={min} max={max} step={step} value={value} onChange={(event) => onChange(Number(event.target.value))} /></div>
+  return <div className="theory-parameter"><label htmlFor={id}><span>{label}<small>{affects}</small></span><b>{value.toFixed(step < 1 ? 1 : 0)} {unit}</b></label><input id={id} aria-label={label} type="range" min={min} max={max} step={step} value={value} onChange={(event) => onChange(Number(event.target.value))} /></div>
 }

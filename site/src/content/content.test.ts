@@ -20,15 +20,34 @@ it('keeps seven Chinese and English chapters paired', () => {
 })
 
 it('organizes the opening chapters around physical computability and the Yb interface bundle', () => {
-  expect(chapters[0].question.zh).toBe('从“可表示状态”到“可扩展计算”，每一层必须满足什么物理条件？')
-  expect(chapters[1].question.zh).toBe('原子为什么能够计算，中性原子怎样按需打开相互作用？')
-  expect(chapters[2].question.zh).toBe('在固定的纠错周期任务下，171Yb 的接口组合解决什么约束，又引入什么代价？')
+  expect(chapters[0].question.zh).toContain('DiVincenzo')
+  expect(chapters[1].question.zh).toMatch(/超导.*离子阱.*光子/)
+  expect(chapters[2].question.zh).toMatch(/Rb.*Cs.*Sr/)
 
   const openingCopy = chapters.slice(0, 3).flatMap((chapter) => chapter.sections.map((section) => section.body.zh)).join('\n')
-  expect(openingCopy).toMatch(/可区分状态.*可组合变换.*条件动力学/s)
-  expect(openingCopy).toMatch(/同一同位素.*天然一致的内部态谱/)
-  expect(openingCopy).toMatch(/接口组合.*工程复杂度/)
+  expect(openingCopy).toMatch(/状态空间.*初始化.*相干.*通用门.*测量/s)
+  expect(openingCopy).toMatch(/超导.*离子阱.*光子.*中性原子/s)
+  expect(openingCopy).toMatch(/Rb.*Cs.*Sr.*171Yb/s)
+  expect(openingCopy).toMatch(/误报.*漏报.*残余 Pauli.*周期/s)
   expect(openingCopy).not.toMatch(/一次有效 shot 通常依次包含/)
+})
+
+it('connects universal fault tolerance to a conditional resource and cost argument', () => {
+  const faultTolerance = chapters.find((chapter) => chapter.id === 'fault-tolerance')
+  expect(faultTolerance).toBeDefined()
+
+  const copy = faultTolerance!.sections.map((section) => `${section.title.zh}\n${section.body.zh}`).join('\n')
+  expect(copy).toMatch(/通用门集.*容错实现/s)
+  expect(copy).toMatch(/物理机制.*电路级通道.*解码器.*逻辑错误率/s)
+  expect(copy).toMatch(/码距.*逻辑错误/s)
+  expect(copy).toMatch(/吞吐.*可用率.*可信结果成本/s)
+})
+
+it('keeps platform and species claims comparative rather than absolute', () => {
+  const comparativeCopy = chapters.slice(1, 3).flatMap((chapter) => chapter.sections.map((section) => section.body.zh)).join('\n')
+
+  expect(comparativeCopy).not.toMatch(/最佳平台|全面优于|天然容错|必然降低/)
+  expect(comparativeCopy).toMatch(/固定.*任务|同一.*口径/)
 })
 
 it('requires a source and unit for confirmed numeric evidence', () => {

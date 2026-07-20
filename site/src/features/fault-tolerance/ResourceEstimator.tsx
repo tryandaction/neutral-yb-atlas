@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import type { Language } from '../../types/content'
-import { estimateResources, type ResourceEstimateInput } from './model'
+import { assessErasureConversion, estimateResources, type ErasureAssessmentInput, type ResourceEstimateInput } from './model'
 import './fault-tolerance.css'
 
 const initialInput: ResourceEstimateInput = {
@@ -10,14 +10,34 @@ const initialInput: ResourceEstimateInput = {
   failureBudget: 0.01,
 }
 
+const initialErasureInput: ErasureAssessmentInput = {
+  totalFaultRate: 0.005,
+  convertibleFraction: 0.75,
+  flagRecall: 0.95,
+  falseFlagRate: 0.0002,
+  baseCycleUs: 10,
+  detectionOverheadUs: 2,
+  memoryErrorPerUs: 0.00003,
+}
+
+const erasureStatusCopy = {
+  candidate: { zh: '条件性优势', en: 'Conditional advantage' },
+  'no-conversion': { zh: '没有可定位增益', en: 'No located-information gain' },
+  'record-contaminated': { zh: '误报污染记录', en: 'False flags contaminate the record' },
+  'overhead-dominated': { zh: '检测开销占主导', en: 'Overhead dominates' },
+} as const
+
 function scientific(value: number): string {
   return value.toExponential(1).replace('e-', ' × 10⁻')
 }
 
 export default function ResourceEstimator({ language }: { language: Language }) {
   const [input, setInput] = useState(initialInput)
+  const [erasureInput, setErasureInput] = useState(initialErasureInput)
   const estimate = useMemo(() => estimateResources(input), [input])
+  const erasure = useMemo(() => assessErasureConversion(erasureInput), [erasureInput])
   const update = (key: keyof ResourceEstimateInput, value: number) => setInput((current) => ({ ...current, [key]: value }))
+  const updateErasure = (key: keyof ErasureAssessmentInput, value: number) => setErasureInput((current) => ({ ...current, [key]: value }))
 
   return (
     <section className="resource-estimator" id="resource-estimator" aria-labelledby="resource-estimator-title">
@@ -35,6 +55,29 @@ export default function ResourceEstimator({ language }: { language: Language }) 
           <article><span>04</span><strong>{language === 'zh' ? '代码与调度' : 'code and schedule'}</strong><p>{language === 'zh' ? '选择码、非 Clifford 资源、并行冲突与译码延迟决定时空开销。' : 'Code choice, non-Clifford resources, parallel conflicts and decoder latency set spacetime overhead.'}</p></article>
           <article><span>05</span><strong>{language === 'zh' ? '可信结果' : 'trustworthy result'}</strong><p>{language === 'zh' ? '逻辑错误、吞吐、可用率与每次成功结果成本必须共同改善。' : 'Logical error, throughput, availability and cost per successful result must improve together.'}</p></article>
         </div>
+      </section>
+
+      <section className={`erasure-assessment erasure-assessment--${erasure.status}`} aria-labelledby="erasure-assessment-title">
+        <header>
+          <div><span>Yb ERROR INFORMATION</span><h3 id="erasure-assessment-title">{language === 'zh' ? '擦除标记何时减少隐藏错误？' : 'When does an erasure flag reduce hidden error?'}</h3></div>
+          <output aria-live="polite">{erasureStatusCopy[erasure.status][language]}</output>
+        </header>
+        <div className="erasure-assessment__controls">
+          <NumberControl language={language} id="erasure-total" label={{ zh: '门内总故障率', en: 'Total in-gate fault rate' }} value={erasureInput.totalFaultRate} min={0} max={0.05} step={0.0001} onChange={(value) => updateErasure('totalFaultRate', value)} />
+          <NumberControl language={language} id="convertible-fraction" label={{ zh: '可转换比例', en: 'Convertible fraction' }} value={erasureInput.convertibleFraction} min={0} max={1} step={0.01} onChange={(value) => updateErasure('convertibleFraction', value)} />
+          <NumberControl language={language} id="flag-recall" label={{ zh: '标记召回率', en: 'Flag recall' }} value={erasureInput.flagRecall} min={0} max={1} step={0.01} onChange={(value) => updateErasure('flagRecall', value)} />
+          <NumberControl language={language} id="false-flag-rate" label={{ zh: '误报率', en: 'False-flag rate' }} value={erasureInput.falseFlagRate} min={0} max={0.02} step={0.0001} onChange={(value) => updateErasure('falseFlagRate', value)} />
+          <NumberControl language={language} id="detection-overhead" label={{ zh: '检测附加时长', en: 'Detection overhead' }} value={erasureInput.detectionOverheadUs} min={0} max={200} step={1} onChange={(value) => updateErasure('detectionOverheadUs', value)} />
+        </div>
+        <div className="erasure-assessment__flow" aria-label={language === 'zh' ? '错误信息流' : 'Fault-information flow'}>
+          <Metric label={language === 'zh' ? '真实可见擦除' : 'True located erasures'} value={erasure.trueErasureRate} tone="located" />
+          <Metric label={language === 'zh' ? '残余隐藏错误' : 'Residual hidden faults'} value={erasure.residualHiddenRate} tone="hidden" />
+          <Metric label={language === 'zh' ? '延迟新增存储错误' : 'Latency-added memory faults'} value={erasure.addedMemoryFault} tone="overhead" />
+          <Metric label={language === 'zh' ? '标记精确率' : 'Flag precision'} value={erasure.flagPrecision} tone="precision" percent />
+        </div>
+        <p>{language === 'zh'
+          ? '判定只比较“被定位的错误”与“检测新增的隐藏错误和误报”。它不替代具体量子码、相关噪声和译码调度仿真。'
+          : 'The verdict compares located faults with hidden faults added by detection and false records. It does not replace code-specific simulation with correlations and decoder scheduling.'}</p>
       </section>
 
       <div className="resource-estimator__controls">
@@ -86,6 +129,10 @@ export default function ResourceEstimator({ language }: { language: Language }) 
       </div>
     </section>
   )
+}
+
+function Metric({ label, value, tone, percent = false }: { label: string; value: number; tone: string; percent?: boolean }) {
+  return <div className={`erasure-metric erasure-metric--${tone}`}><span>{label}</span><strong>{percent ? `${(value * 100).toFixed(1)}%` : value.toExponential(2)}</strong><i style={{ width: `${Math.min(100, Math.max(2, value * (percent ? 100 : 10000)))}%` }} /></div>
 }
 
 interface NumberControlProps {

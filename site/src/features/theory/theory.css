@@ -123,7 +123,7 @@
 
 .theory-workbench__surface {
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(240px, 0.65fr);
+  grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr);
   grid-template-rows: minmax(380px, auto) auto;
   gap: 1px;
   border: 1px solid #35534e;
@@ -173,6 +173,7 @@
 
 .population-chart__topline i.is-yellow { background: var(--yellow); }
 .population-chart__topline i.is-red { background: var(--vermilion); }
+.population-chart__topline i.is-violet { background: #9b83df; }
 
 .population-chart svg {
   width: 100%;
@@ -194,6 +195,20 @@
 
 .population-chart__ground { stroke: var(--yellow); stroke-width: 2.3; }
 .population-chart__rydberg { stroke: var(--vermilion); stroke-width: 2; }
+.population-chart__double {
+  fill: none;
+  stroke: #9b83df;
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.population-chart > p {
+  max-width: 680px;
+  margin: 13px 0 0;
+  color: #8ea8a2;
+  font-size: 10px;
+  line-height: 1.55;
+}
 
 .theory-controls {
   padding: 24px;
@@ -214,7 +229,7 @@
 
 .theory-observables {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   border-top: 1px solid #35534e;
   background: #102d29;
 }
@@ -223,14 +238,27 @@
   min-width: 0;
   padding: 11px 12px;
   border-right: 1px solid #35534e;
+  border-bottom: 1px solid #35534e;
 }
 
-.theory-observables > div:last-child { border-right: 0; }
+.theory-observables > div:nth-child(2n) { border-right: 0; }
+.theory-observables > div:nth-last-child(-n + 2) { border-bottom: 0; }
 
 .theory-observables span,
 .theory-observables strong { display: block; }
-.theory-observables span { color: #92aba5; font-size: 10px; line-height: 1.35; }
+.theory-observables span { min-height: 28px; color: #92aba5; font-size: 10px; line-height: 1.35; }
+.theory-observables span b { display: block; color: var(--yellow); font-size: 9px; }
 .theory-observables strong { margin-top: 5px; color: #edf7f3; font: 400 15px var(--font-display); }
+.theory-observables small { display: block; margin-top: 5px; color: #75948d; font-size: 9px; }
+.theory-observables__track { display: block; height: 3px; margin-top: 8px; overflow: hidden; background: #35534e; }
+.theory-observables__track > i { display: block; height: 100%; background: var(--vermilion); transition: width 180ms ease-out; }
+
+.theory-proxy-note {
+  margin: 12px 0 0;
+  color: #92aba5;
+  font-size: 10px;
+  line-height: 1.5;
+}
 
 .theory-metrics div {
   padding: 12px;
@@ -258,12 +286,13 @@
 }
 
 .theory-parameter label b { color: var(--white); font-weight: 600; }
+.theory-parameter label span small { display: block; margin-top: 4px; color: #718f88; font-size: 9px; }
 .theory-parameter input { width: 100%; margin-top: 9px; accent-color: var(--yellow); }
 
 .error-budget {
   grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: 200px repeat(4, 1fr);
+  grid-template-columns: minmax(180px, 0.8fr) repeat(4, minmax(140px, 1fr));
   background: #173f3a;
 }
 
@@ -310,7 +339,10 @@
   .theory-workbench__main > header { align-items: start; }
   .theory-workbench__main > header h2 { font-size: 28px; }
   .theory-workbench__surface { grid-template-columns: 1fr; }
-  .population-chart svg { height: 260px; }
+  .population-chart { min-height: 0; padding: 20px 16px 16px; }
+  .population-chart__topline { flex-wrap: wrap; gap: 10px; }
+  .population-chart svg { height: 240px; }
+  .theory-controls { padding: 20px 16px; }
   .error-budget { grid-column: auto; grid-template-columns: 1fr; }
   .error-budget__header, .error-budget__row { border-right: 0; border-bottom: 1px solid #35534e; }
   .theory-verdict { grid-template-columns: 1fr 1fr; }
@@ -318,4 +350,15 @@
   .theory-contract dl { grid-template-columns: 1fr; }
   .theory-contract dl > div,
   .theory-contract dl > div:nth-child(3n) { min-height: 0; border-right: 0; }
+}
+
+@media (max-width: 430px) {
+  .theory-workbench__main { padding-inline: 12px; }
+  .theory-verdict { grid-template-columns: 1fr; }
+  .theory-verdict > p { grid-column: auto; }
+  .theory-observables { grid-template-columns: 1fr; }
+  .theory-observables > div,
+  .theory-observables > div:nth-child(2n),
+  .theory-observables > div:nth-last-child(-n + 2) { border-right: 0; border-bottom: 1px solid #35534e; }
+  .theory-observables > div:last-child { border-bottom: 0; }
 }

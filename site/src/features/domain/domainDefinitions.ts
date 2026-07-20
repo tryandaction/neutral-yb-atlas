@@ -16,39 +16,39 @@ export interface DomainDefinition {
 
 export const domainDefinitions: Record<Exclude<RouteId, 'overview'>, DomainDefinition> = {
   foundations: {
-    title: { zh: '计算、量子计算与原子载体', en: 'Computation, quantum computation and atomic carriers' },
+    title: { zh: '计算如何落在中性原子上', en: 'How computation is embodied in neutral atoms' },
     thesis: {
-      zh: '从输入到输出的受控状态变换出发，逐步推出量子相干、条件动力学和可开关原子相互作用。',
-      en: 'Begin with controlled input-to-output state transformation, then derive coherence, conditional dynamics and switchable atomic interaction.',
+      zh: '从可验证输入—输出映射出发，用 DiVincenzo 准则检查物理接口，再在固定纠错任务下比较中性原子与其他硬件路线。',
+      en: 'Start from a verifiable input-output map, use the DiVincenzo criteria to test physical interfaces, then compare neutral atoms with other hardware routes under a fixed correction task.',
     },
     outline: [
-      { id: 'quantum-foundations', label: { zh: '计算的最低条件', en: 'Minimum conditions for computation' } },
-      { id: 'neutral-atoms', label: { zh: '中性原子的实现', en: 'Neutral-atom realization' } },
+      { id: 'quantum-foundations', label: { zh: '计算与物理实现准则', en: 'Computation and implementation criteria' } },
+      { id: 'neutral-atoms', label: { zh: '为什么选择中性原子', en: 'Why choose neutral atoms' } },
     ],
     contextTitle: { zh: '判定框架', en: 'Decision frame' },
     contextItems: [
-      { zh: '状态是否可区分、可初始化并可重复读出？', en: 'Are states distinguishable, initializable and repeatedly readable?' },
-      { zh: '多比特演化是否依赖联合状态？', en: 'Does multiqubit evolution depend on the joint state?' },
-      { zh: '非目标演化是否进入可测误差记录？', en: 'Does residual evolution enter a measurable error record?' },
+      { zh: '状态空间、初始化、相干、通用门和测量是否在同一周期内成立？', en: 'Do state space, initialization, coherence, universal gates and measurement coexist in one cycle?' },
+      { zh: '平台比较是否固定了算法、量子码、损失定义和墙钟时间？', en: 'Does the platform comparison fix algorithm, code, loss convention and wall-clock time?' },
+      { zh: '增加物理资源后，每逻辑操作的失败概率是否下降？', en: 'Does failure per logical operation fall when physical resources increase?' },
     ],
   },
   'yb-platform': {
-    title: { zh: '中性原子与 171Yb 平台', en: 'Neutral atoms and the 171Yb platform' },
+    title: { zh: '为什么在中性原子中选择 171Yb', en: 'Why choose 171Yb among neutral atoms' },
     thesis: {
-      zh: '171Yb 用核自旋承担稳定存储，用电子结构承担冷却、操控、读出与 Rydberg 连接；优势与复杂度来自同一职责分离。',
-      en: '171Yb assigns storage to nuclear spin and cooling, control, readout and Rydberg coupling to electronic structure; its advantage and complexity share this origin.',
+      zh: '171Yb 以最小核自旋空间承载信息，以多电子流形分配冷却、门和读出；只有当错误标记的解码收益超过检测与复位开销时，这种职责分离才成为纠错优势。',
+      en: '171Yb stores information in a minimal nuclear-spin space and divides cooling, gates and readout across electronic manifolds; this separation becomes a QEC advantage only when decoder gains from fault flags exceed detection and reset overhead.',
     },
     outline: [
-      { id: 'yb-platform', label: { zh: '为什么选择 Yb', en: 'Why Yb' } },
+      { id: 'yb-platform', label: { zh: 'Rb、Cs、Sr 与 Yb', en: 'Rb, Cs, Sr and Yb' } },
       { id: 'yb-energy-tutor', label: { zh: '能级与实验通道', en: 'Levels and laboratory channels' } },
       { id: 'yb-complete-reference-map', label: { zh: '完整参考图', en: 'Complete reference map' } },
       { id: 'species-comparison', label: { zh: '物种比较', en: 'Species comparison' } },
     ],
     contextTitle: { zh: '平台判定', en: 'Platform test' },
     contextItems: [
-      { zh: '存储自由度对光移与磁场噪声的灵敏度是多少？', en: 'How sensitive is the storage degree of freedom to light shifts and magnetic noise?' },
-      { zh: '冷却、门和读出通道能否独立标定？', en: 'Can cooling, gate and readout channels be calibrated independently?' },
-      { zh: '多能级泄漏能否被检测或转换为擦除？', en: 'Can multilevel leakage be detected or converted to erasure?' },
+      { zh: '物种比较是否采用相同编码、门并行度和损失口径？', en: 'Does the species comparison use the same encoding, gate parallelism and loss convention?' },
+      { zh: '核自旋存储、Rydberg 门与流形选择读出能否分别标定？', en: 'Can nuclear-spin storage, Rydberg gates and manifold-selective readout be calibrated separately?' },
+      { zh: '误报、漏报、残余 Pauli 与检测时延是否仍给出净逻辑收益？', en: 'Do false flags, missed flags, residual Pauli error and detection latency still leave a net logical gain?' },
     ],
   },
   'gates-theory': {
@@ -89,22 +89,22 @@ export const domainDefinitions: Record<Exclude<RouteId, 'overview'>, DomainDefin
     ],
   },
   'fault-tolerance': {
-    title: { zh: '通用容错、规模化与成本', en: 'Universal fault tolerance, scale and cost' },
+    title: { zh: '通用容错如何转化为规模与成本', en: 'How universal fault tolerance becomes scale and cost' },
     thesis: {
-      zh: '物理原子是资源，逻辑操作才是算力；规模只有在逻辑错误、吞吐、可用率和单位结果成本同时受控时成立。',
-      en: 'Physical atoms are resources; logical operations are compute. Scale exists only when logical error, throughput, availability and cost per result remain controlled together.',
+      zh: '通用门集只是起点；物理通道必须经过容错电路与解码形成可缩放的逻辑错误率，并与吞吐、可用率共同决定一次可信结果的成本。',
+      en: 'A universal gate set is only the start; physical channels must pass through fault-tolerant circuits and decoding to produce a scalable logical error rate, which combines with throughput and availability to determine cost per trustworthy result.',
     },
     outline: [
-      { id: 'fault-tolerance', label: { zh: '从物理到逻辑错误', en: 'Physical to logical error' } },
+      { id: 'fault-tolerance', label: { zh: '从通用门集到逻辑错误', en: 'Universal gates to logical error' } },
       { id: 'resource-estimator', label: { zh: '资源估算', en: 'Resource estimate' } },
       { id: 'scale-chain', label: { zh: '规模与吞吐', en: 'Scale and throughput' } },
       { id: 'cost-chain', label: { zh: '可信结果成本', en: 'Cost per trustworthy result' } },
     ],
     contextTitle: { zh: '容错判据', en: 'Fault-tolerance test' },
     contextItems: [
-      { zh: '完整周期噪声是否低于所选码与门集的阈值？', en: 'Is full-cycle noise below the threshold of the chosen code and gate set?' },
-      { zh: '增加码距后逻辑错误是否按预测下降？', en: 'Does logical error fall as predicted when distance increases?' },
-      { zh: '非 Clifford 资源、译码和维护是否计入总开销？', en: 'Are non-Clifford resources, decoding and maintenance included in total overhead?' },
+      { zh: '物理机制是否映射为带时空相关和标记质量的电路级通道？', en: 'Are physical mechanisms mapped to a circuit-level channel with correlations and flag quality?' },
+      { zh: '相同噪声条件下，增加码距是否持续降低逻辑错误？', en: 'Under the same noise conditions, does increasing code distance keep lowering logical error?' },
+      { zh: '非 Clifford 资源、译码、维护和失败重试是否计入可信结果成本？', en: 'Do non-Clifford resources, decoding, maintenance and failed retries enter cost per trustworthy result?' },
     ],
   },
   evidence: {

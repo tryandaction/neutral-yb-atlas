@@ -49,6 +49,49 @@
 .fault-chain strong { margin-top: 18px; font: 400 17px/1.2 var(--font-display); }
 .fault-chain p { margin: 11px 0 0; color: var(--muted); font-size: 12px; line-height: 1.58; }
 
+.erasure-assessment {
+  margin: 34px 0;
+  border: 1px solid var(--line-strong);
+  background: #f5f7f5;
+}
+
+.erasure-assessment > header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 22px 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.erasure-assessment > header span { color: var(--vermilion); font-size: 10px; font-weight: 800; }
+.erasure-assessment > header h3 { margin-top: 7px; font-size: 28px; }
+.erasure-assessment > header output { flex: 0 0 auto; padding: 8px 10px; border-left: 3px solid var(--forest); background: var(--white); color: var(--forest); font-size: 13px; font-weight: 750; }
+.erasure-assessment--overhead-dominated > header output,
+.erasure-assessment--record-contaminated > header output { border-left-color: var(--danger); color: var(--danger); }
+
+.erasure-assessment__controls {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  border-bottom: 1px solid var(--line);
+}
+
+.erasure-assessment__controls .resource-number { min-height: 84px; border-bottom: 0; }
+
+.erasure-assessment__flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.erasure-metric { min-width: 0; padding: 18px 16px; border-right: 1px solid var(--line); }
+.erasure-metric:last-child { border-right: 0; }
+.erasure-metric span, .erasure-metric strong { display: block; }
+.erasure-metric span { min-height: 32px; color: var(--muted); font-size: 11px; line-height: 1.4; }
+.erasure-metric strong { margin-top: 10px; font: 400 22px/1 var(--font-display); }
+.erasure-metric i { display: block; height: 3px; margin-top: 14px; background: var(--forest); }
+.erasure-metric--hidden i, .erasure-metric--overhead i { background: var(--vermilion); }
+.erasure-assessment > p { margin: 0; padding: 14px 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; line-height: 1.65; }
+
 .resource-estimator__controls {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -201,6 +244,20 @@
   text-align: center;
 }
 
+@media (max-width: 900px) {
+  .fault-chain > div { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fault-chain article:nth-child(2n) { border-right: 0; }
+  .fault-chain article:nth-child(5) { grid-column: 1 / -1; border-top: 1px solid var(--line); }
+
+  .erasure-assessment__controls { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .erasure-assessment__controls .resource-number:nth-child(5) { grid-column: 1 / -1; }
+  .erasure-assessment__flow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  .scale-cost-logic__sequence { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .scale-cost-logic__sequence span:nth-child(3n) { border-right: 0; }
+  .scale-cost-logic__sequence span:nth-child(-n+3) { border-bottom: 1px solid var(--line); }
+}
+
 @media (max-width: 760px) {
   .resource-estimator {
     padding: 44px 20px 52px;
@@ -215,7 +272,14 @@
 
   .fault-chain > div { grid-template-columns: 1fr; }
   .fault-chain article { min-height: auto; border-right: 0; border-bottom: 1px solid var(--line); }
+  .fault-chain article:nth-child(5) { grid-column: auto; border-top: 0; }
   .fault-chain article:last-child { border-bottom: 0; }
+
+  .erasure-assessment > header { align-items: flex-start; flex-direction: column; }
+  .erasure-assessment__controls,
+  .erasure-assessment__flow { grid-template-columns: 1fr; }
+  .erasure-assessment__controls .resource-number,
+  .erasure-metric { border-right: 0; border-bottom: 1px solid var(--line); }
 
   .resource-number {
     border-right: 0;
@@ -228,7 +292,9 @@
   }
 
   .scale-cost-logic__sequence {
-    overflow-x: auto;
-    grid-template-columns: repeat(6, 132px);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+  .scale-cost-logic__sequence span:nth-child(3n) { border-right: 1px solid var(--line); }
+  .scale-cost-logic__sequence span:nth-child(2n) { border-right: 0; }
+  .scale-cost-logic__sequence span:nth-child(-n+4) { border-bottom: 1px solid var(--line); }
 }

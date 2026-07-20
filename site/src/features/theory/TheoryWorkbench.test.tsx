@@ -16,9 +16,29 @@ it('updates the operating verdict and next laboratory measurement from model con
 it('shows the same detuning change as phase mismatch and predicted gate quality', () => {
   render(<TheoryWorkbench language="en" />)
 
-  const before = screen.getByLabelText('Predicted gate quality').textContent
+  const before = screen.getByLabelText('Teaching quality proxy').textContent
   fireEvent.change(screen.getAllByRole('slider')[2], { target: { value: '2' } })
 
-  expect(screen.getAllByText('Conditional-phase mismatch').length).toBeGreaterThan(0)
-  expect(screen.getByLabelText('Predicted gate quality').textContent).not.toBe(before)
+  expect(screen.getByLabelText('Phase-mismatch proxy')).toHaveTextContent('εφ')
+  expect(screen.getByLabelText('Teaching quality proxy').textContent).not.toBe(before)
+  expect(screen.getAllByText(/not measured fidelity/i).length).toBeGreaterThan(0)
+})
+
+it.each([
+  ['Ωmax / 2π', '4', 'Double-excitation proxy'],
+  ['V / 2π', '60', 'Double-excitation proxy'],
+  ['Δ / 2π', '0.8', 'Phase-mismatch proxy'],
+  ['Temperature', '10', 'Doppler proxy'],
+  ['Rydberg lifetime', '60', 'Decay-exposure proxy'],
+  ['Gate duration', '2.2', 'Decay-exposure proxy'],
+])('makes %s visibly change %s', (control, value, observable) => {
+  render(<TheoryWorkbench language="en" />)
+  const output = screen.getByLabelText(observable)
+  const before = output.textContent
+
+  fireEvent.change(screen.getByLabelText(new RegExp(control.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))), {
+    target: { value },
+  })
+
+  expect(output.textContent).not.toBe(before)
 })

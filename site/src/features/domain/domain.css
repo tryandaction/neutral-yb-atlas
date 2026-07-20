@@ -184,7 +184,15 @@
   gap: 24px;
 }
 
-@media (max-width: 1180px) {
+.domain-main .theory-workbench {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.domain-main .theory-workbench__nav {
+  display: none;
+}
+
+@media (max-width: 1560px) {
   .domain-opening {
     grid-template-columns: 1fr;
     gap: 24px;
@@ -220,10 +228,15 @@
     display: flex;
     gap: 24px;
     overflow-x: auto;
+    scrollbar-width: none;
     border-right: 0;
     border-bottom: 1px solid var(--line);
     padding: 0 24px;
     background: var(--white);
+  }
+
+  .domain-outline::-webkit-scrollbar {
+    display: none;
   }
 
   .domain-outline > strong {
@@ -239,7 +252,7 @@
   }
 
   .domain-main {
-    width: min(100%, 900px);
+    width: min(100%, 1120px);
     margin: 0 auto;
     border-right: 0;
   }

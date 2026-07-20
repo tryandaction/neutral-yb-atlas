@@ -128,10 +128,12 @@
 
 .reference-hotspot-callout {
   position: absolute;
+  --hotspot-callout-half: 75px;
   display: grid;
   gap: 1px;
   min-width: 112px;
   max-width: 150px;
+  left: clamp(var(--hotspot-callout-half), var(--hotspot-label-x), calc(100% - var(--hotspot-callout-half)));
   padding: 7px 9px;
   transform: translate(-50%, -50%);
   border-left: 3px solid currentColor;
@@ -321,6 +323,7 @@
   }
 
   .reference-hotspot-callout {
+    --hotspot-callout-half: 54px;
     min-width: 86px;
     max-width: 108px;
     padding: 5px 6px;

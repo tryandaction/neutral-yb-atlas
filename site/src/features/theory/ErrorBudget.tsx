@@ -11,7 +11,6 @@ const labels = {
   decay: { zh: 'Rydberg 衰变', en: 'Rydberg decay' },
   doppler: { zh: 'Doppler', en: 'Doppler' },
   detuning: { zh: '条件相位失配', en: 'Conditional-phase mismatch' },
-  control: { zh: '控制误差', en: 'Control' },
 }
 
 export default function ErrorBudget({ language, budget }: ErrorBudgetProps) {
