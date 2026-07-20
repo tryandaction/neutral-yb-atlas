@@ -1,36 +1,47 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import TheoryWorkbench from './TheoryWorkbench'
 
-it('updates the operating verdict and next laboratory measurement from model controls', () => {
-  render(<TheoryWorkbench language="zh" />)
-
-  expect(screen.getByText('可用教学工作区')).toBeInTheDocument()
-  expect(screen.getByText(/优先测量 Rydberg 寿命与门内布居/)).toBeInTheDocument()
-
-  fireEvent.change(screen.getByLabelText(/V \/ 2π/), { target: { value: '10' } })
-
-  expect(screen.getByText('超出阻塞工作区')).toBeInTheDocument()
-  expect(screen.getByText(/双原子距离与角度扫描/)).toBeInTheDocument()
-})
-
-it('shows the same detuning change as phase mismatch and predicted gate quality', () => {
+it('shows named physical outputs without a synthetic fidelity or research verdict', () => {
   render(<TheoryWorkbench language="en" />)
 
-  const before = screen.getByLabelText('Teaching quality proxy').textContent
-  fireEvent.change(screen.getAllByRole('slider')[2], { target: { value: '2' } })
+  expect(screen.getByLabelText('Maximum double excitation')).toBeInTheDocument()
+  expect(screen.getByLabelText('Conditional phase')).toBeInTheDocument()
+  expect(screen.getByLabelText('Rydberg exposure')).toBeInTheDocument()
+  expect(screen.getByLabelText('Decay probability')).toBeInTheDocument()
+  expect(screen.queryByText(/Qteach|operating region|next measurement|delivery contract/i)).not.toBeInTheDocument()
+})
 
-  expect(screen.getByLabelText('Phase-mismatch proxy')).toHaveTextContent('εφ')
-  expect(screen.getByLabelText('Teaching quality proxy').textContent).not.toBe(before)
-  expect(screen.getAllByText(/not measured fidelity/i).length).toBeGreaterThan(0)
+it('makes stronger blockade reduce maximum double excitation', () => {
+  render(<TheoryWorkbench language="en" />)
+  const output = screen.getByLabelText('Maximum double excitation')
+  const before = output.textContent
+
+  fireEvent.change(screen.getByLabelText(/V \/ 2π/), { target: { value: '90' } })
+
+  expect(output.textContent).not.toBe(before)
+})
+
+it('shows detuning as a conditional-phase change rather than a fidelity score', () => {
+  render(<TheoryWorkbench language="en" />)
+  const phase = screen.getByLabelText('Conditional phase')
+  const phaseError = screen.getByLabelText('Phase error magnitude')
+  const beforePhase = phase.textContent
+  const beforeError = phaseError.textContent
+
+  fireEvent.change(screen.getByLabelText(/Δ \/ 2π/), { target: { value: '0.8' } })
+
+  expect(phase.textContent).not.toBe(beforePhase)
+  expect(phaseError.textContent).not.toBe(beforeError)
+  expect(screen.queryByText(/fidelity proxy/i)).not.toBeInTheDocument()
 })
 
 it.each([
-  ['Ωmax / 2π', '4', 'Double-excitation proxy'],
-  ['V / 2π', '60', 'Double-excitation proxy'],
-  ['Δ / 2π', '0.8', 'Phase-mismatch proxy'],
-  ['Temperature', '10', 'Doppler proxy'],
-  ['Rydberg lifetime', '60', 'Decay-exposure proxy'],
-  ['Gate duration', '2.2', 'Decay-exposure proxy'],
+  ['Ωmax / 2π', '4', 'Rydberg exposure'],
+  ['V / 2π', '60', 'Maximum double excitation'],
+  ['Δ / 2π', '0.8', 'Phase error magnitude'],
+  ['Temperature', '10', 'Doppler frequency scale'],
+  ['Rydberg lifetime', '60', 'Decay probability'],
+  ['Gate duration', '2.2', 'Rydberg exposure'],
 ])('makes %s visibly change %s', (control, value, observable) => {
   render(<TheoryWorkbench language="en" />)
   const output = screen.getByLabelText(observable)

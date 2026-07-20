@@ -1,5 +1,4 @@
 import {
-  analyzeOperatingPoint,
   blockadeRatio,
   buildErrorBudget,
   buildTeachingObservables,
@@ -16,6 +15,24 @@ const baseline: WorkbenchParameters = {
   rydbergLifetimeUs: 120,
   gateTimeUs: 1.24,
 }
+
+it('returns named physical observables without synthesizing a quality score', () => {
+  const observables = buildTeachingObservables(baseline)
+
+  expect(observables).toEqual(expect.objectContaining({
+    maxDoubleExcitation: expect.any(Number),
+    conditionalPhaseRad: expect.any(Number),
+    phaseErrorRad: expect.any(Number),
+    rydbergExposureUs: expect.any(Number),
+    decayProbability: expect.any(Number),
+    dopplerRmsKhz: expect.any(Number),
+  }))
+  expect(observables).not.toHaveProperty('teachingQuality')
+  expect(buildTeachingObservables({ ...baseline, interactionMHz: 90 }).maxDoubleExcitation)
+    .toBeLessThan(observables.maxDoubleExcitation)
+  expect(buildTeachingObservables({ ...baseline, rydbergLifetimeUs: 60 }).decayProbability)
+    .toBeGreaterThan(observables.decayProbability)
+})
 
 it('computes the blockade ratio and rejects non-physical drive', () => {
   expect(blockadeRatio({ interactionMHz: 45, omegaMHz: 3 })).toBe(15)
@@ -46,7 +63,7 @@ it('returns a normalized teaching error budget', () => {
   expect(budget.reduce((sum, item) => sum + item.fraction, 0)).toBeCloseTo(1)
 })
 
-it('connects detuning to visible phase mismatch and reduced teaching quality', () => {
+it('connects detuning to conditional phase error', () => {
   const resonant = buildTeachingObservables({
     omegaMHz: 3,
     interactionMHz: 45,
@@ -64,36 +81,22 @@ it('connects detuning to visible phase mismatch and reduced teaching quality', (
     gateTimeUs: 1.24,
   })
 
-  expect(detuned.phaseMismatch).toBeGreaterThan(resonant.phaseMismatch)
-  expect(detuned.teachingQuality).toBeLessThan(resonant.teachingQuality)
-  expect(detuned.doubleExcitation).toBeCloseTo(resonant.doubleExcitation)
+  expect(detuned.phaseErrorRad).toBeGreaterThan(resonant.phaseErrorRad)
+  expect(detuned.conditionalPhaseRad).not.toBe(resonant.conditionalPhaseRad)
 })
 
 it.each([
-  ['omegaMHz', 4, 'doubleExcitation'],
-  ['interactionMHz', 60, 'doubleExcitation'],
-  ['detuningMHz', 0.8, 'phaseMismatch'],
-  ['temperatureUk', 10, 'dopplerSensitivity'],
-  ['rydbergLifetimeUs', 60, 'decayExposure'],
-  ['gateTimeUs', 2.2, 'decayExposure'],
+  ['omegaMHz', 4, 'maxDoubleExcitation'],
+  ['interactionMHz', 60, 'maxDoubleExcitation'],
+  ['detuningMHz', 0.8, 'phaseErrorRad'],
+  ['temperatureUk', 10, 'dopplerRmsKhz'],
+  ['rydbergLifetimeUs', 60, 'decayProbability'],
+  ['gateTimeUs', 2.2, 'rydbergExposureUs'],
 ] as const)('maps %s to a visible teaching observable', (parameter, value, observable) => {
   const reference = buildTeachingObservables(baseline)
   const changed = buildTeachingObservables({ ...baseline, [parameter]: value })
 
   expect(changed[observable]).not.toBe(reference[observable])
-  expect(changed.teachingQuality).not.toBe(reference.teachingQuality)
-})
-
-it('defines teaching quality as a bounded proxy rather than measured fidelity', () => {
-  const observables = buildTeachingObservables(baseline)
-  const modeledLoss = observables.doubleExcitation
-    + observables.phaseMismatch
-    + observables.decayExposure
-    + observables.dopplerSensitivity
-
-  expect(observables.teachingQuality).toBeCloseTo(Math.max(0, 1 - modeledLoss))
-  expect(observables.teachingQuality).toBeGreaterThanOrEqual(0)
-  expect(observables.teachingQuality).toBeLessThanOrEqual(1)
 })
 
 it('builds a bounded trajectory whose endpoint and pair leakage respond to the model', () => {
@@ -109,27 +112,11 @@ it('builds a bounded trajectory whose endpoint and pair leakage respond to the m
     .toBeLessThan(Math.max(...weakBlockade.map((point) => point.doubleRydberg)))
 })
 
-it('identifies the dominant error and classifies the operating region', () => {
-  const baseline = analyzeOperatingPoint({
-    omegaMHz: 3,
-    interactionMHz: 45,
-    detuningMHz: 0,
-    temperatureUk: 2.9,
-    rydbergLifetimeUs: 120,
-    gateTimeUs: 1.24,
-  })
-  const weakBlockade = analyzeOperatingPoint({
-    omegaMHz: 8,
-    interactionMHz: 10,
-    detuningMHz: 0,
-    temperatureUk: 2.9,
-    rydbergLifetimeUs: 120,
-    gateTimeUs: 1.24,
-  })
+it('keeps physical probabilities bounded', () => {
+  const observables = buildTeachingObservables(baseline)
 
-  expect(baseline.region).toBe('usable')
-  expect(baseline.dominant).toBe('decay')
-  expect(weakBlockade.region).toBe('outside')
-  expect(weakBlockade.dominant).toBe('blockade')
-  expect(weakBlockade.nextMeasurement).toBe('pair-spectroscopy')
+  expect(observables.maxDoubleExcitation).toBeGreaterThanOrEqual(0)
+  expect(observables.maxDoubleExcitation).toBeLessThanOrEqual(1)
+  expect(observables.decayProbability).toBeGreaterThanOrEqual(0)
+  expect(observables.decayProbability).toBeLessThanOrEqual(1)
 })

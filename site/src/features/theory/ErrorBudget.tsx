@@ -16,7 +16,7 @@ const labels = {
 export default function ErrorBudget({ language, budget }: ErrorBudgetProps) {
   return (
     <div className="error-budget">
-      <div className="error-budget__header"><strong>{language === 'zh' ? '误差预算' : 'Error budget'}</strong><span>TEACHING MODEL</span></div>
+      <div className="error-budget__header"><strong>{language === 'zh' ? '近似误差尺度' : 'Approximate error scales'}</strong><span>TEACHING MODEL · NOT FIDELITY</span></div>
       {budget.map((item) => (
         <div className="error-budget__row" key={item.id}>
           <div><span>{labels[item.id][language]}</span><b>{item.value.toExponential(2)}</b></div>

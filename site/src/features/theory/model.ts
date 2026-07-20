@@ -23,24 +23,14 @@ export interface WorkbenchParameters extends ErrorBudgetParameters {
   detuningMHz: number
 }
 
-export type OperatingRegion = 'usable' | 'marginal' | 'outside'
-export type NextMeasurement = 'pair-spectroscopy' | 'rydberg-lifetime' | 'temperature-scan' | 'detuning-scan'
-
-export interface OperatingPointAnalysis {
-  region: OperatingRegion
-  dominant: ErrorContribution['id']
-  nextMeasurement: NextMeasurement
-  totalError: number
-  ratio: number
-}
-
 export interface TeachingGateObservables {
-  doubleExcitation: number
-  phaseMismatch: number
-  decayExposure: number
-  dopplerSensitivity: number
-  teachingQuality: number
+  maxDoubleExcitation: number
+  conditionalPhaseRad: number
+  phaseErrorRad: number
+  rydbergExposureUs: number
+  decayProbability: number
   dopplerRmsKhz: number
+  dopplerPhaseRmsRad: number
 }
 
 export interface TeachingTrajectoryPoint {
@@ -88,10 +78,10 @@ export function rabiPopulation({ omegaMHz, detuningMHz, timeUs }: RabiParameters
 export function buildErrorBudget(parameters: ErrorBudgetParameters): ErrorContribution[] {
   const observables = buildTeachingObservables({ ...parameters, detuningMHz: parameters.detuningMHz ?? 0 })
   const raw = [
-    { id: 'blockade' as const, value: observables.doubleExcitation },
-    { id: 'decay' as const, value: observables.decayExposure },
-    { id: 'doppler' as const, value: observables.dopplerSensitivity },
-    { id: 'detuning' as const, value: observables.phaseMismatch },
+    { id: 'blockade' as const, value: observables.maxDoubleExcitation },
+    { id: 'decay' as const, value: observables.decayProbability },
+    { id: 'doppler' as const, value: clampProbability(observables.dopplerPhaseRmsRad ** 2) },
+    { id: 'detuning' as const, value: clampProbability(observables.phaseErrorRad ** 2) },
   ]
   const total = raw.reduce((sum, item) => sum + item.value, 0)
   return raw.map((item) => ({ ...item, fraction: total === 0 ? 0 : item.value / total }))
@@ -103,20 +93,27 @@ export function buildErrorBudget(parameters: ErrorBudgetParameters): ErrorContri
  */
 export function buildTeachingObservables(parameters: WorkbenchParameters): TeachingGateObservables {
   assertWorkbenchParameters(parameters)
-  const ratio = blockadeRatio(parameters)
+  const trajectory = buildTeachingTrajectory(parameters)
   const dopplerMHz = dopplerRmsMHz(parameters.temperatureUk)
-  const doubleExcitation = clampProbability(0.5 / ratio ** 2)
-  const phaseMismatch = clampProbability((parameters.detuningMHz / parameters.omegaMHz) ** 2)
-  const decayExposure = clampProbability(0.5 * parameters.gateTimeUs / parameters.rydbergLifetimeUs)
-  const dopplerSensitivity = clampProbability((dopplerMHz / parameters.omegaMHz) ** 2)
-  const teachingQuality = clampProbability(1 - doubleExcitation - phaseMismatch - decayExposure - dopplerSensitivity)
+  const dtUs = parameters.gateTimeUs / (trajectory.length - 1)
+  const rydbergExposureUs = trajectory.slice(1).reduce((sum, point, index) => {
+    const previous = trajectory[index]
+    const previousExcitations = previous.rydberg + 2 * previous.doubleRydberg
+    const currentExcitations = point.rydberg + 2 * point.doubleRydberg
+    return sum + 0.5 * (previousExcitations + currentExcitations) * dtUs
+  }, 0)
+  const phaseOffsetRad = 2 * Math.PI * parameters.detuningMHz * rydbergExposureUs
+  const phaseErrorRad = Math.abs(phaseOffsetRad)
+  const dopplerPhaseRmsRad = 2 * Math.PI * dopplerMHz * rydbergExposureUs
+
   return {
-    doubleExcitation,
-    phaseMismatch,
-    decayExposure,
-    dopplerSensitivity,
-    teachingQuality,
+    maxDoubleExcitation: Math.max(...trajectory.map((point) => point.doubleRydberg)),
+    conditionalPhaseRad: Math.PI + phaseOffsetRad,
+    phaseErrorRad,
+    rydbergExposureUs,
+    decayProbability: clampProbability(1 - Math.exp(-rydbergExposureUs / parameters.rydbergLifetimeUs)),
     dopplerRmsKhz: dopplerMHz * 1000,
+    dopplerPhaseRmsRad,
   }
 }
 
@@ -129,7 +126,8 @@ export function buildTeachingTrajectory(parameters: WorkbenchParameters, samples
   assertWorkbenchParameters(parameters)
   if (!Number.isInteger(samples) || samples < 2) throw new Error('samples must be an integer greater than one')
 
-  const leakage = buildTeachingObservables(parameters).doubleExcitation
+  const ratio = blockadeRatio(parameters)
+  const leakage = clampProbability(0.5 / ratio ** 2)
   const thermalMHz = dopplerRmsMHz(parameters.temperatureUk)
   return Array.from({ length: samples }, (_, index) => {
     const timeUs = index / (samples - 1) * parameters.gateTimeUs
@@ -145,29 +143,4 @@ export function buildTeachingTrajectory(parameters: WorkbenchParameters, samples
     const rydberg = excited - doubleRydberg
     return { timeUs, computational: 1 - excited, rydberg, doubleRydberg }
   })
-}
-
-export function analyzeOperatingPoint(parameters: WorkbenchParameters): OperatingPointAnalysis {
-  const ratio = blockadeRatio(parameters)
-  const budget = buildErrorBudget(parameters)
-  const dominant = budget.reduce((largest, item) => item.value > largest.value ? item : largest)
-  const totalError = budget.reduce((sum, item) => sum + item.value, 0)
-  const nextByError: Record<ErrorContribution['id'], NextMeasurement> = {
-    blockade: 'pair-spectroscopy',
-    decay: 'rydberg-lifetime',
-    doppler: 'temperature-scan',
-    detuning: 'detuning-scan',
-  }
-
-  if (Math.abs(parameters.detuningMHz) > 1) {
-    return { region: 'outside', dominant: dominant.id, nextMeasurement: 'detuning-scan', totalError, ratio }
-  }
-
-  const region: OperatingRegion = ratio < 8 || totalError > 0.03
-    ? 'outside'
-    : totalError > 0.012 || ratio < 10
-      ? 'marginal'
-      : 'usable'
-
-  return { region, dominant: dominant.id, nextMeasurement: nextByError[dominant.id], totalError, ratio }
 }

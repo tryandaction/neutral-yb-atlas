@@ -112,6 +112,19 @@ it('derives neutral-atom and Yb choices from a fixed task and decoder-visible re
   expect(JSON.stringify(ytterbium)).toMatch(/Rydberg.*计算子空间.*检测.*漏报.*误报.*解码器.*逻辑错误率/s)
 })
 
+it('derives an accepted gate from levels, dynamics and discriminating evidence', () => {
+  const gates = chapters.find((chapter) => chapter.id === 'gates')!
+
+  expect(gates.sections.map((section) => section.id)).toEqual([
+    'levels-to-controls',
+    'single-atom-drive',
+    'blockade-to-controlled-phase',
+    'gate-evidence',
+  ])
+  expect(JSON.stringify(gates)).toMatch(/能级.*哈密顿量.*阻塞.*条件相位.*真值表.*Bell.*泄漏/s)
+  expect(JSON.stringify(gates)).not.toMatch(/理论交付|下一项测量|放行合同/)
+})
+
 it('requires a source and unit for confirmed numeric evidence', () => {
   const confirmed = evidenceEntries.filter((entry) =>
     entry.status.startsWith('confirmed'),
