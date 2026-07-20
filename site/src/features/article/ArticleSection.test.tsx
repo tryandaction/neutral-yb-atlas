@@ -22,6 +22,14 @@ const section: ArticleSectionData = {
   },
 }
 
+const explainedSection = {
+  ...section,
+  equationNote: {
+    zh: '该式给出共振两能级近似下的激发态布居；Omega 是 Rabi 角频率，t 是脉冲时长，忽略衰减与失谐。',
+    en: 'This gives excited-state population in the resonant two-level approximation; Omega is the Rabi angular frequency and t is pulse duration, while decay and detuning are omitted.',
+  },
+} as ArticleSectionData
+
 it('renders localized article content and a KaTeX equation without an implementation ledger', () => {
   const { container } = render(
     <ArticleSection language="en" section={section} />,
@@ -34,3 +42,10 @@ it('renders localized article content and a KaTeX equation without an implementa
   expect(screen.queryByText('Repeatable pi pulse')).not.toBeInTheDocument()
   expect(container.querySelector('[contenteditable="true"]')).toBeNull()
 }, 20000)
+
+it('renders the physical interpretation directly below an equation', () => {
+  render(<ArticleSection language="en" section={explainedSection} />)
+
+  expect(screen.getByText(/resonant two-level approximation/)).toBeInTheDocument()
+  expect(screen.getByText(/decay and detuning are omitted/)).toBeInTheDocument()
+})

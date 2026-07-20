@@ -5,7 +5,7 @@ export const evidenceEntries: EvidenceEntry[] = [
     id: 'divincenzo-criteria',
     label: { zh: 'DiVincenzo 物理实现准则', en: 'DiVincenzo implementation criteria' },
     domain: 'architecture', value: 'implementation criteria', status: 'confirmed',
-    note: { zh: '用于检查可扩展量子硬件是否具备初始化、相干、通用门与读出的必要接口；它不是容错阈值或平台排名。', en: 'A checklist for initialization, coherence, universal control and readout interfaces; it is neither a fault-tolerance threshold nor a platform ranking.' },
+    note: { zh: '原文给出五项量子计算物理实现要求，并另列两项量子通信要求。五项处理器条件涵盖可表征量子比特、初始化、相关相干时间、通用门集和指定量子比特测量；它不是容错阈值或平台排名。', en: 'The original paper gives five requirements for physical quantum computation and two additional requirements for quantum communication. The processor five cover characterized qubits, initialization, relevant coherence, a universal gate set and qubit-specific measurement; they are neither a fault-tolerance threshold nor a platform ranking.' },
     source: { citation: 'DiVincenzo, The Physical Implementation of Quantum Computation (2000)', url: 'https://doi.org/10.1002/1521-3978(200009)48:9/11%3C771::AID-PROP771%3E3.0.CO;2-E' },
   },
   {

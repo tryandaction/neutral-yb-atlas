@@ -16,10 +16,10 @@ export interface DomainDefinition {
 
 export const domainDefinitions: Record<Exclude<RouteId, 'overview'>, DomainDefinition> = {
   foundations: {
-    title: { zh: '计算如何落在中性原子上', en: 'How computation is embodied in neutral atoms' },
+    title: { zh: '从计算定义到物理实现', en: 'From computation to physical implementation' },
     thesis: {
-      zh: '从可验证输入—输出映射出发，用 DiVincenzo 准则检查物理接口，再在固定纠错任务下比较中性原子与其他硬件路线。',
-      en: 'Start from a verifiable input-output map, use the DiVincenzo criteria to test physical interfaces, then compare neutral atoms with other hardware routes under a fixed correction task.',
+      zh: '先用可检验的测量统计定义计算，再逐项检查 DiVincenzo 五项处理器条件；只有在此基础上，才能在固定纠错任务下比较中性原子与其他硬件路线。',
+      en: 'Define computation through testable measurement statistics, then examine the five DiVincenzo processor conditions one by one; only then compare neutral atoms with other hardware routes under a fixed correction task.',
     },
     outline: [
       { id: 'quantum-foundations', label: { zh: '计算与物理实现准则', en: 'Computation and implementation criteria' } },

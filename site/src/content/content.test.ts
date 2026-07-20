@@ -25,11 +25,40 @@ it('organizes the opening chapters around physical computability and the Yb inte
   expect(chapters[2].question.zh).toMatch(/Rb.*Cs.*Sr/)
 
   const openingCopy = chapters.slice(0, 3).flatMap((chapter) => chapter.sections.map((section) => section.body.zh)).join('\n')
-  expect(openingCopy).toMatch(/状态空间.*初始化.*相干.*通用门.*测量/s)
+  const divincenzo = chapters[0].sections.find((section) => section.id === 'divincenzo-criteria')!
+  expect(divincenzo.keyPoints?.map((point) => point.title.zh).join(' ')).toMatch(/可扩展.*初始化.*相干.*通用门.*测量/)
   expect(openingCopy).toMatch(/超导.*离子阱.*光子.*中性原子/s)
   expect(openingCopy).toMatch(/Rb.*Cs.*Sr.*171Yb/s)
   expect(openingCopy).toMatch(/误报.*漏报.*残余 Pauli.*周期/s)
   expect(openingCopy).not.toMatch(/一次有效 shot 通常依次包含/)
+})
+
+it('teaches the five DiVincenzo computation criteria as distinct physical requirements', () => {
+  const foundations = chapters.find((chapter) => chapter.id === 'quantum-foundations')!
+  const criterion = foundations.sections.find((section) => section.id === 'divincenzo-criteria') as typeof foundations.sections[number] & {
+    keyPoints?: Array<{ title: { zh: string; en: string }; body: { zh: string; en: string } }>
+  }
+
+  expect(criterion.keyPoints).toHaveLength(5)
+  expect(criterion.keyPoints?.map((item) => item.title.zh).join(' ')).toMatch(/可扩展.*初始化.*相干.*通用门集.*测量/)
+  expect(criterion.body.zh).toMatch(/两项.*量子通信/)
+  expect(criterion.equation).toBeUndefined()
+})
+
+it('places each chapter equation next to its physical meaning and scope', () => {
+  const formulaSections = chapters.flatMap((chapter) => chapter.sections).filter((section) => section.equation)
+
+  expect(formulaSections).not.toHaveLength(0)
+  expect(formulaSections.every((section) => {
+    const explained = section as typeof section & { equationNote?: { zh: string; en: string } }
+    return explained.equationNote?.zh.length && explained.equationNote.en.length
+  })).toBe(true)
+
+  const universality = chapters[0].sections.find((section) => section.id === 'entanglement-error-correction') as typeof chapters[number]['sections'][number] & {
+    equationNote?: { zh: string; en: string }
+  }
+  expect(universality.equation).toContain('U_{AB}')
+  expect(universality.equationNote?.zh).toMatch(/U_A.*U_B.*不可分解/)
 })
 
 it('connects universal fault tolerance to a conditional resource and cost argument', () => {

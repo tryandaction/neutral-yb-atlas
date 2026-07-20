@@ -6,6 +6,11 @@ export interface LocalizedText {
   en: string
 }
 
+export interface ArticleKeyPoint {
+  title: LocalizedText
+  body: LocalizedText
+}
+
 export interface ResearchEquation {
   expression: string
   explanation: LocalizedText
@@ -32,7 +37,9 @@ export interface ArticleSection {
   id: string
   title: LocalizedText
   body: LocalizedText
+  keyPoints?: ArticleKeyPoint[]
   equation?: string
+  equationNote?: LocalizedText
   takeaway?: LocalizedText
   research?: ResearchDetail
 }

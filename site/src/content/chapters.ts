@@ -13,27 +13,57 @@ export const chapters: Chapter[] = [
         id: 'state-measurement',
         title: { zh: '计算是可验证的状态变换', en: 'Computation is a verifiable state transformation' },
         body: {
-          zh: '计算把编码输入的物理状态按规则映射为可判定输出。量子计算以状态空间中的相干叠加承载信息，以幺正演化组织算法，以测量产生经典答案；因此“有两个能级”只解决了表示问题。只有当状态可初始化、演化可组合、输出可区分，且重复运行给出受控统计分布时，这组能级才构成计算系统。泄漏态与原子损失后的真空态也必须进入输出字母表，否则后选择会把故障伪装成高保真度。',
-          en: 'Computation maps a physically encoded input state to a decidable output under a specified rule. Quantum computation stores information in coherent superpositions, composes an algorithm from unitary evolution and produces a classical answer by measurement; two energy levels solve only the representation problem. They form a computing system only when states can be initialized, transformations compose, outputs are distinguishable and repeated runs return a controlled distribution. Leakage and vacuum after atom loss must remain in the output alphabet, or postselection can disguise failure as fidelity.',
+          zh: '计算首先规定一个可重复的输入—输出实验：制备某个编码状态，施加控制，再按预先定义的测量规则产生经典记录。量子态可以是纯态，也可以是混态；实验真正比较的是给定状态下各测量结果的概率，而不是“是否存在两个能级”。因此计算空间、泄漏态和原子损失后的真空态必须一起进入结果分类。若只保留成功样本，任何损失或泄漏都会被后选择移出统计量，保真度就不再描述实际计算过程。',
+          en: 'Computation first specifies a repeatable input-output experiment: prepare an encoded state, apply controls and generate a classical record under a predeclared measurement rule. A quantum state may be pure or mixed; the laboratory compares probabilities of measurement outcomes, not the mere existence of two energy levels. The computational space, leakage states and vacuum after atom loss must therefore all enter the outcome classifier. If only successful shots are retained, loss and leakage leave the statistic through postselection and the reported fidelity no longer describes the computation.',
         },
-        equation: String.raw`|\psi\rangle=\alpha|0\rangle+\beta|1\rangle,\qquad |\alpha|^2+|\beta|^2=1`,
+        equation: String.raw`p(m|\rho)=\operatorname{Tr}(E_m\rho),\qquad \sum_m E_m=\mathbb I`,
+        equationNote: {
+          zh: '该式把“输出可判定”写成可检验对象：ρ 是制备后、测量前的密度算符；{E_m} 是包含计算态、泄漏和真空结果的 POVM；p(m|ρ) 是重复实验中结果 m 的概率。它不假设状态纯净，也不描述门如何实现。',
+          en: 'This writes decidable output as a testable object: rho is the density operator before measurement; {E_m} is a POVM that includes computational, leakage and vacuum outcomes; p(m|rho) is the repeated-trial probability of result m. It assumes neither a pure state nor a gate implementation.',
+        },
         research: researchDetails['state-measurement'],
       },
       {
-        id: 'unitary-gates',
+        id: 'divincenzo-criteria',
         title: { zh: 'DiVincenzo 准则检查物理接口', en: 'The DiVincenzo criteria test the physical interfaces' },
         body: {
-          zh: 'DiVincenzo 的五项准则把上述逻辑翻译为硬件接口：可扩展且可表征的量子比特状态空间；可把系统初始化到简单基准态；相干时间显著长于操作时间；可实现通用门集；可对指定量子比特测量。它们是构造通用量子计算机的必要条件，而不是某个容错码的阈值，也不对平台排序。尤其是“长相干”和“高保真门”必须在同一完整周期内比较，孤立组件的最佳数值不能证明准则已在规模化运行中同时成立。',
-          en: 'The five DiVincenzo criteria translate this logic into hardware interfaces: a scalable and characterized qubit state space, initialization to a simple fiducial state, coherence long compared with operation time, a universal gate set, and qubit-specific measurement. They are necessary conditions for universal quantum computation, not the threshold of a fault-tolerant code and not a platform ranking. Long coherence and high-fidelity control must coexist in the same complete cycle; best-case component numbers do not show that the criteria remain jointly satisfied at scale.',
+          zh: 'DiVincenzo 将“能否计算”落实为五项处理器条件；原文另列两项量子通信条件，本图谱在这里讨论的是单台量子处理器必须同时具备的五项。它们不是评分表：缺少任一项，其他四项的最佳指标也不能组成可执行的通用计算。它们更不是容错阈值或平台排名。对原子阵列而言，证据必须来自同一可重复周期中的状态定义、制备、控制和读出记录，而不能由不同实验日的单项最佳数字拼接。',
+          en: 'DiVincenzo turns the question of computability into five processor requirements; the original paper separately gives two requirements for quantum communication, while this atlas treats the five required for one quantum processor. They are not a scorecard: without any one of them, the best values of the other four do not compose into executable universal computation. They are neither a fault-tolerance threshold nor a platform ranking. For an atom array, evidence must come from state definition, preparation, control and readout records within one repeatable cycle, not from isolated best numbers on different days.',
         },
-        equation: String.raw`U(T)=\mathcal{T}\exp\!\left[-\frac{i}{\hbar}\int_0^T H(t)\,dt\right]`,
+        keyPoints: [
+          {
+            title: { zh: '可扩展且可表征的量子比特', en: 'Scalable, well-characterized qubits' },
+            body: { zh: '必须给出计算子空间、泄漏与损失结果、站点差异和串扰的定义；“原子相同”不能替代这些表征。', en: 'Define the computational space, leakage and loss outcomes, site variation and crosstalk; atomic identity does not replace characterization.' },
+          },
+          {
+            title: { zh: '初始化到简单基准态', en: 'Initialization to a fiducial state' },
+            body: { zh: '制备应把阵列带到已知输入，并报告残余占据、误分类和复位失败；否则算法输入本身不确定。', en: 'Preparation must create a known input and report residual population, misclassification and reset failure; otherwise the algorithm begins from an unknown state.' },
+          },
+          {
+            title: { zh: '相关相干时间长于操作时间', en: 'Relevant coherence exceeds operation time' },
+            body: { zh: '比较对象是完整门、测量、移动和反馈周期中的退相干，而不是脱离控制条件的一条 T2 数字。', en: 'Compare decoherence over complete gates, measurement, motion and feedback, rather than one T2 value detached from operating conditions.' },
+          },
+          {
+            title: { zh: '通用门集', en: 'A universal gate set' },
+            body: { zh: '任意单比特控制还不够；必须有可组合的纠缠门，并验证相位、泄漏和重复门误差。', en: 'Arbitrary single-qubit control is insufficient; a composable entangling gate is required, with phase, leakage and repeated-gate error verified.' },
+          },
+          {
+            title: { zh: '指定量子比特的测量', en: 'Qubit-specific measurement' },
+            body: { zh: '读出必须把目标量子比特映射为可校准记录；纠错还会额外要求中途测量、复位和经典反馈的时序。', en: 'Readout must map each target qubit to a calibrated record; QEC additionally imposes timing requirements on mid-circuit measurement, reset and classical feedback.' },
+          },
+        ],
       },
       {
         id: 'entanglement-error-correction',
         title: { zh: '通用性需要条件动力学', en: 'Universality requires conditional dynamics' },
         body: {
-          zh: '任意单量子比特旋转仍可分解为各比特的独立演化；通用多比特计算还需要不能写成单体操作乘积的纠缠门。状态依赖相互作用产生条件动力学，把一个量子比特的状态写入另一个的相位。真值表只能检查布居映射，不能证明相干纠缠；验收还要测条件相位、Bell 奇偶和门后泄漏。通用门集说明算法原则上可编译，容错实现则进一步要求单个故障不会在纠错完成前扩散成不可纠正错误。',
-          en: 'Arbitrary single-qubit rotations still factor into independent evolution. Universal multiqubit computation also needs an entangling gate whose propagator cannot be written as a product of one-body operations. A state-dependent interaction writes one qubit state into another qubit phase. A truth table checks population transfer but not coherent entanglement; acceptance must also measure conditional phase, Bell parity and post-gate leakage. A universal gate set makes algorithms compilable in principle, whereas a fault-tolerant implementation additionally prevents one fault from spreading beyond the code capacity before correction.',
+          zh: '第四项准则中的“通用门集”有一个不可替代的多体条件：任意单比特旋转仍可写成各比特的独立演化，不能产生纠缠。两原子门必须通过状态依赖相互作用使联合传播子不可分解，从而把一个比特的信息写进另一个比特的相位。真值表只检验布居映射；条件相位、Bell 奇偶、计算子空间泄漏和重复门增长才检验相干的双体作用。通用性说明算法可编译，容错实现还要限制单个故障在纠错完成前的传播。',
+          en: 'The universal-gate requirement contains an irreducible many-body condition: arbitrary single-qubit rotations still factor into independent evolutions and cannot create entanglement. A two-atom gate must use a state-dependent interaction so that the joint propagator cannot factor, writing one qubit into another qubit phase. A truth table tests population mapping only; conditional phase, Bell parity, computational-subspace leakage and repeated-gate growth test coherent two-body action. Universality makes algorithms compilable; fault tolerance additionally limits how one fault spreads before correction.',
+        },
+        equation: String.raw`U_{AB}\ne U_A\otimes U_B`,
+        equationNote: {
+          zh: 'UAB 是两量子比特在一次门后的联合传播子；U_A 与 U_B 是各自的单比特传播子。联合演化若能写成 U_A⊗U_B，就没有产生纠缠；不可分解并不自动证明门正确，但它给出纠缠门必须满足的结构条件。条件相位和奇偶测量再检验该条件是否以目标方式实现。',
+          en: 'UAB is the joint two-qubit propagator after one gate, while U_A and U_B are the single-qubit propagators. If joint evolution factors as U_A tensor U_B, it cannot create entanglement; non-factorization does not itself prove a correct gate, but it is the structural requirement for one. Conditional-phase and parity measurements then test whether that condition is realized as intended.',
         },
       },
       {
@@ -69,6 +99,10 @@ export const chapters: Chapter[] = [
           en: 'Atoms of one isotope need not be fabricated device by device, and imaging plus rearrangement can produce regular tweezer geometries. Ground-state atoms interact weakly for storage; brief Rydberg excitation shifts the doubly excited state and generates a conditional phase, giving isolation while idle and coupling during a gate. Array geometry can also change between algorithmic stages. The exchange is stochastic loading, atom loss, motional heating, laser phase and intensity inhomogeneity, and Rydberg decay inside the correction cycle. Identical atoms do not imply identical site controls.',
         },
         equation: String.raw`V(R)=\frac{C_6}{R^6},\qquad R_b=\left(\frac{|C_6|}{\hbar\Omega}\right)^{1/6}`,
+        equationNote: {
+          zh: 'V(R) 是两原子同时进入目标 Rydberg 态时、相距 R 所产生的范德瓦耳斯能移；C6 是该选定原子态与角动量通道的色散系数。Rb 由 |V|=ℏΩ 定义，Ω 是有效 Rydberg 驱动角频率。该近似要求远离 Förster 共振并忽略角度、多通道与运动平均；实际门需用双原子谱测得的 V(R,θ) 校验。',
+          en: 'V(R) is the van der Waals energy shift when two atoms separated by R occupy the selected Rydberg state; C6 belongs to that atomic state and angular channel. Rb is defined by |V| = hbar Omega, with Omega the effective Rydberg-drive angular frequency. This approximation assumes detuning from Förster resonances and neglects angular, multichannel and motional averaging; an actual gate requires pair-spectroscopy data for V(R,theta).',
+        },
         research: researchDetails['cool-trap-image'],
       },
       {
@@ -147,6 +181,10 @@ export const chapters: Chapter[] = [
           en: 'After choosing a computational state and a Rydberg state, laser amplitude, phase and detuning determine the effective rotating-frame Hamiltonian. The Rabi frequency contains electric-field amplitude, transition dipole matrix elements and angular coefficients, so equal optical power is not directly comparable across transitions. The rotating-wave approximation removes rapidly oscillating counter-rotating terms and is controlled by scale separation between carrier frequency, coupling and detuning; strong drive or nearby multilevel structure requires a larger model.',
         },
         equation: String.raw`H_1/\hbar=\frac{\Omega(t)}{2}\left(e^{i\phi(t)}|r\rangle\langle1|+\mathrm{h.c.}\right)-\Delta(t)|r\rangle\langle r|`,
+        equationNote: {
+          zh: '这是旋转波近似和旋转框架下的两能级有效哈密顿量：|1⟩ 是被耦合的计算态，|r⟩ 是指定 Rydberg 态；Ω(t)、φ(t)、Δ(t) 分别是原子面 Rabi 角频率、驱动相位与失谐。它用于把可校准的光学波形映射到单原子传播子；强驱动、邻近多能级或快速相位调制时必须扩大模型。',
+          en: 'This is the two-level effective Hamiltonian in a rotating frame and rotating-wave approximation: |1> is the coupled computational state, |r> the selected Rydberg state, and Omega(t), phi(t), Delta(t) are atom-plane Rabi angular frequency, drive phase and detuning. It maps calibrated optical waveforms to a one-atom propagator; strong drive, nearby multilevel structure or rapid phase modulation require a larger model.',
+        },
       },
       {
         id: 'controlled-phase',
@@ -156,6 +194,10 @@ export const chapters: Chapter[] = [
           en: 'When two atoms are driven, the symmetric singly excited state evolves with an enhanced Rabi frequency while the doubly excited Rydberg state is shifted out of resonance by interactions. The gate objective is not merely to prevent double excitation, but to return all four computational basis states to the computational subspace with the correct relative phase. The conventional pi–2pi–pi sequence is intuitive; modern high-fidelity gates often shape phase, amplitude or detuning continuously to reduce Rydberg population and parameter sensitivity.',
         },
         equation: String.raw`H=H_1^{(a)}+H_1^{(b)}+\hbar V|rr\rangle\langle rr|`,
+        equationNote: {
+          zh: 'Ha 与 Hb 是两颗原子各自的受驱动哈密顿量；最后一项只在 |rr⟩ 双激发态上加入相互作用能 ℏV。阻塞门依赖 |V| 显著大于驱动带宽，使双激发失谐并留下可控条件相位。该最小模型不包含自发辐射、Doppler、旁观态或空间相关噪声；这些必须以主方程或电路级通道补入。',
+          en: 'Ha and Hb are the driven Hamiltonians of the two atoms, while the final term adds interaction energy hbar V only to the double excitation |rr>. A blockade gate relies on |V| being large compared with the drive bandwidth so double excitation is detuned and a controlled phase remains. This minimal model omits spontaneous emission, Doppler shifts, spectator states and spatially correlated noise, which must enter through a master equation or circuit-level channel.',
+        },
         research: researchDetails['controlled-phase'],
       },
       {
@@ -251,6 +293,10 @@ export const chapters: Chapter[] = [
           en: 'Optimal control is more than matching a noiseless propagator to CZ. The objective must penalize leakage, bandwidth, amplitude, phase discontinuity, optical power and overlap with measured noise spectra, while evaluating distributions of temperature, detuning, Rabi inhomogeneity and interaction variation. An implementable pulse must retain optimization history, hardware-filtered waveforms and informative failures; otherwise the laboratory cannot distinguish physical robustness from numerical accident.',
         },
         equation: String.raw`\mathcal{J}=1-F+\lambda_LP_{\rm leak}+\lambda_S\!\int|\dot u|^2dt+\lambda_R\!\int S(\omega)R(\omega)d\omega`,
+        equationNote: {
+          zh: 'J 是用于脉冲优化的目标函数，不是实验测得的门误差。F 是相对于目标门的过程保真度或经明确选择的等价指标；Pleak 是规定终态集合外的泄漏概率；u(t) 是控制波形；S(ω) 与 R(ω) 分别是实测噪声谱和控制滤波响应；λL、λS、λR 是无量纲权重。该式只有在保真度定义、硬件带宽和噪声谱均被锁定后才能比较候选脉冲。',
+          en: 'J is a pulse-optimization objective, not an experimentally measured gate error. F is process fidelity to the target gate or a declared equivalent metric; Pleak is probability outside a specified final-state set; u(t) is the control waveform; S(omega) and R(omega) are the measured noise spectrum and control filter response; lambdaL, lambdaS and lambdaR are dimensionless weights. Candidate pulses are comparable only after the fidelity convention, hardware bandwidth and noise spectrum are fixed.',
+        },
       },
       {
         id: 'theory-delivery-contract',
@@ -285,6 +331,10 @@ export const chapters: Chapter[] = [
           en: 'The argument must remain traceable: a physical mechanism produces gate-level faults; those faults form a spatiotemporally correlated circuit-level channel in the syndrome circuit; measurements and flags form the decoder record; the decoder returns a recovery or Pauli frame; repeated trials finally yield logical error per cycle or logical gate. Aggregate fidelity mixes Pauli error, coherent bias, leakage, erasure and atom loss and cannot directly support a threshold claim. Channel mapping must also preserve false positives, false negatives, crosstalk and conditioning conventions, or the simulation describes a different machine.',
         },
         equation: String.raw`\mathcal{N}=(1-p_e-p_p-p_l)\mathcal{I}+p_e\mathcal{E}_{e}+p_p\mathcal{E}_{p}+p_l\mathcal{E}_{l}`,
+        equationNote: {
+          zh: 'N 是一次门或一次周期交给电路模拟器的有效量子通道；I 表示无故障演化，Ee、Ep、El 分别表示已标记擦除、计算子空间内 Pauli 类故障和泄漏/损失后的条件通道，pe、pp、pl 是与这些定义一致的概率。它是便于说明的混合模型：若故障具有相干偏置、时间相关或标签混淆，就必须扩展为带经典记录和时空相关的条件通道。',
+          en: 'N is the effective quantum channel supplied to a circuit simulation for one gate or one cycle. I denotes fault-free evolution; Ee, Ep and El denote flagged erasure, in-subspace Pauli-like fault and leakage/loss conditional channels, with pe, pp and pl probabilities under those definitions. This is an explanatory mixture model: coherent bias, temporal correlation or flag confusion requires a conditional channel with classical records and spatiotemporal correlations.',
+        },
       },
       {
         id: 'open-challenges',
