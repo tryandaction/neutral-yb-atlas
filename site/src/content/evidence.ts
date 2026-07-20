@@ -37,6 +37,20 @@ export const evidenceEntries: EvidenceEntry[] = [
     source: { citation: 'Bluvstein et al., Logical quantum processor based on reconfigurable atom arrays (2024)', url: 'https://doi.org/10.1038/s41586-023-06927-3' },
   },
   {
+    id: 'neutral-atom-universal-fault-tolerance',
+    label: { zh: '中性原子通用容错架构', en: 'Universal fault-tolerant neutral-atom architecture' },
+    domain: 'architecture', value: 'fault-tolerant architecture', status: 'confirmed',
+    note: { zh: '实验整合低于阈值的纠错、容错逻辑操作、任意幺正综合和深电路中的物理错误移除；结论属于该处理器、代码、调度与噪声条件。', en: 'The experiment integrates below-threshold correction, fault-tolerant logical operations, arbitrary-unitary synthesis and physical-error removal in deep circuits; conclusions apply to its processor, codes, schedules and noise conditions.' },
+    source: { citation: 'A fault-tolerant neutral-atom architecture for universal quantum computation (2025)', url: 'https://doi.org/10.1038/s41586-025-09848-5' },
+  },
+  {
+    id: 'yb-logical-erasure-qubits',
+    label: { zh: '亚稳态 Yb 擦除逻辑比特', en: 'Metastable-Yb logical qubits with erasure conversion' },
+    domain: 'architecture', value: 'logical erasure experiment', status: 'confirmed',
+    note: { zh: '实验把中途擦除记录用于小型逻辑码，并检验输运与门控制下的逻辑操作；它连接门级擦除检测与逻辑编码，但不等同于任意码距的持续缩放。', en: 'The experiment uses mid-circuit erasure records in small logical codes and tests logical operation under transport and gate control; it connects gate-level detection to encoding without establishing sustained scaling at arbitrary distance.' },
+    source: { citation: 'Logical qubits with erasure conversion using metastable neutral atoms, Nature Physics (2026)', url: 'https://doi.org/10.1038/s41567-026-03309-0' },
+  },
+  {
     id: 'logical-error-scaling',
     label: { zh: '码距缩放的逻辑判据', en: 'Logical criterion from code-distance scaling' },
     domain: 'architecture', value: 'logical scaling test', status: 'confirmed',

@@ -8,7 +8,7 @@ it('keeps seven Chinese and English chapters paired', () => {
   for (const chapter of chapters) {
     expect(chapter.title.zh).toBeTruthy()
     expect(chapter.title.en).toBeTruthy()
-    expect(chapter.sections.length).toBeGreaterThanOrEqual(4)
+    expect(chapter.sections.length).toBeGreaterThanOrEqual(3)
 
     for (const section of chapter.sections) {
       const primaryCopy = section.answer ?? section.body
@@ -93,6 +93,23 @@ it('keeps platform and species claims comparative rather than absolute', () => {
 
   expect(comparativeCopy).not.toMatch(/最佳平台|全面优于|天然容错|必然降低/)
   expect(comparativeCopy).toMatch(/固定.*任务|同一.*口径/)
+})
+
+it('derives neutral-atom and Yb choices from a fixed task and decoder-visible records', () => {
+  const neutralAtoms = chapters.find((chapter) => chapter.id === 'neutral-atoms')!
+  const ytterbium = chapters.find((chapter) => chapter.id === 'why-yb')!
+
+  expect(neutralAtoms.sections.map((section) => section.id)).toEqual([
+    'fix-the-computational-task',
+    'neutral-atom-exchange',
+    'platform-decision',
+  ])
+  expect(ytterbium.sections.map((section) => section.id)).toEqual([
+    'compare-the-functional-chain',
+    'why-171yb',
+    'erasure-information-chain',
+  ])
+  expect(JSON.stringify(ytterbium)).toMatch(/Rydberg.*计算子空间.*检测.*漏报.*误报.*解码器.*逻辑错误率/s)
 })
 
 it('requires a source and unit for confirmed numeric evidence', () => {

@@ -1,6 +1,8 @@
 import type { Chapter } from '../types/content'
 import { researchDetails } from './researchDetails'
 import { foundationsChapter } from './learning/foundations'
+import { neutralAtomsChapter } from './learning/neutralAtoms'
+import { ytterbiumChapter } from './learning/ytterbium'
 
 const legacyChapters: Chapter[] = [
   {
@@ -357,4 +359,9 @@ const legacyChapters: Chapter[] = [
   },
 ]
 
-export const chapters: Chapter[] = [foundationsChapter, ...legacyChapters.slice(1)]
+export const chapters: Chapter[] = [
+  foundationsChapter,
+  neutralAtomsChapter,
+  ytterbiumChapter,
+  ...legacyChapters.slice(3),
+]
