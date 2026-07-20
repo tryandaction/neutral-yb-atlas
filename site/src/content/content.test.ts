@@ -125,6 +125,25 @@ it('derives an accepted gate from levels, dynamics and discriminating evidence',
   expect(JSON.stringify(gates)).not.toMatch(/理论交付|下一项测量|放行合同/)
 })
 
+it('orders the atom cycle and fault-tolerance chain without research-workflow language', () => {
+  const experiment = chapters.find((chapter) => chapter.id === 'experiment')!
+  const faultTolerance = chapters.find((chapter) => chapter.id === 'fault-tolerance')!
+
+  expect(experiment.sections.map((section) => section.id)).toEqual([
+    'prepare-the-array',
+    'encode-and-control',
+    'measure-decode-reset',
+    'repeat-the-cycle',
+  ])
+  expect(faultTolerance.sections.map((section) => section.id)).toEqual([
+    'physical-faults-to-cycle-channel',
+    'decoder-record-to-logical-error',
+    'distance-scaling',
+    'trustworthy-result-cost',
+  ])
+  expect(JSON.stringify({ experiment, faultTolerance })).not.toMatch(/研究工作站|理论交付|放行合同|下一项研究任务/)
+})
+
 it('requires a source and unit for confirmed numeric evidence', () => {
   const confirmed = evidenceEntries.filter((entry) =>
     entry.status.startsWith('confirmed'),

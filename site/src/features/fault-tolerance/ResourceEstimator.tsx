@@ -43,7 +43,7 @@ export default function ResourceEstimator({ language }: { language: Language }) 
     <section className="resource-estimator" id="resource-estimator" aria-labelledby="resource-estimator-title">
       <header>
         <h2 id="resource-estimator-title">{language === 'zh' ? '从物理错误预算到逻辑资源' : 'From physical-error budget to logical resources'}</h2>
-        <p>{language === 'zh' ? '这是用于理解缩放关系的教学近似，不是特定 Yb 装置的工程报价。DiVincenzo 准则检查硬件能否实现量子计算；容错还要求把物理错误变成可解码的周期通道。' : 'This is a pedagogical scaling approximation, not an engineering quote for a specific Yb machine. DiVincenzo criteria ask whether hardware can implement quantum computation; fault tolerance additionally requires a decodable cycle channel.'}</p>
+        <p>{language === 'zh' ? '以下关系是模型假设，不是 Yb 装置预测或工程报价。DiVincenzo 准则检查硬件能否实现量子计算；容错还要求把物理错误变成可解码的周期通道。' : 'Read these as model assumptions, not a Yb device prediction or engineering quote. DiVincenzo criteria ask whether hardware can implement quantum computation; fault tolerance additionally requires a decodable cycle channel.'}</p>
       </header>
 
       <section className="fault-chain" aria-labelledby="fault-chain-title">

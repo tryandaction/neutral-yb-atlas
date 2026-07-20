@@ -47,6 +47,7 @@ it('steps through the full apparatus pipeline and exposes acceptance evidence', 
   expect(screen.getByLabelText(/Equation: P=Q/)).toBeInTheDocument()
   expect(screen.getByRole('heading', { name: '操作序列' })).toBeInTheDocument()
   expect(screen.getByText(/分区烘烤并记录温度、压力和 RGA/)).toBeInTheDocument()
+  expect(screen.queryByText('理论任务')).not.toBeInTheDocument()
   await user.click(screen.getByRole('button', { name: /Rydberg 门/ }))
   expect(screen.getByRole('heading', { name: 'Rydberg 光谱、阻塞与纠缠门' })).toBeInTheDocument()
   expect(screen.getByText(/单原子 Rabi.*双原子阻塞.*Bell/)).toBeInTheDocument()

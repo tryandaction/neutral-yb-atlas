@@ -20,6 +20,7 @@ it('separates DiVincenzo implementation criteria from the fault-tolerance chain'
 
   expect(screen.getByRole('heading', { name: 'Universal computation needs a second chain' })).toBeInTheDocument()
   expect(screen.getByText('decoder-visible record')).toBeInTheDocument()
+  expect(screen.getByText(/model assumptions, not a Yb device prediction/i)).toBeInTheDocument()
 })
 
 it('shows when erasure conversion is overwhelmed by detection latency', () => {

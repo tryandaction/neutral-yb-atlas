@@ -13,7 +13,7 @@ interface Stage {
   equation: string
   procedure: Array<Record<Language, string>>
   milestone: Record<Language, string>
-  theoryTask: Record<Language, string>
+  learningLink: Record<Language, string>
   apparatus: Record<Language, string>
   acceptance: Record<Language, string>
   record: Record<Language, string>
@@ -28,7 +28,7 @@ const stages: Stage[] = [
     equation: String.raw`P=Q/S_{\rm eff},\qquad \tau_{\rm trap}^{-1}=\sum_i n_i\langle\sigma_i v_i\rangle`,
     procedure: [{ zh: '完成清洁、氦检和材料放行。', en: 'Release cleaning, leak test and materials.' }, { zh: '分区烘烤并记录温度、压力和 RGA 全时序。', en: 'Bake by zone and log temperature, pressure and the full RGA timeline.' }, { zh: '逐级提高炉温，测通量、科学腔压力和恢复时间。', en: 'Step oven temperature and measure flux, science-cell pressure and recovery.' }, { zh: '用暗保持光镊寿命复核局部背景碰撞。', en: 'Verify local background collisions with dark tweezer lifetime.' }],
     milestone: { zh: '原子炉开启时仍保持可恢复的科学腔真空，并获得可重复装载通量。', en: 'Maintain recoverable science-cell vacuum with repeatable loading flux while the oven is on.' },
-    theoryTask: { zh: '用气载—流导模型预测压力，并用 RGA 组分传播到原子碰撞寿命。', en: 'Predict pressure with gas-load/conductance models and propagate RGA composition to collision lifetime.' },
+    learningLink: { zh: '背景气体碰撞会中断原子序列，因此真空寿命直接限制可重复的纠错周期数。', en: 'Background-gas collisions interrupt the atomic sequence, so vacuum lifetime directly limits the number of repeatable correction cycles.' },
     apparatus: { zh: 'Yb 原子炉、快门、Zeeman slower/二维减速、离子泵、NEG、真空计、RGA。', en: 'Yb oven, shutter, Zeeman slower/2D slowing, ion pump, NEG, gauges and RGA.' },
     acceptance: { zh: '烘烤后基压与 RGA 谱稳定；开启原子炉时科学腔压力、装载率和污染增长符合预算。', en: 'Stable post-bake base pressure and RGA spectrum; science-cell pressure, loading and contamination growth remain within budget when the oven is on.' },
     record: { zh: '温度—通量曲线、压力恢复曲线、RGA 谱、维护记录。', en: 'Temperature–flux curve, pressure recovery, RGA spectra and service log.' }, duration: { zh: '设计/采购/加工通常 6–12 个月，烘烤与调试 4–10 周', en: 'Design/procurement/fabrication often 6–12 months; bake and commissioning 4–10 weeks' },
@@ -40,7 +40,7 @@ const stages: Stage[] = [
     equation: String.raw`T_D=\frac{\hbar\Gamma}{2k_B},\qquad F_{\rm sc}\propto\frac{s}{1+s+4(\Delta-kv)^2/\Gamma^2}`,
     procedure: [{ zh: '补偿残磁场并标定六束光功率、重合和偏振。', en: 'Compensate residual field and calibrate six-beam power, overlap and polarization.' }, { zh: '扫描 399 nm 失谐×梯度，拟合完整装载曲线。', en: 'Scan 399 nm detuning versus gradient and fit full loading curves.' }, { zh: '执行 556 nm 宽频捕获到窄频压缩斜坡。', en: 'Run the 556 nm broadband-capture to narrow-compression ramp.' }, { zh: '用 TOF/释放再捕获测温并扫描光镊转移时刻。', en: 'Measure temperature by TOF/release-recapture and scan tweezer transfer time.' }],
     milestone: { zh: '获得温度、云尺寸和转移效率均可跨天复现的窄线 MOT 末态。', en: 'Obtain a narrow-line MOT final state with reproducible temperature, cloud size and transfer.' },
-    theoryTask: { zh: '将散射力、Zeeman 位移、重力与多级结构映射到装载/温度二维扫描。', en: 'Map scattering force, Zeeman shift, gravity and multilevel structure to loading/temperature scans.' },
+    learningLink: { zh: '散射力和 Zeeman 位移共同决定捕获速度与温度，进而决定光镊装载概率。', en: 'Scattering force and Zeeman shifts jointly set capture velocity and temperature, which determine tweezer-loading probability.' },
     apparatus: { zh: '399/556 nm 激光、锁频、AOM、光纤、扩束、偏振器、三轴补偿线圈与 MOT 线圈。', en: '399/556 nm lasers, locks, AOMs, fibers, expanders, polarizers, compensation coils and MOT coils.' },
     acceptance: { zh: '记录原子数、温度、寿命和转移效率随失谐/功率/梯度的二维扫描，不能只保存最佳点。', en: 'Record atom number, temperature, lifetime and transfer efficiency across detuning/power/gradient scans, not only the optimum.' },
     record: { zh: '吸收/荧光图像、TOF 温度、线圈标定、频率漂移日志。', en: 'Absorption/fluorescence images, TOF temperature, coil calibration and frequency-drift log.' }, duration: { zh: '光源与锁频 2–5 个月；MOT 闭环 3–8 周', en: 'Laser and lock 2–5 months; MOT closure 3–8 weeks' },
@@ -52,7 +52,7 @@ const stages: Stage[] = [
     equation: String.raw`U(\mathbf r)=-\frac{\mathrm{Re}[\alpha(\omega)]I(\mathbf r)}{2\epsilon_0c},\qquad \omega_r\simeq\sqrt{4|U_0|/(mw_0^2)}`,
     procedure: [{ zh: '标定 SLM/AOD 坐标、原子面腰斑、偏振和功率。', en: 'Calibrate SLM/AOD coordinates, atom-plane waist, polarization and power.' }, { zh: '逐站点扫描参量加热，提取径向/轴向阱频。', en: 'Scan parametric heating site by site to extract radial/axial frequencies.' }, { zh: '建立孤立原子 PSF 和亮/空/损失混淆矩阵。', en: 'Build isolated-atom PSF and bright/empty/loss confusion matrices.' }, { zh: '扫描 MOT 末态、光镊时刻与阱深，测装载和成像生存。', en: 'Scan final MOT state, tweezer timing and depth; measure loading and imaging survival.' }],
     milestone: { zh: '每个站点均有坐标、阱频、装载、PSF 和生存率记录。', en: 'Every site has coordinate, trap frequency, loading, PSF and survival records.' },
-    theoryTask: { zh: '用极化率与实测光场预测势、散射和站点光移，并给出不确定度。', en: 'Predict potential, scattering and site light shifts from polarizability and measured fields with uncertainty.' },
+    learningLink: { zh: '极化率把光强转成阱深与散射率；二者分别约束俘获稳定性和相干时间。', en: 'Polarizability converts intensity into trap depth and scattering rate; these constrain trapping stability and coherence time.' },
     apparatus: { zh: '光镊激光、AOD/SLM、高 NA 物镜、空间滤波、功率稳定、EMCCD/sCMOS。', en: 'Tweezer laser, AOD/SLM, high-NA objective, spatial filtering, power stabilization and EMCCD/sCMOS.' },
     acceptance: { zh: '逐站点测量阱频、深度、装载概率、成像保真度、成像生存率与邻站串扰。', en: 'Measure trap frequency, depth, loading, imaging fidelity, survival and neighbor crosstalk site by site.' },
     record: { zh: '占据图、阱频谱、PSF、像差图、光强平坦度与站点参数表。', en: 'Occupancy maps, trap spectra, PSF, aberration map, intensity flatness and site parameter table.' }, duration: { zh: '光机集成与像差优化 2–5 个月', en: 'Optomechanical integration and aberration optimization 2–5 months' },
@@ -64,7 +64,7 @@ const stages: Stage[] = [
     equation: String.raw`\dot E\simeq\frac{m\omega^4}{4}S_x(\omega),\qquad x(t)=F\lambda f_{\rm RF}(t)/v_a`,
     procedure: [{ zh: '由原始帧输出占据概率和分类置信度。', en: 'Infer occupancy probabilities and confidence from raw frames.' }, { zh: '在路径不交叉、速度/加速度/jerk 受限下求搬运计划。', en: 'Plan noncrossing moves with velocity, acceleration and jerk limits.' }, { zh: '生成相位连续 AOD 波形并记录实际下发哈希。', en: 'Generate phase-continuous AOD waveforms and record the delivered hash.' }, { zh: '移动后立即复核成像与温度，按路径长度分类。', en: 'Immediately verify imaging and temperature after motion, stratified by path length.' }],
     milestone: { zh: '达到目标填充率，同时移动损失、温升和端到端周期均在预算内。', en: 'Reach target filling while move loss, heating and end-to-end cycle remain within budget.' },
-    theoryTask: { zh: '把实测阱频和 AOD 传递函数加入轨迹优化，预测运动激发与失效路径。', en: 'Include measured trap frequencies and AOD transfer in trajectory optimization to predict excitation and failure paths.' },
+    learningLink: { zh: '移动轨迹若含接近阱频的频率分量就会激发运动，因此重排速度与最终温度必须同时权衡。', en: 'Motion near the trap frequency excites the atom, so rearrangement speed and final motional temperature must be balanced.' },
     apparatus: { zh: '实时图像分类、FPGA/GPU 路径规划、AOD 波形、统一时钟和移动后再成像。', en: 'Real-time image classification, FPGA/GPU path planning, AOD waveforms, unified clock and post-motion imaging.' },
     acceptance: { zh: '报告初始装载、目标填充、移动次数、周期时间、移动后生存与温度，不只报告最终填充率。', en: 'Report initial loading, target filling, move count, cycle time, post-motion survival and temperature, not only final filling.' },
     record: { zh: '逐次占据图、规划路径、波形哈希、失败类型和站点热图。', en: 'Shot-resolved occupancy, planned paths, waveform hashes, failure classes and site heatmaps.' }, duration: { zh: '算法/时序/运动标定 1–3 个月', en: 'Algorithm, timing and motion calibration 1–3 months' },
@@ -76,7 +76,7 @@ const stages: Stage[] = [
     equation: String.raw`H_q/\hbar=\frac{1}{2}(\Omega_x\sigma_x+\Omega_y\sigma_y+\delta\sigma_z),\qquad \delta=\delta_B+\delta_{\rm AC}+\delta_{\rm LO}`,
     procedure: [{ zh: '光抽运制备核自旋参考态并测纯度/损失。', en: 'Optically pump a nuclear-spin reference and measure purity/loss.' }, { zh: '扫描偏置场与 RF/578 nm 频率，建立旁路谱。', en: 'Scan bias field and RF/578 nm frequencies to map spectators.' }, { zh: '完成 Rabi、Ramsey、echo 和跨站点不均匀测量。', en: 'Complete Rabi, Ramsey, echo and site-inhomogeneity measurements.' }, { zh: '执行 1S0↔3P0 往返映射并区分泄漏、损失和 SPAM。', en: 'Run 1S0-to-3P0 round trips and separate leakage, loss and SPAM.' }],
     milestone: { zh: '得到相位可追踪、往返可逆并跨站点一致的量子比特接口。', en: 'Obtain a phase-traceable, reversible and site-uniform qubit interface.' },
-    theoryTask: { zh: '用多能级选择定则、差分极化率与噪声谱预测 Rabi/Ramsey 和映射。', en: 'Predict Rabi/Ramsey and mapping using multilevel selection rules, differential polarizability and noise spectra.' },
+    learningLink: { zh: '选择定则确定可驱动通道，差分光移与噪声谱决定相位能保持多久。', en: 'Selection rules determine accessible transitions, while differential light shifts and noise spectra determine phase memory.' },
     apparatus: { zh: '光抽运、RF/微波、578 nm 钟激光、超稳腔、磁屏蔽、相位稳定链路。', en: 'Optical pumping, RF/microwave, 578 nm clock laser, ultrastable cavity, magnetic shielding and phase-stabilized delivery.' },
     acceptance: { zh: '分别测量 SPAM、Rabi、Ramsey、echo、映射往返保真度、泄漏和跨站点不均匀。', en: 'Measure SPAM, Rabi, Ramsey, echo, round-trip mapping fidelity, leakage and site inhomogeneity separately.' },
     record: { zh: '相位参考、频率记录、磁场地图、映射矩阵和长时间漂移。', en: 'Phase reference, frequency record, field map, mapping matrix and long-term drift.' }, duration: { zh: '首个相干闭环 1–3 个月；稳健化持续迭代', en: 'First coherent closure 1–3 months; robustness remains iterative' },
@@ -88,7 +88,7 @@ const stages: Stage[] = [
     equation: String.raw`V(R)=C_6/R^6,\qquad \epsilon_B\sim(\Omega/V)^2,\qquad \phi_c=\phi_{11}-\phi_{10}-\phi_{01}+\phi_{00}`,
     procedure: [{ zh: '完成单原子低功率谱学、Rabi、寿命和旁路态标定。', en: 'Complete low-power single-atom spectra, Rabi, lifetime and spectator calibration.' }, { zh: '扫描双原子距离/角度，测阻塞位移和双激发。', en: 'Scan pair distance/angle and measure blockade shift plus double excitation.' }, { zh: '用 Ramsey 恢复条件相位并检查门末泄漏。', en: 'Recover conditional phase with Ramsey and inspect end-of-gate leakage.' }, { zh: '依次完成真值表、Bell 奇偶、重复门和并行密度扫描。', en: 'Complete truth table, Bell parity, repeated gates and parallel-density scans in order.' }],
     milestone: { zh: '门末返回计算子空间，条件相位、损失、泄漏和 SPAM 均单独满足预算。', en: 'Return to the code space at gate end with conditional phase, loss, leakage and SPAM separately within budget.' },
-    theoryTask: { zh: '交付多能级双原子模型、硬件滤波波形、误差预算和下一项判别测量。', en: 'Deliver a multilevel two-atom model, hardware-filtered waveform, error budget and next discriminating measurement.' },
+    learningLink: { zh: '双原子哈密顿量把驱动波形、阻塞强度、条件相位、泄漏和损失连接成可检验的因果链。', en: 'The two-atom Hamiltonian connects drive waveform, blockade strength, conditional phase, leakage and loss in a testable causal chain.' },
     apparatus: { zh: '紫外激发链、相位锁、功率/指向稳定、AWG/FPGA、脉冲整形和同步探测。', en: 'UV excitation chain, phase lock, power/pointing stabilization, AWG/FPGA, pulse shaping and synchronized detection.' },
     acceptance: { zh: '依次完成单原子 Rabi、双原子阻塞、条件相位、Bell 奇偶振荡、重复门序列，并单列损失、泄漏、擦除与 SPAM。', en: 'Complete single-atom Rabi, two-atom blockade, conditional phase, Bell parity oscillation and repeated-gate sequences, with loss, leakage, erasure and SPAM reported separately.' },
     record: { zh: '原始序列、完整波形、锁定状态、环境量、真值表、相位扫描和置信区间。', en: 'Raw sequences, complete waveforms, lock state, environment, truth tables, phase scans and confidence intervals.' }, duration: { zh: '光源和谱学 3–8 个月；门优化持续迭代', en: 'Laser/spectroscopy 3–8 months; gate optimization remains iterative' },
@@ -100,7 +100,7 @@ const stages: Stage[] = [
     equation: String.raw`p(o,f|s)=\sum_e p(o,f|e,s)p(e|s),\qquad p_L=\mathcal D(\mathcal N_0,\mathcal N_f,p_f,\text{schedule})`,
     procedure: [{ zh: '标定亮/暗/泄漏/损失与标签的联合混淆矩阵。', en: 'Calibrate the joint confusion matrix for bright/dark/leakage/loss and flags.' }, { zh: '逐段测曝光、传输、判别、反馈和补原子延迟。', en: 'Measure exposure, transfer, classification, feedback and replacement latency separately.' }, { zh: '把条件通道、相关故障和资源冲突写入解码输入。', en: 'Write conditional channels, correlated faults and resource conflicts into decoder input.' }, { zh: '比较无标签、理想标签和实测标签的完整周期逻辑错误率。', en: 'Compare full-cycle logical error for no flags, ideal flags and measured flags.' }],
     milestone: { zh: '包含检测、反馈、补原子和调度后，实测条件通道仍降低逻辑错误率。', en: 'Measured conditional channels still lower logical error after detection, feedback, replacement and scheduling.' },
-    theoryTask: { zh: '将 N0/Nf、标签混淆与时序开销接入同一解码器，返回最敏感实验指标。', en: 'Feed N0/Nf, flag confusion and timing overhead into one decoder and return the most sensitive experimental metric.' },
+    learningLink: { zh: '测量标签、标签混淆、时序开销与解码规则共同决定每周期的逻辑错误率。', en: 'Measurement flags, flag confusion, timing overhead and decoding rules jointly determine logical error per cycle.' },
     apparatus: { zh: '状态选择读出、快速相机、实时分类、反馈 FPGA、补原子路径、数据湖和解码器。', en: 'State-selective readout, fast camera, real-time classification, feedback FPGA, replacement path, data store and decoder.' },
     acceptance: { zh: '端到端报告周期时间、条件通道、标签混淆矩阵、相关故障和逻辑错误率，不用组件最佳值代替。', en: 'Report end-to-end cycle time, conditional channels, label confusion matrix, correlated faults and logical error rate, rather than component best cases.' },
     record: { zh: '逐周期事件流、时间戳、占据、标签、反馈动作、解码输入与逻辑结果。', en: 'Cycle-resolved events, timestamps, occupancy, labels, feedback actions, decoder inputs and logical outcomes.' }, duration: { zh: '系统集成 6–18 个月，并与硬件迭代并行', en: 'System integration 6–18 months in parallel with hardware iteration' },
@@ -145,7 +145,7 @@ export default function ExperimentPipeline({ language }: { language: Language })
       </div>
 
       <article className="teaching-card pipeline-card" aria-live="polite">
-        <div className="pipeline-card__summary"><span>{selected.duration[language]}</span><h3>{selected.title[language]}</h3><p><WikiText text={selected.objective[language]} language={language} /></p></div>
+        <div className="pipeline-card__summary"><span>{language === 'zh' ? '原子状态路径' : 'ATOMIC STATE PATH'}</span><h3>{selected.title[language]}</h3><p><WikiText text={selected.objective[language]} language={language} /></p></div>
         <div className="pipeline-card__execution">
           <Equation source={selected.equation} />
           <h4>{language === 'zh' ? '操作序列' : 'Operating sequence'}</h4>
@@ -154,10 +154,10 @@ export default function ExperimentPipeline({ language }: { language: Language })
         <dl>
           <div><dt>{language === 'zh' ? '底层物理' : 'Underlying physics'}</dt><dd><WikiText text={selected.physics[language]} language={language} /></dd></div>
           <div><dt>{language === 'zh' ? '核心仪器' : 'Core apparatus'}</dt><dd><WikiText text={selected.apparatus[language]} language={language} /></dd></div>
-          <div><dt>{language === 'zh' ? '阶段退出' : 'Exit milestone'}</dt><dd><WikiText text={selected.milestone[language]} language={language} /></dd></div>
-          <div><dt>{language === 'zh' ? '验收证据' : 'Acceptance evidence'}</dt><dd><WikiText text={selected.acceptance[language]} language={language} /></dd></div>
-          <div><dt>{language === 'zh' ? '必须归档' : 'Required record'}</dt><dd><WikiText text={selected.record[language]} language={language} /></dd></div>
-          <div><dt>{language === 'zh' ? '理论任务' : 'Theory task'}</dt><dd><WikiText text={selected.theoryTask[language]} language={language} /></dd></div>
+          <div><dt>{language === 'zh' ? '阶段结论' : 'Stage conclusion'}</dt><dd><WikiText text={selected.milestone[language]} language={language} /></dd></div>
+          <div><dt>{language === 'zh' ? '怎样检验' : 'How to test'}</dt><dd><WikiText text={selected.acceptance[language]} language={language} /></dd></div>
+          <div><dt>{language === 'zh' ? '留下的记录' : 'Resulting record'}</dt><dd><WikiText text={selected.record[language]} language={language} /></dd></div>
+          <div><dt>{language === 'zh' ? '因果联系' : 'Causal link'}</dt><dd><WikiText text={selected.learningLink[language]} language={language} /></dd></div>
         </dl>
       </article>
     </section>

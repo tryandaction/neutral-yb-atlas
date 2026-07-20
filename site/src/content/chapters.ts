@@ -4,6 +4,8 @@ import { foundationsChapter } from './learning/foundations'
 import { neutralAtomsChapter } from './learning/neutralAtoms'
 import { ytterbiumChapter } from './learning/ytterbium'
 import { gatesChapter } from './learning/gates'
+import { experimentChapter } from './learning/experiment'
+import { faultToleranceChapter } from './learning/faultTolerance'
 
 const legacyChapters: Chapter[] = [
   {
@@ -365,5 +367,7 @@ export const chapters: Chapter[] = [
   neutralAtomsChapter,
   ytterbiumChapter,
   gatesChapter,
-  ...legacyChapters.slice(4),
+  experimentChapter,
+  legacyChapters[5],
+  faultToleranceChapter,
 ]
