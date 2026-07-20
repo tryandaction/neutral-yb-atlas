@@ -74,7 +74,7 @@ it('renders localized article content and a KaTeX equation without an implementa
   )
 
   expect(screen.getByRole('heading', { name: 'Rabi dynamics' })).toBeInTheDocument()
-  expect(screen.getByText(section.body.en)).toBeInTheDocument()
+  expect(screen.getByText(section.body!.en)).toBeInTheDocument()
   expect(container.querySelector('.katex')).toBeInTheDocument()
   expect(screen.queryByRole('complementary', { name: 'Research implementation ledger' })).not.toBeInTheDocument()
   expect(screen.queryByText('Repeatable pi pulse')).not.toBeInTheDocument()

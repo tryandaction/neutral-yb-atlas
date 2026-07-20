@@ -1,7 +1,8 @@
 import type { Chapter } from '../types/content'
 import { researchDetails } from './researchDetails'
+import { foundationsChapter } from './learning/foundations'
 
-export const chapters: Chapter[] = [
+const legacyChapters: Chapter[] = [
   {
     id: 'quantum-foundations',
     number: 1,
@@ -355,3 +356,5 @@ export const chapters: Chapter[] = [
     ],
   },
 ]
+
+export const chapters: Chapter[] = [foundationsChapter, ...legacyChapters.slice(1)]
