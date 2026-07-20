@@ -10,6 +10,7 @@ const labels = {
   blockade: { zh: '有限阻塞', en: 'Finite blockade' },
   decay: { zh: 'Rydberg 衰变', en: 'Rydberg decay' },
   doppler: { zh: 'Doppler', en: 'Doppler' },
+  detuning: { zh: '条件相位失配', en: 'Conditional-phase mismatch' },
   control: { zh: '控制误差', en: 'Control' },
 }
 

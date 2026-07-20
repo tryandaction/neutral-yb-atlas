@@ -23,8 +23,19 @@ export default function ResourceEstimator({ language }: { language: Language }) 
     <section className="resource-estimator" id="resource-estimator" aria-labelledby="resource-estimator-title">
       <header>
         <h2 id="resource-estimator-title">{language === 'zh' ? '从物理错误预算到逻辑资源' : 'From physical-error budget to logical resources'}</h2>
-        <p>{language === 'zh' ? '这是用于理解缩放关系的教学近似，不是特定 Yb 装置的工程报价。改变任一输入都会重新计算最小奇数码距。' : 'This is a pedagogical scaling approximation, not an engineering quote for a specific Yb machine. Every input updates the minimum odd code distance.'}</p>
+        <p>{language === 'zh' ? '这是用于理解缩放关系的教学近似，不是特定 Yb 装置的工程报价。DiVincenzo 准则检查硬件能否实现量子计算；容错还要求把物理错误变成可解码的周期通道。' : 'This is a pedagogical scaling approximation, not an engineering quote for a specific Yb machine. DiVincenzo criteria ask whether hardware can implement quantum computation; fault tolerance additionally requires a decodable cycle channel.'}</p>
       </header>
+
+      <section className="fault-chain" aria-labelledby="fault-chain-title">
+        <h3 id="fault-chain-title">{language === 'zh' ? '通用计算之后，还有一条容错链' : 'Universal computation needs a second chain'}</h3>
+        <div>
+          <article><span>01</span><strong>{language === 'zh' ? '实现条件' : 'implementation criteria'}</strong><p>{language === 'zh' ? '初始化、相干、通用门与读出满足后，硬件才具备进入容错讨论的资格。' : 'Initialization, coherence, universal gates and readout qualify hardware for the fault-tolerance question.'}</p></article>
+          <article><span>02</span><strong>{language === 'zh' ? '物理错误' : 'physical fault'}</strong><p>{language === 'zh' ? 'Pauli、泄漏、损失、相关漂移和测量错误必须保留各自定义。' : 'Pauli faults, leakage, loss, correlated drift and measurement errors keep separate definitions.'}</p></article>
+          <article><span>03</span><strong>{language === 'zh' ? '解码器可见记录' : 'decoder-visible record'}</strong><p>{language === 'zh' ? '擦除标记只有连同漏报、误报、散射与等待时间写入记录才有价值。' : 'An erasure flag matters only together with false negatives, false positives, scattering and wait time.'}</p></article>
+          <article><span>04</span><strong>{language === 'zh' ? '代码与调度' : 'code and schedule'}</strong><p>{language === 'zh' ? '选择码、非 Clifford 资源、并行冲突与译码延迟决定时空开销。' : 'Code choice, non-Clifford resources, parallel conflicts and decoder latency set spacetime overhead.'}</p></article>
+          <article><span>05</span><strong>{language === 'zh' ? '可信结果' : 'trustworthy result'}</strong><p>{language === 'zh' ? '逻辑错误、吞吐、可用率与每次成功结果成本必须共同改善。' : 'Logical error, throughput, availability and cost per successful result must improve together.'}</p></article>
+        </div>
+      </section>
 
       <div className="resource-estimator__controls">
         <NumberControl language={language} id="physical-error" label={{ zh: '物理操作错误率', en: 'Physical operation error' }} value={input.physicalError} min={0.00001} max={0.05} step={0.0001} onChange={(value) => update('physicalError', value)} />
@@ -47,7 +58,7 @@ export default function ResourceEstimator({ language }: { language: Language }) 
       )}
 
       <div className="resource-estimator__assumptions">
-        <strong>{language === 'zh' ? '模型边界' : 'Model boundary'}</strong>
+        <strong>{language === 'zh' ? '模型边界：独立 Pauli 噪声下的表面码式缩放示例' : 'Model boundary: surface-code-style scaling under independent Pauli noise'}</strong>
         <ul>
           <li>pL = 0.1 (p / pth)<sup>(d + 1) / 2</sup></li>
           <li>{language === 'zh' ? '物理比特近似为 2d²/逻辑比特。' : 'Physical-qubit count is approximated as 2d² per logical qubit.'}</li>

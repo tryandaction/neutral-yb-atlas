@@ -1,4 +1,4 @@
-import { analyzeOperatingPoint, blockadeRatio, buildErrorBudget, rabiPopulation } from './model'
+import { analyzeOperatingPoint, blockadeRatio, buildErrorBudget, buildTeachingObservables, rabiPopulation } from './model'
 
 it('computes the blockade ratio and rejects non-physical drive', () => {
   expect(blockadeRatio({ interactionMHz: 45, omegaMHz: 3 })).toBe(15)
@@ -27,6 +27,29 @@ it('returns a normalized teaching error budget', () => {
 
   expect(budget.every((item) => item.value >= 0)).toBe(true)
   expect(budget.reduce((sum, item) => sum + item.fraction, 0)).toBeCloseTo(1)
+})
+
+it('connects detuning to a visible phase error and reduced predicted gate quality', () => {
+  const resonant = buildTeachingObservables({
+    omegaMHz: 3,
+    interactionMHz: 45,
+    detuningMHz: 0,
+    temperatureUk: 2.9,
+    rydbergLifetimeUs: 120,
+    gateTimeUs: 1.24,
+  })
+  const detuned = buildTeachingObservables({
+    omegaMHz: 3,
+    interactionMHz: 45,
+    detuningMHz: 2,
+    temperatureUk: 2.9,
+    rydbergLifetimeUs: 120,
+    gateTimeUs: 1.24,
+  })
+
+  expect(detuned.phaseError).toBeGreaterThan(resonant.phaseError)
+  expect(detuned.gateQuality).toBeLessThan(resonant.gateQuality)
+  expect(detuned.doubleExcitation).toBeCloseTo(resonant.doubleExcitation)
 })
 
 it('identifies the dominant error and classifies the operating region', () => {

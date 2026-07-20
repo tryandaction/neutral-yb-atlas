@@ -14,3 +14,10 @@ it('updates the resource judgment when the physical error crosses threshold', ()
   expect(screen.getByText('当前错误率不低于假设阈值，增加码距不能保证逻辑错误持续下降。')).toBeInTheDocument()
   expect(screen.queryByText('13', { selector: 'output' })).not.toBeInTheDocument()
 })
+
+it('separates DiVincenzo implementation criteria from the fault-tolerance chain', () => {
+  render(<ResourceEstimator language="en" />)
+
+  expect(screen.getByRole('heading', { name: 'Universal computation needs a second chain' })).toBeInTheDocument()
+  expect(screen.getByText('decoder-visible record')).toBeInTheDocument()
+})

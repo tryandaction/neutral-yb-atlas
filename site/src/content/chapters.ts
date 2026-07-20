@@ -5,9 +5,9 @@ export const chapters: Chapter[] = [
   {
     id: 'quantum-foundations',
     number: 1,
-    title: { zh: '量子计算的物理底层', en: 'Physical foundations of quantum computing' },
+    title: { zh: '物理状态如何成为可验证的量子计算', en: 'How physical states become verifiable quantum computation' },
     shortTitle: { zh: '量子信息', en: 'Quantum information' },
-    question: { zh: '一个物理系统满足什么条件，才是在执行可验证的计算？', en: 'What must a physical system provide before its evolution counts as verifiable computation?' },
+    question: { zh: '从“可表示状态”到“可扩展计算”，每一层必须满足什么物理条件？', en: 'What physical condition is added at each step from representable states to scalable computation?' },
     sections: [
       {
         id: 'state-measurement',
@@ -92,9 +92,9 @@ export const chapters: Chapter[] = [
   {
     id: 'why-yb',
     number: 3,
-    title: { zh: '为什么选择镱原子', en: 'Why ytterbium' },
+    title: { zh: '为什么中性原子路线选择 171Yb', en: 'Why choose 171Yb within the neutral-atom route' },
     shortTitle: { zh: 'Yb 平台', en: 'Yb platform' },
-    question: { zh: '171Yb 的接口组合解决了什么问题，又引入什么代价？', en: 'Which problems does the 171Yb interface bundle solve, and what does it cost?' },
+    question: { zh: '在固定的纠错周期任务下，171Yb 的接口组合解决什么约束，又引入什么代价？', en: 'For a fixed correction-cycle task, which constraints does the 171Yb interface bundle solve, and what costs does it add?' },
     sections: [
       {
         id: 'two-electron-structure',

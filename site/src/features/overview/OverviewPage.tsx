@@ -21,16 +21,16 @@ const domainBands: DomainBand[] = [
   {
     route: 'foundations',
     number: '01',
-    title: { zh: '计算为什么必须落在物理状态上', en: 'Why computation must live in physical states' },
-    claim: { zh: '计算要求可区分状态、受控变换、条件动力学和可验证读出。', en: 'Computation requires distinguishable states, controlled transformations, conditional dynamics and verifiable readout.' },
-    question: { zh: '一个原子具备哪些条件，才不只是存储器？', en: 'What makes an atom more than a memory element?' },
+    title: { zh: '物理状态如何成为可验证的计算', en: 'How physical states become verifiable computation' },
+    claim: { zh: '从初始化、可区分状态和读出开始，再到可组合演化、纠缠门与重复纠错周期；每一步都要留下可检验记录。', en: 'Initialization, distinguishable states and readout come first; composable evolution, entangling gates and repeated correction cycles make the computation testable.' },
+    question: { zh: '哪些物理条件把“能级”变成可扩展计算的量子比特？', en: 'Which physical conditions turn energy levels into scalable computational qubits?' },
   },
   {
     route: 'yb-platform',
     number: '02',
-    title: { zh: '为什么选择中性原子与 171Yb', en: 'Why neutral atoms and 171Yb' },
-    claim: { zh: '核自旋承担稳定存储，电子结构提供冷却、控制、读出和 Rydberg 接口。', en: 'Nuclear spin stores information while electronic structure supplies cooling, control, readout and Rydberg interfaces.' },
-    question: { zh: '这种职责分离是否抵消了多波长与多能级复杂度？', en: 'Does this separation of roles outweigh multilevel and multiwavelength complexity?' },
+    title: { zh: '为什么用中性原子，再为什么是 171Yb', en: 'Why neutral atoms, then why 171Yb' },
+    claim: { zh: '先以重复纠错周期比较硬件路径，再以存储、门、读出与错误标记的接口组合比较原子物种。', en: 'Compare hardware paths against a repeated correction cycle first, then compare atomic species by their storage, gate, readout and fault-flag interfaces.' },
+    question: { zh: 'Yb 的职责分离何时会变成逻辑层优势，又在哪些工程代价下失效？', en: 'When does Yb role separation become a logical advantage, and when do its engineering costs erase it?' },
   },
   {
     route: 'gates-theory',
@@ -49,7 +49,7 @@ const domainBands: DomainBand[] = [
   {
     route: 'fault-tolerance',
     number: '05',
-    title: { zh: '怎样判断容错、规模与成本真正成立', en: 'When fault tolerance, scale and cost are real' },
+    title: { zh: '怎样判断通用容错、规模与成本真正成立', en: 'When universal fault tolerance, scale and cost are real' },
     claim: { zh: '规模由可执行逻辑时空体积定义，成本按一次可信结果归一化。', en: 'Scale is executable logical spacetime volume; cost is normalized per trustworthy result.' },
     question: { zh: '增加原子后，逻辑错误、吞吐和单位结果成本是否同时改善？', en: 'Do logical error, throughput and cost per result improve together as atoms are added?' },
   },

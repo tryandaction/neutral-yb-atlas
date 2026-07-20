@@ -7,13 +7,14 @@ export interface RabiParameters {
 export interface ErrorBudgetParameters {
   omegaMHz: number
   interactionMHz: number
+  detuningMHz?: number
   temperatureUk: number
   rydbergLifetimeUs: number
   gateTimeUs: number
 }
 
 export interface ErrorContribution {
-  id: 'blockade' | 'decay' | 'doppler' | 'control'
+  id: 'blockade' | 'decay' | 'doppler' | 'detuning' | 'control'
   value: number
   fraction: number
 }
@@ -31,6 +32,13 @@ export interface OperatingPointAnalysis {
   nextMeasurement: NextMeasurement
   totalError: number
   ratio: number
+}
+
+export interface TeachingGateObservables {
+  doubleExcitation: number
+  rydbergExposure: number
+  phaseError: number
+  gateQuality: number
 }
 
 export function blockadeRatio({ interactionMHz, omegaMHz }: Pick<ErrorBudgetParameters, 'interactionMHz' | 'omegaMHz'>) {
@@ -53,10 +61,26 @@ export function buildErrorBudget(parameters: ErrorBudgetParameters): ErrorContri
     { id: 'blockade' as const, value: 0.5 / ratio ** 2 },
     { id: 'decay' as const, value: 0.5 * parameters.gateTimeUs / parameters.rydbergLifetimeUs },
     { id: 'doppler' as const, value: 0.0012 * (parameters.temperatureUk / 2.9) * (3 / parameters.omegaMHz) ** 2 },
+    { id: 'detuning' as const, value: ((parameters.detuningMHz ?? 0) / parameters.omegaMHz) ** 2 },
     { id: 'control' as const, value: 0.00035 * (parameters.omegaMHz / 3) },
   ]
   const total = raw.reduce((sum, item) => sum + item.value, 0)
   return raw.map((item) => ({ ...item, fraction: total === 0 ? 0 : item.value / total }))
+}
+
+/**
+ * Qualitative two-atom blockade model. It exposes parameter trade-offs but
+ * deliberately does not infer a device fidelity from experimental data.
+ */
+export function buildTeachingObservables(parameters: WorkbenchParameters): TeachingGateObservables {
+  const ratio = blockadeRatio(parameters)
+  const doubleExcitation = Math.min(1, 0.5 / ratio ** 2)
+  const phaseError = Math.min(1, (parameters.detuningMHz / parameters.omegaMHz) ** 2)
+  const rydbergExposure = Math.min(1, 0.5 * parameters.gateTimeUs / parameters.rydbergLifetimeUs)
+  const motionError = 0.0012 * (parameters.temperatureUk / 2.9) * (3 / parameters.omegaMHz) ** 2
+  const controlError = 0.00035 * (parameters.omegaMHz / 3)
+  const gateQuality = Math.max(0, 1 - doubleExcitation - phaseError - rydbergExposure - motionError - controlError)
+  return { doubleExcitation, rydbergExposure, phaseError, gateQuality }
 }
 
 export function analyzeOperatingPoint(parameters: WorkbenchParameters): OperatingPointAnalysis {
@@ -68,6 +92,7 @@ export function analyzeOperatingPoint(parameters: WorkbenchParameters): Operatin
     blockade: 'pair-spectroscopy',
     decay: 'rydberg-lifetime',
     doppler: 'temperature-scan',
+    detuning: 'detuning-scan',
     control: 'control-transfer',
   }
 

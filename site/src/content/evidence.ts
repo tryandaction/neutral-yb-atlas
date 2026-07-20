@@ -2,6 +2,20 @@ import type { EvidenceEntry } from '../types/content'
 
 export const evidenceEntries: EvidenceEntry[] = [
   {
+    id: 'divincenzo-criteria',
+    label: { zh: 'DiVincenzo 物理实现准则', en: 'DiVincenzo implementation criteria' },
+    domain: 'architecture', value: 'implementation criteria', status: 'confirmed',
+    note: { zh: '用于检查可扩展量子硬件是否具备初始化、相干、通用门与读出的必要接口；它不是容错阈值或平台排名。', en: 'A checklist for initialization, coherence, universal control and readout interfaces; it is neither a fault-tolerance threshold nor a platform ranking.' },
+    source: { citation: 'DiVincenzo, The Physical Implementation of Quantum Computation (2000)', url: 'https://doi.org/10.1002/1521-3978(200009)48:9/11%3C771::AID-PROP771%3E3.0.CO;2-E' },
+  },
+  {
+    id: 'yb-erasure-conversion-theory',
+    label: { zh: '171Yb 擦除转换的条件化优势', en: 'Conditional erasure-conversion advantage in 171Yb' },
+    domain: 'architecture', value: 'conditional protocol', status: 'confirmed',
+    note: { zh: '理论方案将部分主导误差映射为已知位置的擦除；资源收益依赖错误偏置、探测质量、码与调度假设。', en: 'The proposal maps part of the dominant error channel to located erasures; its resource benefit depends on error bias, detection quality, code and scheduling assumptions.' },
+    source: { citation: 'Wu et al., Erasure conversion for fault-tolerant quantum computing in alkaline earth Rydberg atom arrays (2022)', url: 'https://doi.org/10.1038/s41467-022-32094-6' },
+  },
+  {
     id: 'yb171-nuclear-spin',
     label: { zh: '171Yb 核自旋', en: '171Yb nuclear spin' },
     domain: 'atomic', value: '1/2', status: 'confirmed',
@@ -48,6 +62,6 @@ export const evidenceEntries: EvidenceEntry[] = [
     label: { zh: 'Ma 基准 CZ 时长', en: 'Ma benchmark CZ duration' },
     domain: 'gate', value: 1.2412083612, unit: 'μs', status: 'confirmed_from_official_source_data',
     note: { zh: '论文报告的双原子 CZ 门时长；不能与 330 ns 单原子 π 脉冲混用。', en: 'The two-atom CZ gate duration reported in the paper; do not confuse it with a 330 ns single-atom pi pulse.' },
-    source: { citation: 'Ma et al., High-Fidelity Gates with Mid-Circuit Erasure Conversion (2023)', url: 'https://doi.org/10.1103/PhysRevX.13.041034' },
+    source: { citation: 'Ma et al., High-fidelity gates and mid-circuit erasure conversion in an atomic qubit (2023)', url: 'https://doi.org/10.1038/s41586-023-06438-1' },
   },
 ]

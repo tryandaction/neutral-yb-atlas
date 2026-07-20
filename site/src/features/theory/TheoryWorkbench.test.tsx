@@ -12,3 +12,13 @@ it('updates the operating verdict and next laboratory measurement from model con
   expect(screen.getByText('超出阻塞工作区')).toBeInTheDocument()
   expect(screen.getByText(/双原子距离与角度扫描/)).toBeInTheDocument()
 })
+
+it('shows the same detuning change as phase mismatch and predicted gate quality', () => {
+  render(<TheoryWorkbench language="en" />)
+
+  const before = screen.getByLabelText('Predicted gate quality').textContent
+  fireEvent.change(screen.getAllByRole('slider')[2], { target: { value: '2' } })
+
+  expect(screen.getAllByText('Conditional-phase mismatch').length).toBeGreaterThan(0)
+  expect(screen.getByLabelText('Predicted gate quality').textContent).not.toBe(before)
+})

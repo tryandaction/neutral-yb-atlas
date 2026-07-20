@@ -3,7 +3,7 @@ import { useState } from 'react'
 import type { Language } from '../../types/content'
 import ErrorBudget from './ErrorBudget'
 import PopulationChart from './PopulationChart'
-import { analyzeOperatingPoint, blockadeRatio, buildErrorBudget, type NextMeasurement } from './model'
+import { analyzeOperatingPoint, blockadeRatio, buildErrorBudget, buildTeachingObservables, type NextMeasurement } from './model'
 import './theory.css'
 
 const defaults = { omegaMHz: 3, interactionMHz: 45, detuningMHz: 0, temperatureUk: 2.9, rydbergLifetimeUs: 120, gateTimeUs: 1.24 }
@@ -20,6 +20,7 @@ const dominantCopy = {
   blockade: { zh: '有限阻塞', en: 'Finite blockade' },
   decay: { zh: 'Rydberg 衰变', en: 'Rydberg decay' },
   doppler: { zh: 'Doppler / 运动', en: 'Doppler / motion' },
+  detuning: { zh: '条件相位失配', en: 'Conditional-phase mismatch' },
   control: { zh: '控制链路', en: 'Control chain' },
 } as const
 
@@ -27,6 +28,7 @@ export default function TheoryWorkbench({ language }: { language: Language }) {
   const [parameters, setParameters] = useState(defaults)
   const ratio = blockadeRatio(parameters)
   const budget = buildErrorBudget(parameters)
+  const observables = buildTeachingObservables(parameters)
   const analysis = analyzeOperatingPoint(parameters)
 
   const verdict = analysis.region === 'usable'
@@ -51,7 +53,7 @@ export default function TheoryWorkbench({ language }: { language: Language }) {
 
       <div className="theory-workbench__main">
         <header>
-          <div><span>H(t) → U(T) → Favg · Pleak · εdecay · εDoppler</span><h2>{language === 'zh' ? '从哈密顿量到可测保真度' : 'From Hamiltonian to measured fidelity'}</h2></div>
+          <div><span>H(t) → U(T) → Prr · εφ · exposure · εmodel</span><h2>{language === 'zh' ? '从哈密顿量到可测门证据' : 'From Hamiltonian to measurable gate evidence'}</h2></div>
           <div className="theory-workbench__commands">
             <button type="button" onClick={() => setParameters(defaults)} title={language === 'zh' ? '恢复默认参数' : 'Reset parameters'} aria-label={language === 'zh' ? '恢复默认参数' : 'Reset parameters'}><RotateCcw aria-hidden="true" /></button>
           </div>
@@ -66,12 +68,22 @@ export default function TheoryWorkbench({ language }: { language: Language }) {
         <div className="theory-workbench__surface">
           <PopulationChart omegaMHz={parameters.omegaMHz} detuningMHz={parameters.detuningMHz} gateTimeUs={parameters.gateTimeUs} />
           <div className="theory-controls">
-            <div className="theory-metrics"><div><small>V / Ω</small><strong>{ratio.toFixed(1)}</strong></div><div><small>1 − F (est.)</small><strong>{analysis.totalError.toExponential(2)}</strong></div></div>
+            <div className="theory-metrics">
+              <div><small>V / Ω</small><strong>{ratio.toFixed(1)}</strong></div>
+              <div aria-label={language === 'zh' ? '预测门质量' : 'Predicted gate quality'}><small>{language === 'zh' ? '预测门质量' : 'Predicted gate quality'}</small><strong>{(observables.gateQuality * 100).toFixed(2)}%</strong></div>
+            </div>
+            <div className="theory-observables" aria-label={language === 'zh' ? '模型可观测量' : 'Model observables'}>
+              <div><span>{language === 'zh' ? '双激发' : 'Double excitation'}</span><strong>{observables.doubleExcitation.toExponential(2)}</strong></div>
+              <div><span>{language === 'zh' ? '条件相位失配' : 'Conditional-phase mismatch'}</span><strong>{observables.phaseError.toExponential(2)}</strong></div>
+              <div><span>{language === 'zh' ? 'Rydberg 暴露' : 'Rydberg exposure'}</span><strong>{observables.rydbergExposure.toExponential(2)}</strong></div>
+            </div>
             <h3>{language === 'zh' ? '模型参数' : 'Model parameters'}</h3>
             <Parameter label="Ωmax / 2π" value={parameters.omegaMHz} min={1} max={8} step={0.1} unit="MHz" onChange={(value) => setParameter('omegaMHz', value)} />
             <Parameter label="V / 2π" value={parameters.interactionMHz} min={10} max={100} step={1} unit="MHz" onChange={(value) => setParameter('interactionMHz', value)} />
             <Parameter label="Δ / 2π" value={parameters.detuningMHz} min={-5} max={5} step={0.1} unit="MHz" onChange={(value) => setParameter('detuningMHz', value)} />
             <Parameter label={language === 'zh' ? '温度' : 'Temperature'} value={parameters.temperatureUk} min={1} max={15} step={0.1} unit="μK" onChange={(value) => setParameter('temperatureUk', value)} />
+            <Parameter label={language === 'zh' ? 'Rydberg 寿命' : 'Rydberg lifetime'} value={parameters.rydbergLifetimeUs} min={40} max={250} step={5} unit="μs" onChange={(value) => setParameter('rydbergLifetimeUs', value)} />
+            <Parameter label={language === 'zh' ? '门时长' : 'Gate duration'} value={parameters.gateTimeUs} min={0.2} max={4} step={0.02} unit="μs" onChange={(value) => setParameter('gateTimeUs', value)} />
           </div>
           <ErrorBudget language={language} budget={budget} />
         </div>

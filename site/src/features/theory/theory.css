@@ -212,6 +212,26 @@
   background: #35534e;
 }
 
+.theory-observables {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid #35534e;
+  background: #102d29;
+}
+
+.theory-observables > div {
+  min-width: 0;
+  padding: 11px 12px;
+  border-right: 1px solid #35534e;
+}
+
+.theory-observables > div:last-child { border-right: 0; }
+
+.theory-observables span,
+.theory-observables strong { display: block; }
+.theory-observables span { color: #92aba5; font-size: 10px; line-height: 1.35; }
+.theory-observables strong { margin-top: 5px; color: #edf7f3; font: 400 15px var(--font-display); }
+
 .theory-metrics div {
   padding: 12px;
   background: #173f3a;
