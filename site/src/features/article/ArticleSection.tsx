@@ -15,8 +15,7 @@ export default function ArticleSection({ language, section }: ArticleSectionProp
     && section.reasoning
     && section.measurement
     && section.boundary
-    && section.sources
-    && section.nextQuestion,
+    && section.sources,
   )
 
   return (
@@ -74,7 +73,6 @@ export default function ArticleSection({ language, section }: ArticleSectionProp
           </div>
         ) : null}
         {section.takeaway ? <blockquote>{section.takeaway[language]}</blockquote> : null}
-        {isLearningSection ? <p className="article-section__next"><strong>{language === 'zh' ? '下一问题' : 'Next question'}</strong>{section.nextQuestion![language]}</p> : null}
       </div>
     </section>
   )

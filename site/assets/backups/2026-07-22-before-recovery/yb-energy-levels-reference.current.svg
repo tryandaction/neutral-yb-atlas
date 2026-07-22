@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1260" viewBox="0 0 1600 1260" role="img" aria-labelledby="title description">
+  <title id="title">171Yb metastable nuclear-spin qubit: state paths and computational operations</title>
+  <desc id="description">A teaching state-path diagram that separates cooling and occupancy imaging, metastable qubit preparation, RF one-qubit rotations, Rydberg entangling gates, erasure conversion, and state-selective Raman readout.</desc>
+  <defs>
+    <marker id="arrow-ink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" fill="#15211e"/></marker>
+    <marker id="arrow-blue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" fill="#1f5fd1"/></marker>
+    <marker id="arrow-green" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" fill="#187a44"/></marker>
+    <marker id="arrow-orange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" fill="#e05c26"/></marker>
+    <marker id="arrow-purple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" fill="#6542b5"/></marker>
+    <marker id="arrow-wine" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" fill="#9c1743"/></marker>
+    <style>
+      text { font-family: Arial, "Noto Sans", sans-serif; fill: #15211e; letter-spacing: 0; }
+      .title { font-size: 30px; font-weight: 700; }
+      .subtitle { font-size: 15px; fill: #53615d; }
+      .section { font-size: 18px; font-weight: 700; }
+      .level { font-size: 21px; font-weight: 700; }
+      .body { font-size: 16px; }
+      .small { font-size: 14px; }
+      .tiny { font-size: 12px; }
+      .card-title { font-size: 17px; font-weight: 700; }
+      .rule { stroke: #15211e; stroke-width: 3; stroke-linecap: round; }
+      .guide { stroke: #cbd5d0; stroke-width: 1; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1260" fill="#fbfcfb"/>
+  <rect x="28" y="24" width="1544" height="1212" fill="#ffffff" stroke="#b9c4bf"/>
+  <text x="72" y="68" class="title">171Yb metastable nuclear-spin qubit: state paths to computational operations</text>
+  <text x="72" y="94" class="subtitle">Teaching map only: vertical placement separates manifolds and is not an energy scale. Colored arrows are driven or engineered channels; black arrows are decay or state flow.</text>
+
+  <rect x="72" y="124" width="1050" height="486" fill="#fbfcfb" stroke="#cbd5d0"/>
+  <text x="96" y="156" class="section">State map</text>
+  <text x="96" y="178" class="subtitle">The labels identify what each path does in a quantum-computing cycle, not merely its wavelength.</text>
+
+  <!-- State manifolds -->
+  <line x1="160" y1="530" x2="400" y2="530" class="rule"/>
+  <text x="96" y="537" class="level">1S0</text>
+  <text x="96" y="558" class="small">ground-state atom</text>
+
+  <line x1="260" y1="350" x2="480" y2="350" class="rule"/>
+  <text x="156" y="357" class="level">3P0</text>
+  <text x="156" y="378" class="small">metastable nuclear-spin qubit</text>
+
+  <line x1="500" y1="236" x2="660" y2="236" class="rule"/>
+  <text x="520" y="222" class="level">3P2</text>
+  <text x="520" y="258" class="small">readout shelving manifold</text>
+
+  <line x1="164" y1="236" x2="352" y2="236" class="rule"/>
+  <text x="96" y="222" class="level">3P1</text>
+  <text x="96" y="258" class="small">narrow-line cooling / imaging</text>
+
+  <line x1="394" y1="145" x2="550" y2="145" class="rule"/>
+  <text x="404" y="131" class="level">5d6s 3D1</text>
+  <text x="404" y="166" class="small">two-photon pumping intermediate</text>
+
+  <line x1="720" y1="138" x2="980" y2="138" class="rule"/>
+  <text x="728" y="124" class="level">|r&gt; = 6s 59s 3S1</text>
+  <text x="880" y="160" class="small">Rydberg state used in a platform-specific gate path</text>
+
+  <line x1="1045" y1="120" x2="1120" y2="120" stroke="#15211e" stroke-width="2.5" stroke-dasharray="7 6"/>
+  <text x="930" y="114" class="body">Yb+ + e- continuum</text>
+
+  <!-- Preparation and imaging -->
+  <line x1="222" y1="520" x2="222" y2="246" stroke="#187a44" stroke-width="3" marker-end="url(#arrow-green)"/>
+
+  <line x1="330" y1="520" x2="430" y2="154" stroke="#b67725" stroke-width="3" marker-end="url(#arrow-orange)"/>
+  <line x1="525" y1="153" x2="460" y2="338" stroke="#b67725" stroke-width="2.5" stroke-dasharray="7 5" marker-end="url(#arrow-orange)"/>
+  <text x="334" y="275" class="body" fill="#b67725" font-weight="700">556 + 1539 nm</text>
+  <text x="334" y="296" class="small" fill="#b67725">two-photon pump to 3P0</text>
+
+  <line x1="126" y1="520" x2="126" y2="245" stroke="#1f5fd1" stroke-width="3" marker-end="url(#arrow-blue)"/>
+
+  <!-- Single-qubit control -->
+  <path d="M280 402 C315 430 378 430 420 402" fill="none" stroke="#15211e" stroke-width="2.5" marker-end="url(#arrow-ink)"/>
+  <text x="350" y="454" class="body" text-anchor="middle" font-weight="700">RF: Rφ(θ) in the nuclear-spin basis</text>
+  <text x="350" y="476" class="small" text-anchor="middle">single-qubit rotations; not the Raman readout branch</text>
+
+  <!-- Rydberg gate and erasure -->
+  <line x1="840" y1="340" x2="840" y2="146" stroke="#6542b5" stroke-width="3" marker-end="url(#arrow-purple)"/>
+  <text x="858" y="248" class="body" fill="#6542b5" font-weight="700">approximately 302 nm</text>
+  <text x="858" y="269" class="small" fill="#6542b5">|1&gt; ↔ |r&gt;; blockade-enabled CZ</text>
+
+  <line x1="986" y1="136" x2="1070" y2="125" stroke="#9c1743" stroke-width="3" marker-end="url(#arrow-wine)"/>
+  <text x="880" y="194" class="body" fill="#9c1743" font-weight="700">approximately 369 nm</text>
+  <text x="880" y="215" class="small" fill="#9c1743">core excitation → autoionization / erasure record</text>
+
+  <!-- State-selective readout -->
+  <path d="M465 344 C505 320 526 286 548 244" fill="none" stroke="#e05c26" stroke-width="3" marker-end="url(#arrow-orange)"/>
+  <text x="480" y="285" class="body" fill="#e05c26" font-weight="700">649 + 770 nm Raman</text>
+  <text x="480" y="306" class="small" fill="#e05c26">map one selected 3P0 nuclear-spin state to 3P2</text>
+  <path d="M650 240 C690 280 650 438 420 520" fill="none" stroke="#e05c26" stroke-width="2.5" stroke-dasharray="7 5" marker-end="url(#arrow-orange)"/>
+  <text x="665" y="368" class="body" fill="#e05c26" font-weight="700">497 nm depump via 3D2</text>
+  <text x="665" y="389" class="small" fill="#e05c26">return mapped population to imageable 1S0</text>
+
+  <text x="96" y="588" class="tiny" fill="#53615d">Readout path shown is the Li et al. (2025) 649/770 nm Raman + 497 nm implementation. The 302/369 nm path is the Ma et al. (2023) Rydberg erasure-conversion implementation.</text>
+
+  <!-- Operation cards -->
+  <text x="72" y="664" class="section">Computational meaning of the optical paths</text>
+  <rect x="72" y="690" width="356" height="244" fill="#fbfdff" stroke="#1f5fd1" stroke-width="2"/>
+  <text x="96" y="725" class="card-title" fill="#1f5fd1">01  Prepare a protected physical qubit</text>
+  <text x="96" y="757" class="body">1S0 → 3P0 through the 3D1 pumping path</text>
+  <text x="96" y="782" class="small">Local 556 nm + global 1539 nm pump into</text>
+  <text x="96" y="802" class="small">the metastable nuclear-spin manifold. This</text>
+  <text x="96" y="822" class="small">creates the storage basis; it is not a gate.</text>
+  <text x="96" y="875" class="small" fill="#53615d">Li et al. (2025): 3D1 pumping during trap-off windows.</text>
+
+  <rect x="448" y="690" width="356" height="244" fill="#fbfefc" stroke="#187a44" stroke-width="2"/>
+  <text x="472" y="725" class="card-title" fill="#187a44">02  Apply single-qubit rotations</text>
+  <text x="472" y="757" class="body">RF: |0&gt; ↔ |1&gt; within 3P0</text>
+  <text x="472" y="782" class="small">An RF drive supplies the directly usable</text>
+  <text x="472" y="802" class="small">one-qubit primitive Rφ(θ). Site selectivity</text>
+  <text x="472" y="822" class="small">requires a resolved frequency or local light shift.</text>
+  <text x="472" y="875" class="small" fill="#53615d">Ma et al. (2022): nuclear-spin gate operations.</text>
+
+  <rect x="824" y="690" width="356" height="244" fill="#fcfbff" stroke="#6542b5" stroke-width="2"/>
+  <text x="848" y="725" class="card-title" fill="#6542b5">03  Create an entangling gate</text>
+  <text x="848" y="757" class="body">302 nm: |1&gt; ↔ |r&gt;</text>
+  <text x="848" y="782" class="small">State-selective Rydberg excitation makes a</text>
+  <text x="848" y="802" class="small">two-atom interaction conditional. A calibrated</text>
+  <text x="848" y="822" class="small">blockade sequence returns a controlled phase to 3P0.</text>
+  <text x="848" y="875" class="small" fill="#53615d">Ma et al. (2023): metastable-qubit Rydberg CZ path.</text>
+
+  <rect x="1200" y="690" width="328" height="244" fill="#fffdfb" stroke="#e05c26" stroke-width="2"/>
+  <text x="1224" y="725" class="card-title" fill="#e05c26">04  Measure and classify</text>
+  <text x="1224" y="757" class="body">Raman map → 497 depump → image</text>
+  <text x="1224" y="782" class="small">Map |0&gt;, then |1&gt;, to 3P2; return each</text>
+  <text x="1224" y="802" class="small">mapped state to 1S0, then acquire two images:</text>
+  <text x="1224" y="822" class="small">bright/dark, dark/bright, or dark/dark.</text>
+  <text x="1224" y="875" class="small" fill="#53615d">Li et al. (2025): loss-resolved spin record.</text>
+
+  <rect x="72" y="962" width="1456" height="218" fill="#f5f8f6" stroke="#cbd5d0"/>
+  <text x="96" y="998" class="section">Decoder-visible consequence</text>
+  <text x="96" y="1030" class="body">RF rotates the nuclear-spin qubit. The Rydberg path supplies a conditional two-qubit phase.</text>
+  <text x="96" y="1054" class="body">Raman mapping plus imaging produces a ternary measurement record: |0&gt;, |1&gt;, or loss.</text>
+  <text x="96" y="1078" class="body">The 369 nm branch converts a Rydberg error into an ionization event that can be reported as an erasure.</text>
+  <line x1="96" y1="1100" x2="1504" y2="1100" class="guide"/>
+  <text x="96" y="1130" class="small" fill="#53615d">Sources represented in this teaching map: Ma et al., PRX 12, 021028 (2022); Ma et al., PRX Quantum 4, 020327 (2023); Li et al., arXiv:2504.11995 (2025). Wavelengths and pulse programs are implementation-dependent.</text>
+  <text x="96" y="1156" class="small" fill="#53615d">399 nm is a ground-state fluorescence channel. It does not directly discriminate a qubit stored in 3P0; state-selective mapping is required first.</text>
+</svg>

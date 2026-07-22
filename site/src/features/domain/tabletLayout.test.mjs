@@ -10,7 +10,7 @@ describe('tablet-density layout', () => {
   })
 
   it('reflows fault chains before five teaching steps become cramped', () => {
-    expect(faultToleranceCss).toMatch(/@media\s*\(max-width:\s*900px\)[\s\S]*\.fault-chain\s*>\s*div[\s\S]*grid-template-columns:\s*repeat\(2/)
+    expect(faultToleranceCss).toMatch(/@media\s*\(max-width:\s*900px\)[\s\S]*\.fault-chain__steps\s*\{[\s\S]*grid-template-columns:\s*repeat\(2/)
   })
 
   it('keeps the six-step scale sequence visible without horizontal scrolling on phones', () => {

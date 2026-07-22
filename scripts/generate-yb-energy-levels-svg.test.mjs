@@ -26,12 +26,14 @@ test('keeps the repump inset in physical energy order', async () => {
   assert.deepEqual([...positions].sort((a, b) => a - b), positions)
 })
 
-test('defines the meaning and limits of the spectroscopic energy labels', async () => {
+test('keeps the level map schematic without arbitrary spectroscopic energies', async () => {
   const svg = await readFile(svgPath, 'utf8')
 
-  assert.match(svg, /E\/hc（cm⁻¹）/)
-  assert.match(svg, /相对 ¹S₀/)
-  assert.match(svg, /超精细分裂未画/)
+  assert.doesNotMatch(svg, /E\/hc/)
+  assert.doesNotMatch(svg, /cm⁻¹/)
+  assert.match(svg, /纵向间距/)
+  assert.match(svg, /不按真实能量比例/)
+  assert.match(svg, /未展开超精细与 Zeeman 分裂/)
 })
 
 test('separates the 369 nm ionic-core excitation from the subsequent autoionization', async () => {

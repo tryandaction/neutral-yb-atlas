@@ -16,6 +16,7 @@ it('keeps the Yb reference map and comparison in the platform destination', () =
 it('keeps the experimental route focused on teaching visuals without an acceptance workbench', () => {
   renderRoute('experiment')
 
+  expect(document.getElementById('experiment-cycle-timeline')).toBeInTheDocument()
   expect(document.getElementById('experiment-visual-atlas')).toBeInTheDocument()
   expect(document.querySelector('.experiment-workbench')).not.toBeInTheDocument()
 })

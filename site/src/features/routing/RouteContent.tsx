@@ -10,6 +10,7 @@ import DomainPage from '../domain/DomainPage'
 import { domainDefinitions } from '../domain/domainDefinitions'
 import EvidenceBrowser from '../evidence/EvidenceBrowser'
 import ExperimentVisualAtlas from '../experiment-visual-atlas/ExperimentVisualAtlas'
+import ExperimentCycleTimeline from '../experiment-timeline/ExperimentCycleTimeline'
 import ResourceEstimator from '../fault-tolerance/ResourceEstimator'
 import OverviewPage from '../overview/OverviewPage'
 import ExperimentPipeline from '../teaching-visuals/ExperimentPipeline'
@@ -49,7 +50,7 @@ function RouteContent(props: RouteContentProps) {
       content = <>{article(3)}<RydbergGateTutor language={language} /><TheoryWorkbench language={language} /></>
       break
     case 'experiment':
-      content = <>{article(4)}<ExperimentPipeline language={language} /><ExperimentVisualAtlas language={language} /></>
+      content = <>{article(4)}<ExperimentPipeline language={language} /><ExperimentCycleTimeline language={language} /><ExperimentVisualAtlas language={language} /></>
       break
     case 'fault-tolerance':
       content = <>{article(5)}<ResourceEstimator language={language} /></>

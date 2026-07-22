@@ -92,8 +92,8 @@ const hotspots: ReferenceHotspot[] = [
     y: 29.1,
     rx: 3.5,
     ry: 13,
-    labelX: 63,
-    labelY: 28,
+    labelX: 69,
+    labelY: 47,
     color: '#7354a2',
   },
   {
@@ -110,17 +110,11 @@ const hotspots: ReferenceHotspot[] = [
     y: 11.5,
     rx: 4,
     ry: 6,
-    labelX: 63,
-    labelY: 9,
+    labelX: 69,
+    labelY: 24,
     color: '#b9503c',
   },
 ]
-
-const lensScale = 2.6
-
-function lensAxisPosition(coordinate: number) {
-  return `${((50 - coordinate * lensScale) / (1 - lensScale)).toFixed(2)}%`
-}
 
 export default function AtomicMap({ language }: { language: Language }) {
   const [fullMapOpen, setFullMapOpen] = useState(false)
@@ -203,29 +197,13 @@ export default function AtomicMap({ language }: { language: Language }) {
                 style={{
                   '--hotspot-label-x': `${selected.labelX}%`,
                   top: `${selected.labelY}%`,
-                } as CSSProperties}
+             } as CSSProperties & Record<'--hotspot-label-x', string>}
                 aria-hidden="true"
               >
                 <b>{selected.wavelength}</b>
                 <span>{selected.label[language]}</span>
               </div>
             </div>
-          </div>
-          <div
-            className="atomic-reference__mobile-lens"
-            data-testid="reference-mobile-lens"
-            data-focus-x={selected.x}
-            data-focus-y={selected.y}
-            role="img"
-            aria-label={`${language === 'zh' ? '选中区域放大' : 'Selected-region magnification'}: ${selected.label[language]}`}
-            style={{
-              backgroundImage: `url(${energyDiagram})`,
-              backgroundPosition: `${lensAxisPosition(selected.x)} ${lensAxisPosition(selected.y)}`,
-              color: selected.color,
-            }}
-          >
-            <span>{language === 'zh' ? '局部放大' : 'Local magnification'}</span>
-            <b>{selected.label[language]}</b>
           </div>
           <figcaption>
             {language === 'zh'

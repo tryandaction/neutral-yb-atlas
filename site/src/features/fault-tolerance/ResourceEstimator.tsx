@@ -27,6 +27,49 @@ const erasureStatusCopy = {
   'overhead-dominated': { zh: '检测开销占主导', en: 'Overhead dominates' },
 } as const
 
+const faultChainSteps = [
+  {
+    id: 'criteria',
+    number: '01',
+    title: { zh: '实现条件', en: 'implementation criteria' },
+    summary: { zh: '初始化、相干、通用门与读出满足后，硬件才具备进入容错讨论的资格。', en: 'Initialization, coherence, universal gates and readout qualify hardware for the fault-tolerance question.' },
+    detailTitle: { zh: '实现条件定义可运行的处理器接口', en: 'Implementation criteria define a runnable processor interface' },
+    detail: { zh: 'DiVincenzo 准则回答硬件能否准备状态、执行控制并读出结果。它们是容错的前提，而不是容错证明；单个门或单项相干时间优异仍不足以说明完整周期可运行。', en: 'DiVincenzo criteria ask whether hardware can prepare states, execute control and read out results. They are prerequisites for fault tolerance, not its proof; one strong gate or coherence number does not establish a runnable cycle.' },
+  },
+  {
+    id: 'physical-fault',
+    number: '02',
+    title: { zh: '物理错误', en: 'physical fault' },
+    summary: { zh: 'Pauli、泄漏、损失、相关漂移和测量错误必须保留各自定义。', en: 'Pauli faults, leakage, loss, correlated drift and measurement errors keep separate definitions.' },
+    detailTitle: { zh: '物理错误必须成为周期通道', en: 'Physical fault becomes a cycle channel' },
+    detail: { zh: '解码器需要故障的类型、位置、时间和相关性，而不是一张平均保真度表。并行门、移动、测量和复位会把局部机制组合成一个周期通道。', en: 'A decoder needs the fault type, location, timing and correlation, not an average-fidelity table. Parallel gates, motion, measurement and reset compose local mechanisms into a cycle channel.' },
+  },
+  {
+    id: 'record',
+    number: '03',
+    title: { zh: '解码器可见记录', en: 'decoder-visible record' },
+    summary: { zh: '擦除标记只有连同漏报、误报、散射与等待时间写入记录才有价值。', en: 'An erasure flag matters only together with false negatives, false positives, scattering and wait time.' },
+    detailTitle: { zh: '记录决定解码器实际知道什么', en: 'The record determines what the decoder actually knows' },
+    detail: { zh: '擦除位置能缩小候选故障集合，但漏报、误报和检测延迟同样进入综合征历史。模型若省略这些量，就等于把实验中不存在的完美信息交给解码器。', en: 'Erasure locations shrink the candidate-fault set, but missed flags, false flags and detection latency also enter syndrome history. Omitting them gives the decoder perfect information absent from experiment.' },
+  },
+  {
+    id: 'schedule',
+    number: '04',
+    title: { zh: '代码与调度', en: 'code and schedule' },
+    summary: { zh: '选择码、非 Clifford 资源、并行冲突与译码延迟决定时空开销。', en: 'Code choice, non-Clifford resources, parallel conflicts and decoder latency set spacetime overhead.' },
+    detailTitle: { zh: '代码与调度把通道转成资源消耗', en: 'Code and schedule turn a channel into resource demand' },
+    detail: { zh: '同一物理通道在不同量子码、码距、并行度和译码延迟下会有不同的逻辑错误与墙钟时间。资源估算必须保留这些选择，不能只用物理原子数代表规模。', en: 'The same physical channel yields different logical error and wall time under different codes, distances, parallelism and decoder latency. Resource estimates retain these choices rather than treating atom count as scale.' },
+  },
+  {
+    id: 'result',
+    number: '05',
+    title: { zh: '可信结果', en: 'trustworthy result' },
+    summary: { zh: '逻辑错误、吞吐、可用率与每次成功结果成本必须共同改善。', en: 'Logical error, throughput, availability and cost per successful result must improve together.' },
+    detailTitle: { zh: '可信结果是最终比较口径', en: 'Trustworthy result is the final comparison basis' },
+    detail: { zh: '只有在同一任务、精度和成功标准下，逻辑错误下降、吞吐提升和可用率不被维护停机抵消时，新增物理资源才形成实际计算价值。', en: 'Only under the same task, accuracy and success standard do added physical resources create computational value when logical error falls, throughput rises and maintenance does not erase availability.' },
+  },
+] as const
+
 function scientific(value: number): string {
   return value.toExponential(1).replace('e-', ' × 10⁻')
 }
@@ -34,8 +77,10 @@ function scientific(value: number): string {
 export default function ResourceEstimator({ language }: { language: Language }) {
   const [input, setInput] = useState(initialInput)
   const [erasureInput, setErasureInput] = useState(initialErasureInput)
+  const [selectedFaultLink, setSelectedFaultLink] = useState('result')
   const estimate = useMemo(() => estimateResources(input), [input])
   const erasure = useMemo(() => assessErasureConversion(erasureInput), [erasureInput])
+  const selectedFaultStep = faultChainSteps.find((step) => step.id === selectedFaultLink) ?? faultChainSteps[0]
   const update = (key: keyof ResourceEstimateInput, value: number) => setInput((current) => ({ ...current, [key]: value }))
   const updateErasure = (key: keyof ErasureAssessmentInput, value: number) => setErasureInput((current) => ({ ...current, [key]: value }))
 
@@ -48,12 +93,23 @@ export default function ResourceEstimator({ language }: { language: Language }) 
 
       <section className="fault-chain" aria-labelledby="fault-chain-title">
         <h3 id="fault-chain-title">{language === 'zh' ? '通用计算之后，还有一条容错链' : 'Universal computation needs a second chain'}</h3>
-        <div>
-          <article><span>01</span><strong>{language === 'zh' ? '实现条件' : 'implementation criteria'}</strong><p>{language === 'zh' ? '初始化、相干、通用门与读出满足后，硬件才具备进入容错讨论的资格。' : 'Initialization, coherence, universal gates and readout qualify hardware for the fault-tolerance question.'}</p></article>
-          <article><span>02</span><strong>{language === 'zh' ? '物理错误' : 'physical fault'}</strong><p>{language === 'zh' ? 'Pauli、泄漏、损失、相关漂移和测量错误必须保留各自定义。' : 'Pauli faults, leakage, loss, correlated drift and measurement errors keep separate definitions.'}</p></article>
-          <article><span>03</span><strong>{language === 'zh' ? '解码器可见记录' : 'decoder-visible record'}</strong><p>{language === 'zh' ? '擦除标记只有连同漏报、误报、散射与等待时间写入记录才有价值。' : 'An erasure flag matters only together with false negatives, false positives, scattering and wait time.'}</p></article>
-          <article><span>04</span><strong>{language === 'zh' ? '代码与调度' : 'code and schedule'}</strong><p>{language === 'zh' ? '选择码、非 Clifford 资源、并行冲突与译码延迟决定时空开销。' : 'Code choice, non-Clifford resources, parallel conflicts and decoder latency set spacetime overhead.'}</p></article>
-          <article><span>05</span><strong>{language === 'zh' ? '可信结果' : 'trustworthy result'}</strong><p>{language === 'zh' ? '逻辑错误、吞吐、可用率与每次成功结果成本必须共同改善。' : 'Logical error, throughput, availability and cost per successful result must improve together.'}</p></article>
+        <div className="fault-chain__steps">
+          {faultChainSteps.map((step) => (
+            <button
+              key={step.id}
+              type="button"
+              className={selectedFaultLink === step.id ? 'is-selected' : ''}
+              aria-label={`${language === 'zh' ? '容错链环节：' : 'Fault-tolerance link: '}${step.title[language]}`}
+              aria-pressed={selectedFaultLink === step.id}
+              onClick={() => setSelectedFaultLink(step.id)}
+            >
+              <span>{step.number}</span><strong>{step.title[language]}</strong><p>{step.summary[language]}</p>
+            </button>
+          ))}
+        </div>
+        <div className="fault-chain__detail" aria-live="polite">
+          <span>{selectedFaultStep.number}</span>
+          <div><h4>{selectedFaultStep.detailTitle[language]}</h4><p>{selectedFaultStep.detail[language]}</p></div>
         </div>
       </section>
 

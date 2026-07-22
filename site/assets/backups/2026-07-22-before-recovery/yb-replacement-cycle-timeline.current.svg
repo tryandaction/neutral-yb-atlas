@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1370" viewBox="0 0 1600 1370" role="img" aria-labelledby="title description">
+  <title id="title">171Yb concurrent replacement, preparation, and readout timing architecture</title>
+  <desc id="description">A three-level teaching timing diagram. The upper panel shows Li et al. 2025 concurrent reservoir maintenance and a fresh-atom preparation cycle. The lower panels show the trap-off microcycles for optical pumping and Raman mapping readout.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#15211e"/></marker>
+    <style>
+      text { font-family: Arial, "Noto Sans", sans-serif; fill: #15211e; letter-spacing: 0; }
+      .title { font-size: 30px; font-weight: 700; }
+      .subtitle { font-size: 15px; fill: #53615d; }
+      .section { font-size: 18px; font-weight: 700; }
+      .stage-number { font-size: 11px; font-weight: 700; fill: #c34c36; }
+      .stage-label { font-size: 14px; font-weight: 700; }
+      .lane { font-size: 14px; }
+      .small { font-size: 12px; }
+      .tiny { font-size: 11px; }
+      .axis { font-size: 12px; }
+      .panel { fill: #ffffff; stroke: #b9c4bf; stroke-width: 1.2; }
+      .stage { fill: #f1f4f2; stroke: #cbd5d0; stroke-width: 1; }
+      .row { fill: #ffffff; stroke: #d9e1dd; stroke-width: 1; }
+      .line { stroke: #15211e; stroke-width: 1.4; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1370" fill="#fbfcfb"/>
+  <rect x="28" y="24" width="1544" height="1322" fill="#ffffff" stroke="#b9c4bf"/>
+  <text x="72" y="68" class="title">171Yb timing architecture: replacement in parallel with protected computation</text>
+  <text x="72" y="94" class="subtitle">This is a hierarchy of control schedules, not one portable pulse recipe. Reported durations and microcycle parameters are marked as Li et al. (2025) implementation values.</text>
+
+  <!-- Panel A -->
+  <rect x="72" y="126" width="1456" height="530" class="panel"/>
+  <text x="96" y="160" class="section">A. System-level concurrency: reservoir maintenance, fresh-atom preparation, and a protected compute array</text>
+  <text x="96" y="183" class="subtitle">Phase widths are schematic. Only labels such as 1 ms, 6 ms, 4 ms, 0.7 ms, and 6 ms denote values reported in the cited implementation.</text>
+
+  <text x="404" y="216" class="axis">relative experimental time</text>
+  <line x1="404" y1="224" x2="1484" y2="224" class="line"/>
+  <rect x="404" y="238" width="168" height="54" class="stage"/><rect x="572" y="238" width="174" height="54" class="stage"/><rect x="746" y="238" width="270" height="54" class="stage"/><rect x="1016" y="238" width="204" height="54" class="stage"/><rect x="1220" y="238" width="264" height="54" class="stage"/>
+  <text x="420" y="258" class="stage-number">01</text><text x="420" y="278" class="stage-label">Load from reservoir</text>
+  <text x="588" y="258" class="stage-number">02</text><text x="588" y="278" class="stage-label">Transport</text>
+  <text x="762" y="258" class="stage-number">03</text><text x="762" y="278" class="stage-label">Select + identify + cool</text>
+  <text x="1032" y="258" class="stage-number">04</text><text x="1032" y="278" class="stage-label">Prepare P0 + handoff</text>
+  <text x="1236" y="258" class="stage-number">05</text><text x="1236" y="278" class="stage-label">Compute / readout slot</text>
+
+  <text x="382" y="334" text-anchor="end" class="lane">1D reservoir molasses</text><text x="382" y="350" text-anchor="end" class="tiny" fill="#53615d">reservoir zone</text>
+  <rect x="404" y="316" width="1080" height="42" class="row"/>
+  <rect x="414" y="325" width="557" height="24" rx="3" fill="#208c65"/>
+  <rect x="1015" y="325" width="195" height="24" rx="3" fill="#208c65"/>
+  <rect x="1230" y="325" width="244" height="24" rx="3" fill="#208c65"/>
+  <text x="977" y="341" class="tiny" text-anchor="middle" fill="#c34c36">OFF during fluorescence image</text>
+
+  <text x="382" y="390" text-anchor="end" class="lane">mobile 488 nm tweezers</text><text x="382" y="406" text-anchor="end" class="tiny" fill="#53615d">AOD array + galvo transport</text>
+  <rect x="404" y="372" width="1080" height="42" class="row"/>
+  <rect x="430" y="381" width="122" height="24" rx="3" fill="#176f8f"/><text x="491" y="398" text-anchor="middle" class="tiny" fill="#ffffff">load 1 ms</text>
+  <rect x="590" y="381" width="130" height="24" rx="3" fill="#176f8f"/><text x="655" y="398" text-anchor="middle" class="tiny" fill="#ffffff">transport ~1 ms</text>
+  <rect x="1082" y="381" width="96" height="24" rx="3" fill="#176f8f"/><text x="1130" y="398" text-anchor="middle" class="tiny" fill="#ffffff">handoff</text>
+
+  <text x="382" y="446" text-anchor="end" class="lane">local LAC beam</text><text x="382" y="462" text-anchor="end" class="tiny" fill="#53615d">single-atom parity projection</text>
+  <rect x="404" y="428" width="1080" height="42" class="row"/><rect x="770" y="437" width="92" height="24" rx="3" fill="#bc5a37"/><text x="816" y="454" text-anchor="middle" class="tiny" fill="#ffffff">6 ms</text>
+
+  <text x="382" y="502" text-anchor="end" class="lane">556 nm occupancy image</text><text x="382" y="518" text-anchor="end" class="tiny" fill="#53615d">ground-state classification</text>
+  <rect x="404" y="484" width="1080" height="42" class="row"/><rect x="880" y="493" width="68" height="24" rx="3" fill="#33865b"/><text x="914" y="510" text-anchor="middle" class="tiny" fill="#ffffff">4 ms</text>
+
+  <text x="382" y="558" text-anchor="end" class="lane">local + molasses cooling</text><text x="382" y="574" text-anchor="end" class="tiny" fill="#53615d">return to approximately 10 microkelvin</text>
+  <rect x="404" y="540" width="1080" height="42" class="row"/><rect x="960" y="549" width="94" height="24" rx="3" fill="#33865b"/><text x="1007" y="566" text-anchor="middle" class="tiny" fill="#ffffff">6 ms</text>
+
+  <text x="382" y="614" text-anchor="end" class="lane">556 + 1539 nm P0 pumping</text><text x="382" y="630" text-anchor="end" class="tiny" fill="#53615d">detailed microcycle in panel B</text>
+  <rect x="404" y="596" width="1080" height="42" class="row"/><rect x="1070" y="605" width="106" height="24" rx="3" fill="#b67725"/><text x="1123" y="622" text-anchor="middle" class="tiny" fill="#ffffff">0.7 ms</text>
+
+  <rect x="1220" y="428" width="264" height="210" fill="#f5f8f6" stroke="#cbd5d0"/>
+  <text x="1238" y="452" class="small" font-weight="700">stationary 3P0 compute array</text>
+  <text x="1238" y="480" class="small">RF Rphi(theta): one-qubit rotations</text>
+  <text x="1238" y="506" class="small">302 nm UV: calibrated Rydberg CZ windows</text>
+  <text x="1238" y="532" class="small">maintenance runs on fresh/mobile atoms</text>
+  <text x="1238" y="558" class="small">stored metastable qubits remain isolated from</text>
+  <text x="1238" y="577" class="small">1S0 cooling, imaging, and pumping light</text>
+  <text x="1238" y="610" class="tiny" fill="#53615d">Li et al. report no measurable coherence loss</text>
+  <text x="1238" y="626" class="tiny" fill="#53615d">from subsequent replacement rounds.</text>
+
+  <!-- Panel B -->
+  <rect x="72" y="686" width="694" height="548" class="panel"/>
+  <text x="96" y="720" class="section">B. Metastable-qubit preparation microcycle</text>
+  <text x="96" y="744" class="subtitle">Li et al. (2025): two pumping stages, 50 cycles per stage; total preparation reported as 0.7 ms.</text>
+  <text x="270" y="780" class="axis">1.8 microsecond intensity-modulation period</text>
+  <text x="252" y="810" text-anchor="end" class="lane">tweezer intensity</text>
+  <rect x="270" y="792" width="450" height="38" class="row"/>
+  <rect x="270" y="800" width="75" height="22" fill="#415e78"/><rect x="345" y="800" width="75" height="22" fill="#e8ecea"/><rect x="420" y="800" width="75" height="22" fill="#415e78"/><rect x="495" y="800" width="75" height="22" fill="#e8ecea"/><rect x="570" y="800" width="75" height="22" fill="#415e78"/><rect x="645" y="800" width="75" height="22" fill="#e8ecea"/>
+  <text x="307" y="846" class="tiny" text-anchor="middle">ON</text><text x="382" y="846" class="tiny" text-anchor="middle">OFF 900 ns</text><text x="457" y="846" class="tiny" text-anchor="middle">ON</text><text x="532" y="846" class="tiny" text-anchor="middle">OFF 900 ns</text><text x="607" y="846" class="tiny" text-anchor="middle">ON</text><text x="682" y="846" class="tiny" text-anchor="middle">OFF 900 ns</text>
+
+  <text x="252" y="888" text-anchor="end" class="lane">localized 556 nm</text><rect x="270" y="870" width="450" height="36" class="row"/><rect x="351" y="878" width="62" height="20" rx="3" fill="#33865b"/><rect x="501" y="878" width="62" height="20" rx="3" fill="#33865b"/><rect x="651" y="878" width="62" height="20" rx="3" fill="#33865b"/>
+  <text x="252" y="940" text-anchor="end" class="lane">global 1539 nm</text><rect x="270" y="922" width="450" height="36" class="row"/><rect x="351" y="930" width="62" height="20" rx="3" fill="#b67725"/><rect x="501" y="930" width="62" height="20" rx="3" fill="#b67725"/><rect x="651" y="930" width="62" height="20" rx="3" fill="#b67725"/>
+  <text x="252" y="992" text-anchor="end" class="lane">497 nm depump</text><rect x="270" y="974" width="450" height="36" class="row"/><rect x="351" y="982" width="62" height="20" rx="3" fill="#d68a26"/><rect x="501" y="982" width="62" height="20" rx="3" fill="#d68a26"/><rect x="651" y="982" width="62" height="20" rx="3" fill="#d68a26"/>
+  <text x="270" y="1045" class="small">Optical-pumping pulses occupy the trap-off half-period.</text>
+  <text x="270" y="1067" class="small">This avoids transient-manifold light shifts and anti-trapping.</text>
+  <text x="270" y="1092" class="small">The gating rule is shown; polarization and two-stage ordering are apparatus-specific.</text>
+  <rect x="96" y="1110" width="646" height="94" fill="#f5f8f6" stroke="#cbd5d0"/>
+  <text x="118" y="1140" class="small" font-weight="700">State path:</text><text x="198" y="1140" class="small">1S0 --(556 + 1539 nm via 3D1)--> 3P0 nuclear-spin qubit</text>
+  <text x="118" y="1170" class="small" font-weight="700">Isolation rule:</text><text x="218" y="1170" class="small">local 556 nm preparation does not cross the reservoir.</text>
+
+  <!-- Panel C -->
+  <rect x="790" y="686" width="738" height="548" class="panel"/>
+  <text x="814" y="720" class="section">C. State-selective readout microcycle and record</text>
+  <text x="814" y="744" class="subtitle">Li et al. (2025): Raman map one nuclear-spin state to 3P2, depump to 1S0, image; repeat for the other state.</text>
+  <text x="1030" y="780" class="axis">trap-off control window, repeated for the addressed state</text>
+  <text x="1010" y="810" text-anchor="end" class="lane">tweezer intensity</text><rect x="1028" y="792" width="444" height="38" class="row"/>
+  <rect x="1028" y="800" width="74" height="22" fill="#415e78"/><rect x="1102" y="800" width="74" height="22" fill="#e8ecea"/><rect x="1176" y="800" width="74" height="22" fill="#415e78"/><rect x="1250" y="800" width="74" height="22" fill="#e8ecea"/><rect x="1324" y="800" width="74" height="22" fill="#415e78"/><rect x="1398" y="800" width="74" height="22" fill="#e8ecea"/>
+  <text x="1139" y="846" class="tiny" text-anchor="middle">OFF 900 ns</text><text x="1287" y="846" class="tiny" text-anchor="middle">OFF 900 ns</text><text x="1435" y="846" class="tiny" text-anchor="middle">OFF 900 ns</text>
+
+  <text x="1010" y="888" text-anchor="end" class="lane">649 + 770 nm Raman</text><rect x="1028" y="870" width="444" height="36" class="row"/>
+  <rect x="1111" y="878" width="54" height="20" rx="3" fill="#c74d36"/><rect x="1259" y="878" width="54" height="20" rx="3" fill="#c74d36"/><rect x="1407" y="878" width="54" height="20" rx="3" fill="#c74d36"/>
+  <text x="1028" y="925" class="tiny">two-photon pi pulse: approximately 400 ns; repeated sequence x8 in the reported implementation</text>
+  <text x="1010" y="958" text-anchor="end" class="lane">497 nm depump</text><rect x="1028" y="940" width="444" height="36" class="row"/>
+  <rect x="1111" y="948" width="54" height="20" rx="3" fill="#d68a26"/><rect x="1259" y="948" width="54" height="20" rx="3" fill="#d68a26"/><rect x="1407" y="948" width="54" height="20" rx="3" fill="#d68a26"/>
+  <text x="1028" y="995" class="small">Map |q&gt;: 3P0 --(649 + 770 nm)--> 3P2</text>
+  <text x="1028" y="1015" class="small">--(497 nm via 3D2)--> imageable 1S0.</text>
+
+  <rect x="814" y="1030" width="680" height="154" fill="#f5f8f6" stroke="#cbd5d0"/>
+  <text x="836" y="1060" class="small" font-weight="700">Image 1 after mapping |0&gt;</text><rect x="1092" y="1043" width="90" height="24" rx="3" fill="#33865b"/><text x="1137" y="1060" text-anchor="middle" class="tiny" fill="#ffffff">fluorescence</text>
+  <text x="836" y="1090" class="small" font-weight="700">Image 2 after mapping |1&gt;</text><rect x="1092" y="1073" width="90" height="24" rx="3" fill="#33865b"/><text x="1137" y="1090" text-anchor="middle" class="tiny" fill="#ffffff">fluorescence</text>
+  <text x="836" y="1130" class="small">bright, dark  →  |0&gt;</text><text x="1080" y="1130" class="small">dark, bright  →  |1&gt;</text><text x="1320" y="1130" class="small">dark, dark  →  loss</text>
+  <text x="836" y="1162" class="tiny" fill="#53615d">The two-image record is the decoder-relevant output. A classifier must retain site, cycle, and outcome rather than only an averaged fidelity.</text>
+
+  <line x1="96" y1="1272" x2="1504" y2="1272" stroke="#cbd5d0"/>
+  <text x="96" y="1302" class="small" fill="#53615d">Source basis: Li et al., Fast, Continuous and Coherent Atom Replacement in a Neutral Atom Qubit Array (2025), Figs. 2, 3, 4, and 9. RF and Rydberg-gate rows are computational slots; their pulse shapes are deliberately not inferred from the replacement experiment.</text>
+  <text x="96" y="1324" class="small" fill="#53615d">A production control sequence additionally needs calibrated AOM/EOM delays, phase references, shutter latency, camera trigger timing, and per-site addressing masks; those are hardware settings, not universal atomic timing constants.</text>
+</svg>

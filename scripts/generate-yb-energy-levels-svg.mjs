@@ -85,8 +85,8 @@ const markerDefs = Object.entries({
 
 const svg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1480" viewBox="0 0 1600 1480" role="img" aria-labelledby="title description">
-  <title id="title">¹⁷¹Yb 亚稳态核自旋量子比特能级与擦除检测</title>
-  <desc id="description">¹⁷¹Yb 的主能级、399、556、578.4、302 和约369纳米通道，以及Rydberg态衰变、770纳米再泵浦和擦除检测流程。</desc>
+  <title id="title">¹⁷¹Yb 核自旋量子比特能级、控制与擦除检测</title>
+  <desc id="description">¹⁷¹Yb 的主能级、基态 556 纳米局域 Raman 门、亚稳态全局 RF 与局域相位控制、Rydberg 激发，以及衰变、再泵浦和擦除检测流程。</desc>
   <defs>
     ${markerDefs}
     <style>
@@ -106,15 +106,11 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
   </defs>
   <rect width="1600" height="1480" fill="#ffffff"/>
 
-  ${text(800, 46, '¹⁷¹Yb 亚稳态核自旋量子比特：能级、Rydberg 激发、成像与读出通道', 'title', { anchor: 'middle' })}
+  ${text(800, 46, '¹⁷¹Yb 核自旋量子比特：能级、Rydberg 激发、成像与读出通道', 'title', { anchor: 'middle' })}
   ${roundedRect(22, 62, 248, 48, colors.ink, '#ffffff', 8, 1.5)}
   ${text(40, 94, '¹⁷¹Yb：核自旋 I = 1/2', 'body', { weight: 700 })}
-  ${roundedRect(22, 124, 250, 84, '#b7a26e', colors.note, 7, 1.3)}
-  ${multiline(39, 148, ['示意图：纵向间距', '不按真实能量比例', '数值为 E/hc，相对 ¹S₀', '¹⁷¹Yb 超精细分裂未画'], { className: 'tiny', lineHeight: 19 })}
-
-  <!-- Main energy axis -->
-  ${arrow(72, 835, 72, 210, colors.ink, { marker: 'ink', width: 3 })}
-  <text transform="translate(31 525) rotate(-90)" class="small" text-anchor="middle">E/hc（cm⁻¹）</text>
+  ${roundedRect(22, 124, 250, 78, '#b7a26e', colors.note, 7, 1.3)}
+  ${multiline(39, 148, ['示意图：纵向间距', '不按真实能量比例', '未展开超精细与 Zeeman 分裂'], { className: 'micro', lineHeight: 20 })}
 
   <line x1="350" y1="820" x2="930" y2="820" class="energy-line"/>
   <line x1="440" y1="620" x2="930" y2="620" class="energy-line"/>
@@ -124,57 +120,90 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
   <line x1="680" y1="100" x2="925" y2="100" class="energy-line"/>
   <line x1="680" y1="145" x2="850" y2="145" stroke="${colors.ink}" stroke-width="2.5" stroke-dasharray="8 7"/>
 
-  ${text(168, 827, '1   6s² ¹S₀', 'level')}
-  ${text(955, 827, '0 cm⁻¹', 'small')}
-  ${text(278, 627, '2   6s6p ³P₀', 'level')}
-  ${text(955, 627, '17288.439 cm⁻¹', 'small')}
-  ${text(278, 507, '3   6s6p ³P₁', 'level')}
-  ${text(730, 507, '17992.007 cm⁻¹', 'small')}
-  ${text(278, 387, '4   6s6p ¹P₁', 'level')}
-  ${text(730, 387, '25068.222 cm⁻¹', 'small')}
-  ${text(270, 248, '5   6s59s ³S₁', 'level')}
-  ${text(628, 226, '|r⟩ = |6s59s ³S₁, F=3/2, mF=3/2⟩', 'body', { anchor: 'middle' })}
-  ${text(780, 263, 'Rydberg 态', 'small')}
-  ${text(470, 108, '6p₁/₂59s 自动电离态', 'body')}
+  <circle cx="164" cy="820" r="9" fill="#ffffff" stroke="${colors.blue}" stroke-width="3"/>
+  ${text(184, 827, '6s² ¹S₀', 'level')}
+  <circle cx="268" cy="620" r="9" fill="#ffffff" stroke="${colors.orange}" stroke-width="3"/>
+  ${text(288, 627, '6s6p ³P₀', 'level')}
+  <circle cx="268" cy="500" r="9" fill="#ffffff" stroke="${colors.green}" stroke-width="3"/>
+  ${text(288, 507, '6s6p ³P₁', 'level')}
+  <circle cx="268" cy="380" r="9" fill="#ffffff" stroke="${colors.blue}" stroke-width="3"/>
+  ${text(288, 387, '6s6p ¹P₁', 'level')}
+  <circle cx="258" cy="240" r="9" fill="#ffffff" stroke="${colors.purple}" stroke-width="3"/>
+  ${text(278, 248, '6s 59s ³S₁', 'level')}
+  ${text(628, 226, '|r⟩ = |6s 59s ³S₁, F=3/2, mF=3/2⟩', 'body', { anchor: 'middle' })}
+  ${text(830, 270, 'Rydberg 态', 'small', { anchor: 'end' })}
+  <circle cx="658" cy="100" r="9" fill="#ffffff" stroke="${colors.wine}" stroke-width="3"/>
+  ${text(680, 88, '6p₁/₂ 59s 自动电离态', 'body')}
   ${text(1035, 151, 'Yb⁺ + e⁻ 连续区', 'body')}
 
-  ${text(945, 846, '箭头图例：彩色=激光耦合/激发；黑色=衰变；虚线=示意分支', 'micro', { fill: colors.muted })}
+  ${text(22, 850, '箭头颜色=对应光场；黑色=RF/衰变；虚线=示意', 'micro', { fill: colors.muted })}
 
   <!-- Main transitions -->
   ${arrow(255, 812, 255, 388, colors.blue, { marker: 'blue', double: true, width: 3 })}
-  ${multiline(122, 540, ['399 nm', '快速基态成像'], { className: 'body', lineHeight: 24, fill: colors.blue, weight: 700 })}
+  ${multiline(122, 538, ['399 nm', '快速基态成像'], { className: 'body', lineHeight: 28, fill: colors.blue, weight: 700 })}
   ${camera(128, 620, colors.ink)}
   <line x1="151" y1="611" x2="151" y2="580" stroke="${colors.blue}" stroke-width="2" stroke-dasharray="4 4"/>
 
   ${arrow(398, 812, 398, 508, colors.green, { marker: 'green', double: true, width: 3 })}
-  ${multiline(290, 716, ['556 nm', '窄线冷却/成像'], { className: 'body', lineHeight: 24, fill: colors.green, weight: 700 })}
-  ${camera(300, 753, colors.ink)}
+  ${multiline(285, 704, ['556 nm', '窄线冷却', '低损伤成像'], { className: 'body', lineHeight: 24, fill: colors.green, weight: 700 })}
+  ${camera(300, 760, colors.ink)}
 
   ${arrow(430, 812, 430, 628, colors.orange, { marker: 'orange', double: true, dashed: true, width: 2.5 })}
-  ${multiline(448, 716, ['578.4 nm', '钟跃迁'], { className: 'body', lineHeight: 24, fill: colors.orange, weight: 700 })}
+  ${multiline(448, 714, ['578.4 nm', '钟跃迁'], { className: 'body', lineHeight: 28, fill: colors.orange, weight: 700 })}
 
   ${arrow(860, 612, 860, 248, colors.purple, { marker: 'purple', double: true, width: 3 })}
-  ${multiline(880, 430, ['302 nm', 'ΩUV'], { className: 'level', lineHeight: 29, fill: colors.purple, weight: 700 })}
+  ${multiline(880, 424, ['302 nm', 'ΩRyd'], { className: 'level', lineHeight: 38, fill: colors.purple, weight: 700 })}
+  ${text(880, 505, '同波长的局域相位控制', 'micro', { fill: colors.purple, weight: 700 })}
+  ${text(880, 528, '失谐聚焦光产生差分 AC Stark 位移', 'micro')}
+  ${text(880, 551, '计算作用：局域 Rz；与全局 RF 合成逐位点门', 'micro')}
 
   ${arrow(850, 232, 850, 108, colors.wine, { marker: 'wine', width: 3 })}
-  ${multiline(715, 162, ['约369 nm', '离子实激发'], { className: 'body', lineHeight: 24, fill: colors.wine, weight: 700 })}
+  ${multiline(715, 158, ['约369 nm', '离子实激发'], { className: 'body', lineHeight: 30, fill: colors.wine, weight: 700 })}
   ${pathArrow('M925 100 C965 100 970 145 1025 145', colors.wine, 'wine', 3)}
   ${text(940, 122, '自动电离', 'small', { fill: colors.wine, weight: 700 })}
 
   <!-- Nuclear-spin qubit -->
   ${text(315, 664, '|0⟩ = |³P₀, F=1/2, mF=−1/2⟩', 'small')}
   ${text(735, 664, '|1⟩ = |³P₀, F=1/2, mF=+1/2⟩', 'small')}
-  ${arrow(585, 650, 750, 650, colors.ink, { marker: 'ink', double: true, width: 2.5 })}
-  ${text(668, 687, 'RF 核自旋驱动 ΩRF', 'body', { anchor: 'middle', weight: 700 })}
-  ${multiline(590, 716, ['Ma 2023：B = 5.0 G，νL = 5.70 kHz', 'π 脉冲约 2.0 ms'], { className: 'small', lineHeight: 23 })}
+  ${arrow(560, 650, 700, 650, colors.ink, { marker: 'ink', double: true, width: 2.5 })}
+  ${text(630, 696, '全局 RF 核自旋旋转 ΩRF', 'body', { anchor: 'middle', weight: 700 })}
+  ${multiline(590, 722, ['Ma 2023：B = 5.0 G，νL = 5.70 kHz', 'π 脉冲约 2.0 ms'], { className: 'small', lineHeight: 24 })}
+  ${text(590, 770, '全阵列 X/Y；聚焦 302 nm 提供局域 Rz', 'tiny')}
+  ${text(520, 850, '态选择读出：649+770 nm Raman（Li 2025）', 'micro', { fill: colors.muted })}
+
+  <!-- Demonstrated local ground-state Raman gates: Muniz et al., PRX Quantum 6, 020334 (2025). -->
+  ${roundedRect(940, 668, 300, 160, colors.green, '#f7fcf9', 8, 2)}
+  <circle cx="962" cy="694" r="7" fill="${colors.green}"/>
+  ${text(978, 701, '556 nm 基态局域 Raman', 'tiny', { fill: colors.green, weight: 700 })}
+  ${text(960, 728, '两束聚焦光；¹S₀(mF=±1/2)', 'micro')}
+  ${text(960, 751, '经 ³P₁(F′=1/2) 虚激发', 'micro')}
+  ${text(960, 774, 'Δ/2π≈−5 GHz；ΩR/2π≈7 kHz', 'micro')}
+  ${text(960, 797, '逐位点相位/脉冲面积 → 并行 X/Y', 'micro')}
+  ${text(960, 820, 'Muniz et al. (2025)', 'micro', { fill: colors.muted })}
+  ${text(900, 850, '亚稳态局域 Raman：649 nm 经 ³S₁（Jenkins 2022）', 'micro', { fill: colors.muted })}
 
   <!-- Key parameter cards -->
   ${text(1420, 78, '关键信息卡片', 'section-title', { anchor: 'middle' })}
-  ${card(1260, 90, 318, 142, colors.blue, '1  399 nm：快速基态检测', ['¹S₀ ↔ ¹P₁；Γ/2π ≈ 29 MHz', '20 μs；识别保真度 0.986', '检测已回到基态的原子'], { lineHeight: 23 })}
-  ${card(1260, 240, 318, 142, colors.green, '2  556 nm：窄线冷却/成像', ['¹S₀ ↔ ³P₁；Γ/2π ≈ 182 kHz', '窄线 MOT 与低损伤成像', '15 ms；保真度/存活率约 0.995'], { lineHeight: 23 })}
-  ${card(1260, 390, 318, 142, colors.orange, '3  578.4 nm：钟态映射', ['¹S₀ ↔ ³P₀ 钟跃迁', '相干映射与钟态控制', 'Ma 2023 使用光泵浦初始化'], { lineHeight: 23 })}
-  ${card(1260, 540, 318, 142, colors.purple, '4  302 nm：Rydberg 激发', ['|1⟩ ↔ |r⟩；ΩUV/2π ≈ 1.6 MHz', 'π脉冲330 ns；功率约6 mW', '光束腰 w₀ ≈ 10 μm'], { lineHeight: 23 })}
-  ${card(1260, 690, 318, 142, colors.wine, '5  约369 nm：自动电离', ['6s59s ³S₁ → 6p₁/₂59s', '→ Yb⁺ + e⁻；态选择性移除', '用于最终核自旋态读出'], { lineHeight: 23 })}
+  ${roundedRect(1260, 90, 318, 142, colors.blue, '#ffffff', 8, 2)}
+  <circle cx="1279" cy="113" r="8" fill="${colors.blue}"/>
+  ${text(1297, 119, '399 nm：快速基态检测', 'card-title', { fill: colors.blue, weight: 700 })}
+  ${multiline(1278, 146, ['¹S₀ ↔ ¹P₁；Γ/2π ≈ 29 MHz', '20 μs；识别保真度 0.986', '检测已回到基态的原子', '计算作用：基态占据判别与擦除标记'], { className: 'tiny', lineHeight: 23 })}
+  ${roundedRect(1260, 240, 318, 142, colors.green, '#ffffff', 8, 2)}
+  <circle cx="1279" cy="263" r="8" fill="${colors.green}"/>
+  ${text(1297, 269, '556 nm：冷却、成像与 Raman', 'card-title', { fill: colors.green, weight: 700 })}
+  ${multiline(1278, 293, ['¹S₀ ↔ ³P₁；Γ/2π ≈ 182 kHz', '冷却/成像：窄线散射', '单比特门：两束聚焦 Raman 光', 'Δ/2π≈−5 GHz；ΩR/2π≈7 kHz', 'Clifford 99.963(2)%（Muniz 2025）'], { className: 'micro', lineHeight: 21 })}
+  ${roundedRect(1260, 390, 318, 142, colors.orange, '#ffffff', 8, 2)}
+  <circle cx="1279" cy="413" r="8" fill="${colors.orange}"/>
+  ${text(1297, 419, '578.4 nm：钟态映射', 'card-title', { fill: colors.orange, weight: 700 })}
+  ${multiline(1278, 446, ['¹S₀ ↔ ³P₀ 钟跃迁', '相干映射与钟态控制', 'Ma 2023 使用光泵浦初始化', '计算作用：量子比特制备与复位接口'], { className: 'tiny', lineHeight: 23 })}
+  ${roundedRect(1260, 540, 318, 142, colors.purple, '#ffffff', 8, 2)}
+  <circle cx="1279" cy="563" r="8" fill="${colors.purple}"/>
+  ${text(1297, 569, '302 nm：Rydberg 与局域相位', 'card-title', { fill: colors.purple, weight: 700 })}
+  ${multiline(1278, 596, ['共振：|1⟩ ↔ |r⟩；ΩRyd/2π ≈ 1.6 MHz', 'π脉冲330 ns；约6 mW；w₀≈10 μm', '计算作用：Rydberg 阻塞型 CZ 门', '失谐聚焦：差分 AC Stark → 局域 Rz'], { className: 'tiny', lineHeight: 23 })}
+  ${roundedRect(1260, 690, 318, 142, colors.wine, '#ffffff', 8, 2)}
+  <circle cx="1279" cy="713" r="8" fill="${colors.wine}"/>
+  ${text(1297, 719, '约369 nm：自动电离', 'card-title', { fill: colors.wine, weight: 700 })}
+  ${multiline(1278, 746, ['6s 59s ³S₁ → 6p₁/₂ 59s', '→ Yb⁺ + e⁻；态选择性移除', '用于最终核自旋态读出', '计算作用：Rydberg 错误转擦除记录'], { className: 'tiny', lineHeight: 23 })}
 
   <!-- Bottom process band -->
   <line x1="0" y1="870" x2="1600" y2="870" stroke="${colors.ink}" stroke-width="2"/>
@@ -184,15 +213,17 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
   <!-- Stage A -->
   ${roundedRect(18, 950, 520, 505, colors.purple, '#fcfbff', 10, 2)}
   ${text(278, 980, '阶段 A：等待 Rydberg 态衰变', 'section-title', { anchor: 'middle', fill: colors.purple })}
-  ${card(38, 1040, 160, 228, colors.purple, '初始 |r⟩', ['6s59s ³S₁', 'F=3/2', 'mF=3/2', '', '等待约', '400 μs'], { bodyClass: 'small', lineHeight: 25 })}
+  ${card(38, 1040, 160, 228, colors.purple, '初始 |r⟩', ['6s 59s ³S₁', 'F=3/2', 'mF=3/2', '', '等待约', '400 μs'], { bodyClass: 'small', lineHeight: 25 })}
   ${card(225, 995, 290, 94, colors.blue, '约25%：回到 ¹S₀', ['399 nm 可检测，形成擦除标记'], { lineHeight: 19 })}
   ${card(225, 1101, 290, 110, colors.orange, '约10%：回到 ³P₀', ['返回亚稳态，不等于恢复量子态', '未额外检测时可成为隐藏错误'], { lineHeight: 22 })}
-  ${card(225, 1223, 290, 94, colors.green, '约35%：进入 ³P₂', ['需770 nm再泵浦；399 nm不直接探测'], { lineHeight: 22 })}
+  ${card(225, 1223, 290, 94, colors.green, '约35%：进入 ³P₂', ['需 770 nm 再泵浦；', '399 nm 不直接探测'], { lineHeight: 22 })}
   ${card(225, 1329, 290, 104, colors.purple, '约30%：未计入上述能级', ['其他Rydberg态、损失或泄漏通道', '不能直接计为已知位置的擦除'], { lineHeight: 22 })}
-  ${pathArrow('M198 1148 L212 1148 L212 1042 L225 1042', colors.ink, 'ink', 2)}
-  ${pathArrow('M198 1148 L225 1156', colors.ink, 'ink', 2)}
-  ${pathArrow('M198 1148 L212 1148 L212 1270 L225 1270', colors.ink, 'ink', 2)}
-  ${pathArrow('M198 1148 L212 1148 L212 1380 L225 1380', colors.ink, 'ink', 2)}
+  <line x1="198" y1="1156" x2="210" y2="1156" stroke="${colors.ink}" stroke-width="2"/>
+  <line x1="210" y1="1042" x2="210" y2="1381" stroke="${colors.ink}" stroke-width="2"/>
+  <line x1="210" y1="1042" x2="221" y2="1042" stroke="${colors.ink}" stroke-width="2" marker-end="url(#arrow-ink)"/>
+  <line x1="210" y1="1156" x2="221" y2="1156" stroke="${colors.ink}" stroke-width="2" marker-end="url(#arrow-ink)"/>
+  <line x1="210" y1="1270" x2="221" y2="1270" stroke="${colors.ink}" stroke-width="2" marker-end="url(#arrow-ink)"/>
+  <line x1="210" y1="1381" x2="221" y2="1381" stroke="${colors.ink}" stroke-width="2" marker-end="url(#arrow-ink)"/>
 
   <!-- Stage B -->
   ${roundedRect(558, 950, 360, 505, colors.green, '#fbfefc', 10, 2)}

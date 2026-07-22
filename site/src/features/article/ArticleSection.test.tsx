@@ -94,7 +94,7 @@ it('renders one causal learning section in pedagogical order', () => {
   expect(screen.getByText('Why is a physical output required?')).toBeInTheDocument()
   expect(screen.getByText('A computation must end in an independently testable record.')).toBeInTheDocument()
   expect(within(screen.getByRole('list', { name: 'Reasoning steps' })).getAllByRole('listitem')).toHaveLength(3)
-  expect(screen.getByText('What quantum structure changes this map?')).toBeInTheDocument()
+  expect(screen.queryByText('What quantum structure changes this map?')).not.toBeInTheDocument()
   expect(screen.getByRole('link', { name: /DiVincenzo/ })).toHaveAttribute(
     'href',
     expect.stringContaining('quant-ph/0002077'),

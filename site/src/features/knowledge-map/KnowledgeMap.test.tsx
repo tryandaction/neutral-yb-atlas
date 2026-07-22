@@ -12,5 +12,5 @@ it('exposes chapter dependencies, outputs and the theory-experiment feedback loo
   await user.click(screen.getByRole('button', { name: '节点 06 理论闭环' }))
   expect(screen.getByRole('heading', { name: '理论如何服务实验落地' })).toBeInTheDocument()
   expect(screen.getByText('实验数据 → 参数反演 → 可证伪预测')).toBeInTheDocument()
-  expect(screen.getByRole('link', { name: '进入理论闭环章节' })).toHaveAttribute('href', '#theory-experiment-loop')
+  expect(screen.getByRole('link', { name: '进入理论闭环章节' })).toHaveAttribute('href', '#theory')
 })

@@ -78,6 +78,7 @@ export const domainDefinitions: Record<Exclude<RouteId, 'overview'>, DomainDefin
     outline: [
       { id: 'experiment', label: { zh: '原子计算周期', en: 'Atomic computation cycle' } },
       { id: 'experiment-pipeline-tutor', label: { zh: '装置如何改变原子状态', en: 'How apparatus changes atomic states' } },
+      { id: 'experiment-cycle-timeline', label: { zh: '光场怎样构成一个周期', en: 'How optical fields form one cycle' } },
       { id: 'experiment-visual-atlas', label: { zh: '实验教学图谱', en: 'Experimental plate atlas' } },
     ],
     contextTitle: { zh: '学习提示', en: 'Learning prompts' },

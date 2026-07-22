@@ -1,0 +1,32 @@
+import { readFileSync } from 'node:fs'
+import { expect, it } from 'vitest'
+
+const svg = readFileSync('assets/yb-replacement-cycle-timeline.svg', 'utf8')
+
+it('resolves the source-qualified macrocycle and both trap-modulated microcycles', () => {
+  expect(svg).toContain('Five semantic stages; reservoir maintenance and stationary-array computation run concurrently.')
+  expect(svg).toContain('scheduled load 2 ms')
+  expect(svg).toContain('τload = 0.84 ms')
+  expect(svg).toContain('move 0.5 ms')
+  expect(svg).toContain('LAC 6 ms')
+  expect(svg).toContain('identification image 4 ms')
+  expect(svg).toContain('cool 6 ms')
+  expect(svg).toContain('prepare ³P₀ 0.7 ms')
+  expect(svg).toContain('1D reservoir molasses')
+  expect(svg).toContain('mobile tweezer array (488 nm)')
+  expect(svg).toContain('global σ+ 556 nm')
+  expect(svg).toContain('local 556 + 1539 nm')
+  expect(svg).toContain('649 + 770 nm Raman mapping')
+  expect(svg).toContain('497 nm depump')
+  expect(svg).toContain('TRAP ON')
+  expect(svg).toContain('TRAP OFF')
+  expect(svg).toContain('×50 each stage')
+  expect(svg).toContain('400 ns')
+  expect(svg).toContain('×8')
+  expect(svg.match(/map \+ depump 15 µs → image 4 ms/g)).toHaveLength(2)
+  expect(svg).toContain('|0&gt; / |1&gt; / loss')
+  expect(svg).not.toContain('about 1 ms')
+  expect(svg).not.toContain('2 × 50')
+  expect(svg).not.toContain('497 nm Raman')
+  expect(svg).not.toMatch(/[（(](?:demonstrated|not demonstrated|candidate)[）)]/i)
+})

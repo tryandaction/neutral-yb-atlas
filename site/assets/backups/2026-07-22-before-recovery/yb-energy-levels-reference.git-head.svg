@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1480" viewBox="0 0 1600 1480" role="img" aria-labelledby="title description">
-  <title id="title">¹⁷¹Yb 核自旋量子比特能级、控制与擦除检测</title>
-  <desc id="description">¹⁷¹Yb 的主能级、基态 556 纳米局域 Raman 门、亚稳态全局 RF 与局域相位控制、Rydberg 激发，以及衰变、再泵浦和擦除检测流程。</desc>
+  <title id="title">¹⁷¹Yb 亚稳态核自旋量子比特能级与擦除检测</title>
+  <desc id="description">¹⁷¹Yb 的主能级、399、556、578.4、302 和约369纳米通道，以及Rydberg态衰变、770纳米再泵浦和擦除检测流程。</desc>
   <defs>
     <marker id="arrow-ink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto-start-reverse"><path d="M0,0 L9,4.5 L0,9 Z" fill="#15211e"/></marker>
 <marker id="arrow-blue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto-start-reverse"><path d="M0,0 L9,4.5 L0,9 Z" fill="#1f5fd1"/></marker>
@@ -26,13 +26,18 @@
   </defs>
   <rect width="1600" height="1480" fill="#ffffff"/>
 
-  <text x="800" y="46" class="title" text-anchor="middle">¹⁷¹Yb 核自旋量子比特：能级、Rydberg 激发、成像与读出通道</text>
+  <text x="800" y="46" class="title" text-anchor="middle">¹⁷¹Yb 亚稳态核自旋量子比特：能级、Rydberg 激发、成像与读出通道</text>
   <rect x="22" y="62" width="248" height="48" rx="8" fill="#ffffff" stroke="#15211e" stroke-width="1.5"/>
   <text x="40" y="94" class="body" font-weight="700">¹⁷¹Yb：核自旋 I = 1/2</text>
-  <rect x="22" y="124" width="250" height="78" rx="7" fill="#fff9e8" stroke="#b7a26e" stroke-width="1.3"/>
-  <text x="39" y="148" class="micro" fill="#15211e" font-weight="400">示意图：纵向间距</text>
-<text x="39" y="168" class="micro" fill="#15211e" font-weight="400">不按真实能量比例</text>
-<text x="39" y="188" class="micro" fill="#15211e" font-weight="400">未展开超精细与 Zeeman 分裂</text>
+  <rect x="22" y="124" width="250" height="84" rx="7" fill="#fff9e8" stroke="#b7a26e" stroke-width="1.3"/>
+  <text x="39" y="148" class="tiny" fill="#15211e" font-weight="400">示意图：纵向间距</text>
+<text x="39" y="167" class="tiny" fill="#15211e" font-weight="400">不按真实能量比例</text>
+<text x="39" y="186" class="tiny" fill="#15211e" font-weight="400">数值为 E/hc，相对 ¹S₀</text>
+<text x="39" y="205" class="tiny" fill="#15211e" font-weight="400">¹⁷¹Yb 超精细分裂未画</text>
+
+  <!-- Main energy axis -->
+  <line x1="72" y1="835" x2="72" y2="210" stroke="#15211e" stroke-width="3" marker-end="url(#arrow-ink)"/>
+  <text transform="translate(31 525) rotate(-90)" class="small" text-anchor="middle">E/hc（cm⁻¹）</text>
 
   <line x1="350" y1="820" x2="930" y2="820" class="energy-line"/>
   <line x1="440" y1="620" x2="930" y2="620" class="energy-line"/>
@@ -42,28 +47,26 @@
   <line x1="680" y1="100" x2="925" y2="100" class="energy-line"/>
   <line x1="680" y1="145" x2="850" y2="145" stroke="#15211e" stroke-width="2.5" stroke-dasharray="8 7"/>
 
-  <circle cx="164" cy="820" r="9" fill="#ffffff" stroke="#1f5fd1" stroke-width="3"/>
-  <text x="184" y="827" class="level">6s² ¹S₀</text>
-  <circle cx="268" cy="620" r="9" fill="#ffffff" stroke="#e74b22" stroke-width="3"/>
-  <text x="288" y="627" class="level">6s6p ³P₀</text>
-  <circle cx="268" cy="500" r="9" fill="#ffffff" stroke="#187a44" stroke-width="3"/>
-  <text x="288" y="507" class="level">6s6p ³P₁</text>
-  <circle cx="268" cy="380" r="9" fill="#ffffff" stroke="#1f5fd1" stroke-width="3"/>
-  <text x="288" y="387" class="level">6s6p ¹P₁</text>
-  <circle cx="258" cy="240" r="9" fill="#ffffff" stroke="#5b33c5" stroke-width="3"/>
-  <text x="278" y="248" class="level">6s 59s ³S₁</text>
-  <text x="628" y="226" class="body" text-anchor="middle">|r⟩ = |6s 59s ³S₁, F=3/2, mF=3/2⟩</text>
-  <text x="830" y="270" class="small" text-anchor="end">Rydberg 态</text>
-  <circle cx="658" cy="100" r="9" fill="#ffffff" stroke="#9c1743" stroke-width="3"/>
-  <text x="680" y="88" class="body">6p₁/₂ 59s 自动电离态</text>
+  <text x="168" y="827" class="level">1   6s² ¹S₀</text>
+  <text x="955" y="827" class="small">0 cm⁻¹</text>
+  <text x="278" y="627" class="level">2   6s6p ³P₀</text>
+  <text x="955" y="627" class="small">17288.439 cm⁻¹</text>
+  <text x="278" y="507" class="level">3   6s6p ³P₁</text>
+  <text x="730" y="507" class="small">17992.007 cm⁻¹</text>
+  <text x="278" y="387" class="level">4   6s6p ¹P₁</text>
+  <text x="730" y="387" class="small">25068.222 cm⁻¹</text>
+  <text x="270" y="248" class="level">5   6s59s ³S₁</text>
+  <text x="628" y="226" class="body" text-anchor="middle">|r⟩ = |6s59s ³S₁, F=3/2, mF=3/2⟩</text>
+  <text x="780" y="263" class="small">Rydberg 态</text>
+  <text x="470" y="108" class="body">6p₁/₂59s 自动电离态</text>
   <text x="1035" y="151" class="body">Yb⁺ + e⁻ 连续区</text>
 
-  <text x="22" y="850" class="micro" fill="#53615d">箭头颜色=对应光场；黑色=RF/衰变；虚线=示意</text>
+  <text x="945" y="846" class="micro" fill="#53615d">箭头图例：彩色=激光耦合/激发；黑色=衰变；虚线=示意分支</text>
 
   <!-- Main transitions -->
   <line x1="255" y1="812" x2="255" y2="388" stroke="#1f5fd1" stroke-width="3" marker-start="url(#arrow-blue)" marker-end="url(#arrow-blue)"/>
-  <text x="122" y="538" class="body" fill="#1f5fd1" font-weight="700">399 nm</text>
-<text x="122" y="566" class="body" fill="#1f5fd1" font-weight="700">快速基态成像</text>
+  <text x="122" y="540" class="body" fill="#1f5fd1" font-weight="700">399 nm</text>
+<text x="122" y="564" class="body" fill="#1f5fd1" font-weight="700">快速基态成像</text>
   <g transform="translate(128 620)" stroke="#15211e" fill="none" stroke-width="3">
     <rect x="0" y="8" width="46" height="34" rx="4"/>
     <path d="M10 8 L16 0 H30 L36 8"/>
@@ -72,91 +75,63 @@
   <line x1="151" y1="611" x2="151" y2="580" stroke="#1f5fd1" stroke-width="2" stroke-dasharray="4 4"/>
 
   <line x1="398" y1="812" x2="398" y2="508" stroke="#187a44" stroke-width="3" marker-start="url(#arrow-green)" marker-end="url(#arrow-green)"/>
-  <text x="285" y="704" class="body" fill="#187a44" font-weight="700">556 nm</text>
-<text x="285" y="728" class="body" fill="#187a44" font-weight="700">窄线冷却</text>
-<text x="285" y="752" class="body" fill="#187a44" font-weight="700">低损伤成像</text>
-  <g transform="translate(300 760)" stroke="#15211e" fill="none" stroke-width="3">
+  <text x="290" y="716" class="body" fill="#187a44" font-weight="700">556 nm</text>
+<text x="290" y="740" class="body" fill="#187a44" font-weight="700">窄线冷却/成像</text>
+  <g transform="translate(300 753)" stroke="#15211e" fill="none" stroke-width="3">
     <rect x="0" y="8" width="46" height="34" rx="4"/>
     <path d="M10 8 L16 0 H30 L36 8"/>
     <circle cx="23" cy="25" r="10"/>
   </g>
 
   <line x1="430" y1="812" x2="430" y2="628" stroke="#e74b22" stroke-width="2.5" stroke-dasharray="8 7" marker-start="url(#arrow-orange)" marker-end="url(#arrow-orange)"/>
-  <text x="448" y="714" class="body" fill="#e74b22" font-weight="700">578.4 nm</text>
-<text x="448" y="742" class="body" fill="#e74b22" font-weight="700">钟跃迁</text>
+  <text x="448" y="716" class="body" fill="#e74b22" font-weight="700">578.4 nm</text>
+<text x="448" y="740" class="body" fill="#e74b22" font-weight="700">钟跃迁</text>
 
   <line x1="860" y1="612" x2="860" y2="248" stroke="#5b33c5" stroke-width="3" marker-start="url(#arrow-purple)" marker-end="url(#arrow-purple)"/>
-  <text x="880" y="424" class="level" fill="#5b33c5" font-weight="700">302 nm</text>
-<text x="880" y="462" class="level" fill="#5b33c5" font-weight="700">ΩRyd</text>
-  <text x="880" y="505" class="micro" fill="#5b33c5" font-weight="700">同波长的局域相位控制</text>
-  <text x="880" y="528" class="micro">失谐聚焦光产生差分 AC Stark 位移</text>
-  <text x="880" y="551" class="micro">计算作用：局域 Rz；与全局 RF 合成逐位点门</text>
+  <text x="880" y="430" class="level" fill="#5b33c5" font-weight="700">302 nm</text>
+<text x="880" y="459" class="level" fill="#5b33c5" font-weight="700">ΩUV</text>
 
   <line x1="850" y1="232" x2="850" y2="108" stroke="#9c1743" stroke-width="3" marker-end="url(#arrow-wine)"/>
-  <text x="715" y="158" class="body" fill="#9c1743" font-weight="700">约369 nm</text>
-<text x="715" y="188" class="body" fill="#9c1743" font-weight="700">离子实激发</text>
+  <text x="715" y="162" class="body" fill="#9c1743" font-weight="700">约369 nm</text>
+<text x="715" y="186" class="body" fill="#9c1743" font-weight="700">离子实激发</text>
   <path d="M925 100 C965 100 970 145 1025 145" fill="none" stroke="#9c1743" stroke-width="3" marker-end="url(#arrow-wine)"/>
   <text x="940" y="122" class="small" fill="#9c1743" font-weight="700">自动电离</text>
 
   <!-- Nuclear-spin qubit -->
   <text x="315" y="664" class="small">|0⟩ = |³P₀, F=1/2, mF=−1/2⟩</text>
   <text x="735" y="664" class="small">|1⟩ = |³P₀, F=1/2, mF=+1/2⟩</text>
-  <line x1="560" y1="650" x2="700" y2="650" stroke="#15211e" stroke-width="2.5" marker-start="url(#arrow-ink)" marker-end="url(#arrow-ink)"/>
-  <text x="630" y="696" class="body" text-anchor="middle" font-weight="700">全局 RF 核自旋旋转 ΩRF</text>
-  <text x="590" y="722" class="small" fill="#15211e" font-weight="400">Ma 2023：B = 5.0 G，νL = 5.70 kHz</text>
-<text x="590" y="746" class="small" fill="#15211e" font-weight="400">π 脉冲约 2.0 ms</text>
-  <text x="590" y="770" class="tiny">全阵列 X/Y；聚焦 302 nm 提供局域 Rz</text>
-  <text x="520" y="850" class="micro" fill="#53615d">态选择读出：649+770 nm Raman（Li 2025）</text>
-
-  <!-- Demonstrated local ground-state Raman gates: Muniz et al., PRX Quantum 6, 020334 (2025). -->
-  <rect x="940" y="668" width="300" height="160" rx="8" fill="#f7fcf9" stroke="#187a44" stroke-width="2"/>
-  <circle cx="962" cy="694" r="7" fill="#187a44"/>
-  <text x="978" y="701" class="tiny" fill="#187a44" font-weight="700">556 nm 基态局域 Raman</text>
-  <text x="960" y="728" class="micro">两束聚焦光；¹S₀(mF=±1/2)</text>
-  <text x="960" y="751" class="micro">经 ³P₁(F′=1/2) 虚激发</text>
-  <text x="960" y="774" class="micro">Δ/2π≈−5 GHz；ΩR/2π≈7 kHz</text>
-  <text x="960" y="797" class="micro">逐位点相位/脉冲面积 → 并行 X/Y</text>
-  <text x="960" y="820" class="micro" fill="#53615d">Muniz et al. (2025)</text>
-  <text x="900" y="850" class="micro" fill="#53615d">亚稳态局域 Raman：649 nm 经 ³S₁（Jenkins 2022）</text>
+  <line x1="585" y1="650" x2="750" y2="650" stroke="#15211e" stroke-width="2.5" marker-start="url(#arrow-ink)" marker-end="url(#arrow-ink)"/>
+  <text x="668" y="687" class="body" text-anchor="middle" font-weight="700">RF 核自旋驱动 ΩRF</text>
+  <text x="590" y="716" class="small" fill="#15211e" font-weight="400">Ma 2023：B = 5.0 G，νL = 5.70 kHz</text>
+<text x="590" y="739" class="small" fill="#15211e" font-weight="400">π 脉冲约 2.0 ms</text>
 
   <!-- Key parameter cards -->
   <text x="1420" y="78" class="section-title" text-anchor="middle">关键信息卡片</text>
   <rect x="1260" y="90" width="318" height="142" rx="8" fill="#ffffff" stroke="#1f5fd1" stroke-width="2"/>
-  <circle cx="1279" cy="113" r="8" fill="#1f5fd1"/>
-  <text x="1297" y="119" class="card-title" fill="#1f5fd1" font-weight="700">399 nm：快速基态检测</text>
-  <text x="1278" y="146" class="tiny" fill="#15211e" font-weight="400">¹S₀ ↔ ¹P₁；Γ/2π ≈ 29 MHz</text>
+<text x="1278" y="119" class="card-title" fill="#1f5fd1" font-weight="700">1  399 nm：快速基态检测</text>
+<text x="1278" y="146" class="tiny" fill="#15211e" font-weight="400">¹S₀ ↔ ¹P₁；Γ/2π ≈ 29 MHz</text>
 <text x="1278" y="169" class="tiny" fill="#15211e" font-weight="400">20 μs；识别保真度 0.986</text>
 <text x="1278" y="192" class="tiny" fill="#15211e" font-weight="400">检测已回到基态的原子</text>
-<text x="1278" y="215" class="tiny" fill="#15211e" font-weight="400">计算作用：基态占据判别与擦除标记</text>
   <rect x="1260" y="240" width="318" height="142" rx="8" fill="#ffffff" stroke="#187a44" stroke-width="2"/>
-  <circle cx="1279" cy="263" r="8" fill="#187a44"/>
-  <text x="1297" y="269" class="card-title" fill="#187a44" font-weight="700">556 nm：冷却、成像与 Raman</text>
-  <text x="1278" y="293" class="micro" fill="#15211e" font-weight="400">¹S₀ ↔ ³P₁；Γ/2π ≈ 182 kHz</text>
-<text x="1278" y="314" class="micro" fill="#15211e" font-weight="400">冷却/成像：窄线散射</text>
-<text x="1278" y="335" class="micro" fill="#15211e" font-weight="400">单比特门：两束聚焦 Raman 光</text>
-<text x="1278" y="356" class="micro" fill="#15211e" font-weight="400">Δ/2π≈−5 GHz；ΩR/2π≈7 kHz</text>
-<text x="1278" y="377" class="micro" fill="#15211e" font-weight="400">Clifford 99.963(2)%（Muniz 2025）</text>
+<text x="1278" y="269" class="card-title" fill="#187a44" font-weight="700">2  556 nm：窄线冷却/成像</text>
+<text x="1278" y="296" class="tiny" fill="#15211e" font-weight="400">¹S₀ ↔ ³P₁；Γ/2π ≈ 182 kHz</text>
+<text x="1278" y="319" class="tiny" fill="#15211e" font-weight="400">窄线 MOT 与低损伤成像</text>
+<text x="1278" y="342" class="tiny" fill="#15211e" font-weight="400">15 ms；保真度/存活率约 0.995</text>
   <rect x="1260" y="390" width="318" height="142" rx="8" fill="#ffffff" stroke="#e74b22" stroke-width="2"/>
-  <circle cx="1279" cy="413" r="8" fill="#e74b22"/>
-  <text x="1297" y="419" class="card-title" fill="#e74b22" font-weight="700">578.4 nm：钟态映射</text>
-  <text x="1278" y="446" class="tiny" fill="#15211e" font-weight="400">¹S₀ ↔ ³P₀ 钟跃迁</text>
+<text x="1278" y="419" class="card-title" fill="#e74b22" font-weight="700">3  578.4 nm：钟态映射</text>
+<text x="1278" y="446" class="tiny" fill="#15211e" font-weight="400">¹S₀ ↔ ³P₀ 钟跃迁</text>
 <text x="1278" y="469" class="tiny" fill="#15211e" font-weight="400">相干映射与钟态控制</text>
 <text x="1278" y="492" class="tiny" fill="#15211e" font-weight="400">Ma 2023 使用光泵浦初始化</text>
-<text x="1278" y="515" class="tiny" fill="#15211e" font-weight="400">计算作用：量子比特制备与复位接口</text>
   <rect x="1260" y="540" width="318" height="142" rx="8" fill="#ffffff" stroke="#5b33c5" stroke-width="2"/>
-  <circle cx="1279" cy="563" r="8" fill="#5b33c5"/>
-  <text x="1297" y="569" class="card-title" fill="#5b33c5" font-weight="700">302 nm：Rydberg 与局域相位</text>
-  <text x="1278" y="596" class="tiny" fill="#15211e" font-weight="400">共振：|1⟩ ↔ |r⟩；ΩRyd/2π ≈ 1.6 MHz</text>
-<text x="1278" y="619" class="tiny" fill="#15211e" font-weight="400">π脉冲330 ns；约6 mW；w₀≈10 μm</text>
-<text x="1278" y="642" class="tiny" fill="#15211e" font-weight="400">计算作用：Rydberg 阻塞型 CZ 门</text>
-<text x="1278" y="665" class="tiny" fill="#15211e" font-weight="400">失谐聚焦：差分 AC Stark → 局域 Rz</text>
+<text x="1278" y="569" class="card-title" fill="#5b33c5" font-weight="700">4  302 nm：Rydberg 激发</text>
+<text x="1278" y="596" class="tiny" fill="#15211e" font-weight="400">|1⟩ ↔ |r⟩；ΩUV/2π ≈ 1.6 MHz</text>
+<text x="1278" y="619" class="tiny" fill="#15211e" font-weight="400">π脉冲330 ns；功率约6 mW</text>
+<text x="1278" y="642" class="tiny" fill="#15211e" font-weight="400">光束腰 w₀ ≈ 10 μm</text>
   <rect x="1260" y="690" width="318" height="142" rx="8" fill="#ffffff" stroke="#9c1743" stroke-width="2"/>
-  <circle cx="1279" cy="713" r="8" fill="#9c1743"/>
-  <text x="1297" y="719" class="card-title" fill="#9c1743" font-weight="700">约369 nm：自动电离</text>
-  <text x="1278" y="746" class="tiny" fill="#15211e" font-weight="400">6s 59s ³S₁ → 6p₁/₂ 59s</text>
+<text x="1278" y="719" class="card-title" fill="#9c1743" font-weight="700">5  约369 nm：自动电离</text>
+<text x="1278" y="746" class="tiny" fill="#15211e" font-weight="400">6s59s ³S₁ → 6p₁/₂59s</text>
 <text x="1278" y="769" class="tiny" fill="#15211e" font-weight="400">→ Yb⁺ + e⁻；态选择性移除</text>
 <text x="1278" y="792" class="tiny" fill="#15211e" font-weight="400">用于最终核自旋态读出</text>
-<text x="1278" y="815" class="tiny" fill="#15211e" font-weight="400">计算作用：Rydberg 错误转擦除记录</text>
 
   <!-- Bottom process band -->
   <line x1="0" y1="870" x2="1600" y2="870" stroke="#15211e" stroke-width="2"/>
@@ -168,7 +143,7 @@
   <text x="278" y="980" class="section-title" text-anchor="middle" fill="#5b33c5">阶段 A：等待 Rydberg 态衰变</text>
   <rect x="38" y="1040" width="160" height="228" rx="8" fill="#ffffff" stroke="#5b33c5" stroke-width="2"/>
 <text x="56" y="1069" class="card-title" fill="#5b33c5" font-weight="700">初始 |r⟩</text>
-<text x="56" y="1096" class="small" fill="#15211e" font-weight="400">6s 59s ³S₁</text>
+<text x="56" y="1096" class="small" fill="#15211e" font-weight="400">6s59s ³S₁</text>
 <text x="56" y="1121" class="small" fill="#15211e" font-weight="400">F=3/2</text>
 <text x="56" y="1146" class="small" fill="#15211e" font-weight="400">mF=3/2</text>
 <text x="56" y="1171" class="small" fill="#15211e" font-weight="400"></text>
@@ -183,18 +158,15 @@
 <text x="243" y="1179" class="tiny" fill="#15211e" font-weight="400">未额外检测时可成为隐藏错误</text>
   <rect x="225" y="1223" width="290" height="94" rx="8" fill="#ffffff" stroke="#187a44" stroke-width="2"/>
 <text x="243" y="1252" class="card-title" fill="#187a44" font-weight="700">约35%：进入 ³P₂</text>
-<text x="243" y="1279" class="tiny" fill="#15211e" font-weight="400">需 770 nm 再泵浦；</text>
-<text x="243" y="1301" class="tiny" fill="#15211e" font-weight="400">399 nm 不直接探测</text>
+<text x="243" y="1279" class="tiny" fill="#15211e" font-weight="400">需770 nm再泵浦；399 nm不直接探测</text>
   <rect x="225" y="1329" width="290" height="104" rx="8" fill="#ffffff" stroke="#5b33c5" stroke-width="2"/>
 <text x="243" y="1358" class="card-title" fill="#5b33c5" font-weight="700">约30%：未计入上述能级</text>
 <text x="243" y="1385" class="tiny" fill="#15211e" font-weight="400">其他Rydberg态、损失或泄漏通道</text>
 <text x="243" y="1407" class="tiny" fill="#15211e" font-weight="400">不能直接计为已知位置的擦除</text>
-  <line x1="198" y1="1156" x2="210" y2="1156" stroke="#15211e" stroke-width="2"/>
-  <line x1="210" y1="1042" x2="210" y2="1381" stroke="#15211e" stroke-width="2"/>
-  <line x1="210" y1="1042" x2="221" y2="1042" stroke="#15211e" stroke-width="2" marker-end="url(#arrow-ink)"/>
-  <line x1="210" y1="1156" x2="221" y2="1156" stroke="#15211e" stroke-width="2" marker-end="url(#arrow-ink)"/>
-  <line x1="210" y1="1270" x2="221" y2="1270" stroke="#15211e" stroke-width="2" marker-end="url(#arrow-ink)"/>
-  <line x1="210" y1="1381" x2="221" y2="1381" stroke="#15211e" stroke-width="2" marker-end="url(#arrow-ink)"/>
+  <path d="M198 1148 L212 1148 L212 1042 L225 1042" fill="none" stroke="#15211e" stroke-width="2" marker-end="url(#arrow-ink)"/>
+  <path d="M198 1148 L225 1156" fill="none" stroke="#15211e" stroke-width="2" marker-end="url(#arrow-ink)"/>
+  <path d="M198 1148 L212 1148 L212 1270 L225 1270" fill="none" stroke="#15211e" stroke-width="2" marker-end="url(#arrow-ink)"/>
+  <path d="M198 1148 L212 1148 L212 1380 L225 1380" fill="none" stroke="#15211e" stroke-width="2" marker-end="url(#arrow-ink)"/>
 
   <!-- Stage B -->
   <rect x="558" y="950" width="360" height="505" rx="10" fill="#fbfefc" stroke="#187a44" stroke-width="2"/>

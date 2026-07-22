@@ -4,6 +4,7 @@ const coolingSource = { id: 'burgers-2018', citation: 'Burgers et al., Narrow-Li
 const qubitSource = { id: 'jenkins-2022', citation: 'Jenkins et al., Ytterbium Nuclear-Spin Qubits in an Optical Tweezer Array (2022)', url: 'https://doi.org/10.1103/PRXQuantum.3.020315' }
 const gateSource = { id: 'ma-2023', citation: 'Ma et al., High-fidelity gates and mid-circuit erasure conversion in an atomic qubit (2023)', url: 'https://doi.org/10.1038/s41586-023-06438-1' }
 const logicalSource = { id: 'bluvstein-2024', citation: 'Bluvstein et al., Logical quantum processor based on reconfigurable atom arrays, Nature 626 (2024)', url: 'https://doi.org/10.1038/s41586-023-06927-3' }
+const replacementSource = { id: 'li-2025', citation: 'Li et al., Fast, continuous and coherent atom replacement in a neutral atom qubit array (2025)', url: 'https://arxiv.org/abs/2506.15633' }
 
 export const experimentChapter: Chapter = {
   id: 'experiment',
@@ -73,7 +74,7 @@ export const experimentChapter: Chapter = {
       ],
       measurement: { zh: '连续运行并报告周期时间分布、成功率、停机分类、漂移相关性、站点热图和完整样本保留规则。', en: 'Run continuously and report cycle-time distribution, success rate, downtime classes, drift correlations, site maps and the complete sample-retention rule.' },
       boundary: { zh: '周期稳定性是进入逻辑评估的必要条件，但仍不等同于逻辑错误随码距下降；后者还需要具体量子码和解码器。', en: 'Cycle stability is required for logical evaluation but is not itself code-distance suppression; that also needs a particular code and decoder.' },
-      sources: [logicalSource],
+      sources: [logicalSource, replacementSource],
       nextQuestion: { zh: '完整周期中的物理故障怎样转化为逻辑错误率？', en: 'How do physical faults in the complete cycle become a logical error rate?' },
     },
   ],

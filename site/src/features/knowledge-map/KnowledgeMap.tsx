@@ -60,11 +60,28 @@ const nodeMeta: KnowledgeNodeMeta[] = [
 
 const chapterById = new Map(chapters.map((chapter) => [chapter.id, chapter]))
 
+const theoryLoopContent = {
+  number: 6,
+  shortTitle: { zh: '理论闭环', en: 'Theory loop' },
+  title: { zh: '理论如何服务实验落地', en: 'How theory closes the experimental loop' },
+  question: {
+    zh: '实验数据怎样约束模型，并把可证伪预测返回下一轮测量与控制？',
+    en: 'How do experimental data constrain the model and return falsifiable predictions to the next measurement and control cycle?',
+  },
+}
+
+function getNodeContent(meta: KnowledgeNodeMeta, index: number) {
+  if (meta.id === 'theory-experiment-loop') return theoryLoopContent
+  const chapter = chapterById.get(meta.id) ?? chapters[index]
+  return { ...chapter, number: meta.id === 'fault-tolerance' ? 7 : chapter.number }
+}
+
 export default function KnowledgeMap({ language, mode }: { language: Language; mode: ReadingMode }) {
   const [selectedId, setSelectedId] = useState('quantum-foundations')
   const selectedMeta = nodeMeta.find((item) => item.id === selectedId) ?? nodeMeta[0]
-  const selectedChapter = chapterById.get(selectedMeta.id) ?? chapters[0]
-  const selectedAnchor = selectedMeta.id === 'why-yb' ? 'yb-platform' : selectedMeta.id
+  const selectedIndex = nodeMeta.findIndex((item) => item.id === selectedMeta.id)
+  const selectedChapter = getNodeContent(selectedMeta, selectedIndex)
+  const selectedAnchor = selectedMeta.id === 'why-yb' ? 'yb-platform' : selectedMeta.id === 'theory-experiment-loop' ? 'theory' : selectedMeta.id
 
   return (
     <section className="knowledge-map" id="knowledge-map">
@@ -86,7 +103,7 @@ export default function KnowledgeMap({ language, mode }: { language: Language; m
 
         <div className="knowledge-graph__nodes">
           {nodeMeta.map((meta, index) => {
-            const chapter = chapterById.get(meta.id) ?? chapters[index]
+            const chapter = getNodeContent(meta, index)
             return (
               <button key={meta.id} type="button" data-node={meta.id} aria-label={`${language === 'zh' ? '节点' : 'Node'} ${String(chapter.number).padStart(2, '0')} ${chapter.shortTitle[language]}`} aria-pressed={selectedMeta.id === meta.id} onClick={() => setSelectedId(meta.id)}>
                 <span>{String(chapter.number).padStart(2, '0')} · {meta.symbol}</span>

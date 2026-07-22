@@ -23,6 +23,23 @@ it('separates DiVincenzo implementation criteria from the fault-tolerance chain'
   expect(screen.getByText(/model assumptions, not a Yb device prediction/i)).toBeInTheDocument()
 })
 
+it('makes each fault-tolerance link selectable and explains the selected link', () => {
+  render(<ResourceEstimator language="en" />)
+
+  const physicalFault = screen.getByRole('button', { name: 'Fault-tolerance link: physical fault' })
+  const trustworthyResult = screen.getByRole('button', { name: 'Fault-tolerance link: trustworthy result' })
+
+  expect(physicalFault).toHaveAttribute('aria-pressed', 'false')
+  expect(trustworthyResult).toHaveAttribute('aria-pressed', 'true')
+
+  fireEvent.click(physicalFault)
+
+  expect(physicalFault).toHaveAttribute('aria-pressed', 'true')
+  expect(trustworthyResult).toHaveAttribute('aria-pressed', 'false')
+  expect(screen.getByRole('heading', { name: 'Physical fault becomes a cycle channel' })).toBeInTheDocument()
+  expect(screen.getByText(/A decoder needs the fault type, location, timing and correlation/)).toBeInTheDocument()
+})
+
 it('shows when erasure conversion is overwhelmed by detection latency', () => {
   render(<ResourceEstimator language="en" />)
 

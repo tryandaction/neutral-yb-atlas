@@ -34,7 +34,6 @@ it('uses normalized image coordinates to move the teaching ring and arrow precis
   const ring = screen.getByTestId('reference-hotspot-ring')
   expect(overlay).toHaveAttribute('data-coordinate-system', 'normalized-percent')
   expect(ring).toHaveAttribute('data-hotspot', '399')
-  expect(screen.getByTestId('reference-mobile-lens')).toHaveAttribute('data-focus-x', '16')
-  expect(screen.getByTestId('reference-mobile-lens')).toHaveAttribute('data-focus-y', '40.5')
+  expect(screen.queryByTestId('reference-mobile-lens')).not.toBeInTheDocument()
   expect(screen.getByText('主冷却、一级 MOT 与荧光成像')).toBeInTheDocument()
 })

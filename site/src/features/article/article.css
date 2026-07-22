@@ -231,7 +231,6 @@
 .article-section__evidence > div:last-child { border-right: 0; }
 .article-section__equation-guide strong,
 .article-section__evidence strong,
-.article-section__next strong { display: block; margin-bottom: 5px; color: var(--forest); font-size: 11px; }
 .article-section__equation-guide p,
 .article-section__equation-guide ul,
 .article-section__evidence p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.65; }
@@ -239,7 +238,6 @@
 .article-section__evidence { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 28px; }
 .article-section__sources a { display: block; color: var(--forest); font-size: 12px; line-height: 1.55; }
 .article-section__sources a + a { margin-top: 6px; }
-.article-section__next { margin: 24px 0 0; padding: 14px 16px; border-left: 2px solid var(--vermilion); background: var(--paper); color: var(--ink); font-size: 14px; line-height: 1.6; }
 
 .equation--error {
   color: var(--danger);
