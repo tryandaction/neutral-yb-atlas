@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 
 const css = readFileSync('src/features/domain/domain.css', 'utf8')
+const headerCss = readFileSync('src/components/app-header.css', 'utf8')
 
 describe('domain workbench desktop layout', () => {
   it('uses a fluid workbench with bounded side rails', () => {
@@ -28,5 +29,14 @@ describe('domain workbench desktop layout', () => {
   it('keeps the compact outline touch-scrollable without a native scrollbar', () => {
     expect(css).toMatch(/\.domain-outline\s*\{[\s\S]*scrollbar-width:\s*none/)
     expect(css).toMatch(/\.domain-outline::\-webkit-scrollbar\s*\{[\s\S]*display:\s*none/)
+  })
+
+  it('anchors every sticky outline directly below the responsive header', () => {
+    expect(css).not.toMatch(/\.domain-outline\s*\{[\s\S]*?top:\s*100px/)
+    expect(css).toMatch(/\.domain-outline\s*\{[\s\S]*?top:\s*var\(--header-height\)/)
+  })
+
+  it('keeps the two-row header height synchronized with the sticky offset', () => {
+    expect(headerCss).toMatch(/@media\s*\(max-width:\s*1120px\)[\s\S]*?\.app-header\s*\{[\s\S]*?row-gap:\s*0/)
   })
 })

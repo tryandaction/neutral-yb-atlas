@@ -96,6 +96,9 @@ export interface EvidenceEntry {
   status: EvidenceStatus
   note: LocalizedText
   source: EvidenceSource
+  readingTier?: 'frontier' | 'foundation'
+  publicationYear?: number
+  readingType?: LocalizedText
 }
 
 export interface InstrumentEntry {

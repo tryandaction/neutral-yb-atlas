@@ -159,6 +159,23 @@ it('requires a source and unit for confirmed numeric evidence', () => {
   }
 })
 
+it('keeps the recommended frontier reading current and traceable', () => {
+  const frontier = evidenceEntries.filter((entry) => entry.readingTier === 'frontier')
+
+  expect(frontier.length).toBeGreaterThanOrEqual(5)
+  expect(frontier.some((entry) => entry.id === 'yb-logical-erasure-qubits')).toBe(true)
+  expect(frontier.some((entry) => entry.id === 'neutral-atom-universal-fault-tolerance')).toBe(true)
+  expect(frontier.some((entry) => entry.id === 'yb-coherent-multiqubit-mapping')).toBe(true)
+  expect(frontier.some((entry) => entry.id === 'yb-continuous-atom-replacement')).toBe(true)
+
+  for (const entry of frontier) {
+    expect(entry.publicationYear).toBeGreaterThanOrEqual(2024)
+    expect(entry.readingType?.zh).toBeTruthy()
+    expect(entry.readingType?.en).toBeTruthy()
+    expect(entry.source.url).toMatch(/^https:\/\//)
+  }
+})
+
 it('models a complete ordered experimental lifecycle', () => {
   expect(experimentPhases).toHaveLength(7)
   expect(experimentPhases.map((phase) => phase.order)).toEqual([

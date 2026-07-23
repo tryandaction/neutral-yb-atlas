@@ -13,18 +13,25 @@ function lensAxisPosition(coordinate: number) {
   return `${boundedPosition.toFixed(2)}%`
 }
 
-function ImageStage({ plate, selectedId, language, onSelect }: {
+function ImageStage({ plate, selectedId, annotationVisible, language, onSelect, onClear }: {
   plate: AtlasPlate
   selectedId: string
+  annotationVisible: boolean
   language: Language
   onSelect: (id: string) => void
+  onClear: () => void
 }) {
   const selected = plate.hotspots.find((hotspot) => hotspot.id === selectedId) ?? plate.hotspots[0]
   const calloutX = Math.min(94, Math.max(6, selected.x + (selected.x > 52 ? -9 : 9)))
   const calloutY = Math.min(92, Math.max(8, selected.y - 10))
 
   return (
-    <div className="visual-atlas__image-stage" style={{ aspectRatio: plate.aspectRatio ?? '1672 / 941' }}>
+    <div
+      className="visual-atlas__image-stage"
+      data-testid="atlas-image-stage"
+      style={{ aspectRatio: plate.aspectRatio ?? '1672 / 941' }}
+      onClick={onClear}
+    >
       <img src={plate.image} alt={plate.alt[language]} loading="lazy" />
       {plate.masks?.map((mask) => (
         <div
@@ -50,7 +57,7 @@ function ImageStage({ plate, selectedId, language, onSelect }: {
         data-coordinate-system="normalized-percent"
         style={{ color: plate.accent }}
       >
-        <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        {annotationVisible ? <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
           <defs>
             <marker id={`atlas-arrow-${plate.id}`} markerWidth="5" markerHeight="5" refX="4.5" refY="2.5" orient="auto">
               <path d="M0,0 L5,2.5 L0,5 Z" fill="currentColor" />
@@ -66,21 +73,24 @@ function ImageStage({ plate, selectedId, language, onSelect }: {
             ry={selected.ry}
             vectorEffect="non-scaling-stroke"
           />
-        </svg>
+        </svg> : null}
         {plate.hotspots.map((hotspot) => (
           <button
             key={hotspot.id}
             type="button"
             className="visual-atlas__image-target"
             aria-label={`${language === 'zh' ? '图中选择' : 'Select on figure'} ${hotspot.label[language]}`}
-            aria-pressed={hotspot.id === selected.id}
+            aria-pressed={annotationVisible && hotspot.id === selected.id}
             style={{ left: `${hotspot.x}%`, top: `${hotspot.y}%` }}
-            onClick={() => onSelect(hotspot.id)}
+            onClick={(event) => {
+              event.stopPropagation()
+              onSelect(hotspot.id)
+            }}
           />
         ))}
-        <span className="visual-atlas__hotspot-index" style={{ left: `${calloutX}%`, top: `${calloutY}%` }} aria-hidden="true">
+        {annotationVisible ? <span className="visual-atlas__hotspot-index" style={{ left: `${calloutX}%`, top: `${calloutY}%` }} aria-hidden="true">
           {selected.index}
-        </span>
+        </span> : null}
       </div>
     </div>
   )
@@ -89,6 +99,7 @@ function ImageStage({ plate, selectedId, language, onSelect }: {
 export default function ExperimentVisualAtlas({ language }: { language: Language }) {
   const [plateId, setPlateId] = useState(atlasPlates[0].id)
   const [hotspotId, setHotspotId] = useState(atlasPlates[0].hotspots[0].id)
+  const [annotationVisible, setAnnotationVisible] = useState(true)
   const [fullOpen, setFullOpen] = useState(false)
   const plate = atlasPlates.find((item) => item.id === plateId) ?? atlasPlates[0]
   const selected = plate.hotspots.find((hotspot) => hotspot.id === hotspotId) ?? plate.hotspots[0]
@@ -105,6 +116,12 @@ export default function ExperimentVisualAtlas({ language }: { language: Language
   const selectPlate = (next: AtlasPlate) => {
     setPlateId(next.id)
     setHotspotId(next.hotspots[0].id)
+    setAnnotationVisible(true)
+  }
+
+  const selectHotspot = (id: string) => {
+    setHotspotId(id)
+    setAnnotationVisible(true)
   }
 
   return (
@@ -133,7 +150,14 @@ export default function ExperimentVisualAtlas({ language }: { language: Language
 
       <div className="visual-atlas__workspace">
         <figure>
-          <ImageStage plate={plate} selectedId={selected.id} language={language} onSelect={setHotspotId} />
+          <ImageStage
+            plate={plate}
+            selectedId={selected.id}
+            annotationVisible={annotationVisible}
+            language={language}
+            onSelect={selectHotspot}
+            onClear={() => setAnnotationVisible(false)}
+          />
           <button
             type="button"
             className="visual-atlas__expand"
@@ -143,7 +167,7 @@ export default function ExperimentVisualAtlas({ language }: { language: Language
           >
             <Maximize2 aria-hidden="true" />
           </button>
-          <div
+          {annotationVisible ? <div
             className="visual-atlas__mobile-lens"
             data-testid="atlas-mobile-lens"
             data-focus-x={selected.x}
@@ -159,7 +183,7 @@ export default function ExperimentVisualAtlas({ language }: { language: Language
           >
             <span>{selected.index}</span>
             <b>{selected.label[language]}</b>
-          </div>
+          </div> : null}
           <figcaption>{plate.caption[language]}</figcaption>
         </figure>
 
@@ -178,8 +202,8 @@ export default function ExperimentVisualAtlas({ language }: { language: Language
                 type="button"
                 key={hotspot.id}
                 aria-label={`${language === 'zh' ? '定位' : 'Locate'} ${hotspot.label[language]}`}
-                aria-pressed={hotspot.id === selected.id}
-                onClick={() => setHotspotId(hotspot.id)}
+                aria-pressed={annotationVisible && hotspot.id === selected.id}
+                onClick={() => selectHotspot(hotspot.id)}
               >
                 <span>{hotspot.index}</span>{hotspot.label[language]}
               </button>
@@ -192,7 +216,14 @@ export default function ExperimentVisualAtlas({ language }: { language: Language
         <div className="visual-atlas__lightbox" role="dialog" aria-modal="true" aria-label={language === 'zh' ? '实验图版全屏视图' : 'Experimental plate fullscreen view'}>
           <button type="button" aria-label={language === 'zh' ? '关闭全屏图版' : 'Close fullscreen plate'} onClick={() => setFullOpen(false)}><X aria-hidden="true" /></button>
           <div className="visual-atlas__lightbox-stage">
-            <ImageStage plate={plate} selectedId={selected.id} language={language} onSelect={setHotspotId} />
+            <ImageStage
+              plate={plate}
+              selectedId={selected.id}
+              annotationVisible={annotationVisible}
+              language={language}
+              onSelect={selectHotspot}
+              onClear={() => setAnnotationVisible(false)}
+            />
           </div>
         </div>
       )}

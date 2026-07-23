@@ -203,6 +203,7 @@
   .app-header {
     grid-template-columns: 1fr auto;
     grid-template-rows: 58px 42px;
+    row-gap: 0;
     padding: 0 18px;
   }
 
@@ -234,7 +235,7 @@
   .app-header {
     min-height: 58px;
     padding: 0 14px;
-    gap: 10px;
+    column-gap: 10px;
   }
 
   .brand-name,

@@ -161,15 +161,6 @@
   padding: 56px clamp(24px, 4vw, 48px) 64px;
 }
 
-.domain-main .atomic-reference__body {
-  grid-template-columns: minmax(0, 1fr);
-}
-
-.domain-main .atomic-reference aside ol {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
 .domain-main .teaching-visual__header {
   grid-template-columns: 1fr;
   gap: 22px;
@@ -224,7 +215,7 @@
   .domain-outline {
     position: sticky;
     z-index: 10;
-    top: 100px;
+    top: var(--header-height);
     display: flex;
     gap: 24px;
     overflow-x: auto;
@@ -305,7 +296,7 @@
   }
 
   .domain-outline {
-    top: 100px;
+    top: var(--header-height);
     padding: 0 20px;
   }
 
@@ -322,9 +313,6 @@
     gap: 12px;
   }
 
-  .domain-main .atomic-reference aside ol {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

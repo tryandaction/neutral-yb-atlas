@@ -56,3 +56,16 @@ it('preserves the native aspect ratio of the square control and data-chain plate
   expect(screen.getByRole('img', { name: 'Neutral-atom timing and real-time data-chain teaching plate' }).parentElement)
     .toHaveStyle({ aspectRatio: '1254 / 1254' })
 })
+
+it('dismisses the image annotation on blank space and restores it from a hotspot', async () => {
+  const user = userEvent.setup()
+  render(<ExperimentVisualAtlas language="en" />)
+
+  expect(screen.getByTestId('atlas-hotspot-ring')).toHaveAttribute('data-hotspot', 'oven')
+
+  await user.click(screen.getByTestId('atlas-image-stage'))
+  expect(screen.queryByTestId('atlas-hotspot-ring')).not.toBeInTheDocument()
+
+  await user.click(screen.getByRole('button', { name: 'Select on figure Yb oven and atomic beam' }))
+  expect(screen.getByTestId('atlas-hotspot-ring')).toHaveAttribute('data-hotspot', 'oven')
+})
