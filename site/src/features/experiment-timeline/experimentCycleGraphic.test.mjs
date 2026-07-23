@@ -1,32 +1,26 @@
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 import { expect, it } from 'vitest'
 
-const svg = readFileSync('assets/yb-replacement-cycle-timeline.svg', 'utf8')
+const panels = [
+  ['yb-cycle-01-reservoir-load.svg', ['scheduled load 2 ms', 'τload = 0.84 ms', '1D reservoir molasses']],
+  ['yb-cycle-02-qualify-cool.svg', ['move 0.5 ms', 'LAC 6 ms', 'identification image 4 ms', 'cool 6 ms']],
+  ['yb-cycle-03-prepare-handoff.svg', ['prepare ³P₀ 0.7 ms', 'global σ+ 556 nm', 'local 556 + 1539 nm', '×50 each stage']],
+  ['yb-cycle-04-compute.svg', ['stationary compute', 'RF nuclear-spin control', '302 nm Rydberg reference', 'reload continues in parallel']],
+  ['yb-cycle-05-readout-feedback.svg', ['649 + 770 nm Raman mapping', '400 ns ×8', '497 nm depump', '|0&gt; / |1&gt; / loss']],
+]
 
-it('resolves the source-qualified macrocycle and both trap-modulated microcycles', () => {
-  expect(svg).toContain('Five semantic stages; reservoir maintenance and stationary-array computation run concurrently.')
-  expect(svg).toContain('scheduled load 2 ms')
-  expect(svg).toContain('τload = 0.84 ms')
-  expect(svg).toContain('move 0.5 ms')
-  expect(svg).toContain('LAC 6 ms')
-  expect(svg).toContain('identification image 4 ms')
-  expect(svg).toContain('cool 6 ms')
-  expect(svg).toContain('prepare ³P₀ 0.7 ms')
-  expect(svg).toContain('1D reservoir molasses')
-  expect(svg).toContain('mobile tweezer array (488 nm)')
-  expect(svg).toContain('global σ+ 556 nm')
-  expect(svg).toContain('local 556 + 1539 nm')
-  expect(svg).toContain('649 + 770 nm Raman mapping')
-  expect(svg).toContain('497 nm depump')
-  expect(svg).toContain('TRAP ON')
-  expect(svg).toContain('TRAP OFF')
-  expect(svg).toContain('×50 each stage')
-  expect(svg).toContain('400 ns')
-  expect(svg).toContain('×8')
-  expect(svg.match(/map \+ depump 15 µs → image 4 ms/g)).toHaveLength(2)
-  expect(svg).toContain('|0&gt; / |1&gt; / loss')
-  expect(svg).not.toContain('about 1 ms')
-  expect(svg).not.toContain('2 × 50')
-  expect(svg).not.toContain('497 nm Raman')
-  expect(svg).not.toMatch(/[（(](?:demonstrated|not demonstrated|candidate)[）)]/i)
+it('splits the full cycle into five readable, source-qualified SVG panels', () => {
+  for (const [filename, evidence] of panels) {
+    const path = resolve('assets', filename)
+    expect(existsSync(path), `${filename} should exist`).toBe(true)
+    if (!existsSync(path)) continue
+
+    const svg = readFileSync(path, 'utf8')
+    expect(svg).toContain('viewBox="0 0 760 760"')
+    expect(svg).toMatch(/\.body \{ font-size: (?:1[6-9]|[2-9]\d)px;/)
+    for (const phrase of evidence) expect(svg).toContain(phrase)
+    expect(svg).not.toContain('497 nm Raman')
+    expect(svg).not.toMatch(/[（(](?:demonstrated|not demonstrated|candidate)[）)]/i)
+  }
 })

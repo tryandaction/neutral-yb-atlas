@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="760" viewBox="0 0 760 760" role="img" aria-labelledby="title description">
+  <title id="title">State mapping, imaging, and feedback</title>
+  <desc id="description">Each nuclear-spin state is mapped to an imageable manifold before classification.</desc>
+  <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#14211d"/></marker><style>
+    text { font-family: Inter, "Noto Sans", Arial, sans-serif; letter-spacing: 0; }
+    .title { font-size: 27px; font-weight: 700; } .subtitle { font-size: 17px; }
+    .body { font-size: 17px; } .small { font-size: 15px; } .micro { font-size: 13px; } .stage { font-size: 10px; }
+  </style></defs>
+  <rect width="760" height="760" fill="#ffffff"/>
+  <text x="22" y="28" class="stage" fill="#d84c2f" font-weight="700">MEASUREMENT DOMAIN</text>
+  <text x="22" y="58" class="title">State mapping, imaging, and feedback</text>
+  <text x="738" y="56" class="small" text-anchor="end" fill="#56635f" font-weight="700">05 / 05</text>
+  <rect x="20" y="82" width="136" height="34" rx="3" fill="#edf1ef" stroke="none"/><text x="88" y="104" class="stage" text-anchor="middle" fill="#56635f" font-weight="700">RESERVOIR / LOAD</text>
+<rect x="164" y="82" width="136" height="34" rx="3" fill="#edf1ef" stroke="none"/><text x="232" y="104" class="stage" text-anchor="middle" fill="#56635f" font-weight="700">QUALIFY / COOL</text>
+<rect x="308" y="82" width="136" height="34" rx="3" fill="#edf1ef" stroke="none"/><text x="376" y="104" class="stage" text-anchor="middle" fill="#56635f" font-weight="700">PREPARE / HANDOFF</text>
+<rect x="452" y="82" width="136" height="34" rx="3" fill="#edf1ef" stroke="none"/><text x="520" y="104" class="stage" text-anchor="middle" fill="#56635f" font-weight="700">COMPUTE</text>
+<rect x="596" y="82" width="136" height="34" rx="3" fill="#14211d" stroke="none"/><text x="664" y="104" class="stage" text-anchor="middle" fill="#ffffff" font-weight="700">READOUT / FEEDBACK</text>
+  <rect x="176" y="132" width="178" height="42" rx="3" fill="#f5f1fb" stroke="none"/><text x="265" y="151" class="small" text-anchor="middle" font-weight="700">map |0⟩</text><text x="265" y="168" class="micro" text-anchor="middle" fill="#56635f">~15 µs block</text>
+<rect x="362" y="132" width="142" height="42" rx="3" fill="#eef3fb" stroke="none"/><text x="433" y="151" class="small" text-anchor="middle" font-weight="700">image 0</text><text x="433" y="168" class="micro" text-anchor="middle" fill="#56635f">4 ms</text>
+<rect x="512" y="132" width="112" height="42" rx="3" fill="#f5f1fb" stroke="none"/><text x="568" y="151" class="small" text-anchor="middle" font-weight="700">map |1⟩</text><text x="568" y="168" class="micro" text-anchor="middle" fill="#56635f">~15 µs</text>
+<rect x="632" y="132" width="100" height="42" rx="3" fill="#eef3fb" stroke="none"/><text x="682" y="151" class="small" text-anchor="middle" font-weight="700">image 1</text><text x="682" y="168" class="micro" text-anchor="middle" fill="#56635f">4 ms</text>
+  <text x="22" y="232" class="body" font-weight="650">649+770 Raman map</text><line x1="176" y1="236" x2="732" y2="236" stroke="#c9d1ce" stroke-width="1"/><rect x="184" y="219" width="106" height="26" rx="4" fill="#6845c6" stroke="none"/><text x="237" y="237" class="micro" text-anchor="middle" fill="#fff" font-weight="700">400 ns ×8</text>
+<rect x="520" y="219" width="96" height="26" rx="4" fill="#6845c6" stroke="none"/><text x="568" y="237" class="micro" text-anchor="middle" fill="#fff" font-weight="700">400 ns ×8</text>
+<text x="22" y="290" class="body" font-weight="650">497 nm depump</text><line x1="176" y1="294" x2="732" y2="294" stroke="#c9d1ce" stroke-width="1"/><rect x="298" y="277" width="48" height="26" rx="4" fill="#d84c2f" stroke="none"/><text x="322" y="295" class="micro" text-anchor="middle" fill="#fff" font-weight="700">to ¹S₀</text>
+<rect x="620" y="277" width="8" height="26" rx="4" fill="#d84c2f" stroke="none"/><text x="624" y="295" class="micro" text-anchor="middle" fill="#fff" font-weight="700"></text>
+<text x="22" y="348" class="body" font-weight="650">399 nm imaging</text><line x1="176" y1="352" x2="732" y2="352" stroke="#c9d1ce" stroke-width="1"/><rect x="370" y="335" width="126" height="26" rx="4" fill="#2864c7" stroke="none"/><text x="433" y="353" class="micro" text-anchor="middle" fill="#fff" font-weight="700">image |0⟩ 4 ms</text>
+<rect x="640" y="335" width="84" height="26" rx="4" fill="#2864c7" stroke="none"/><text x="682" y="353" class="micro" text-anchor="middle" fill="#fff" font-weight="700">image |1⟩</text>
+<text x="22" y="406" class="body" font-weight="650">camera</text><line x1="176" y1="410" x2="732" y2="410" stroke="#c9d1ce" stroke-width="1"/><rect x="370" y="393" width="126" height="26" rx="4" fill="#14211d" stroke="none"/><text x="433" y="411" class="micro" text-anchor="middle" fill="#fff" font-weight="700">frame A</text>
+<rect x="640" y="393" width="84" height="26" rx="4" fill="#14211d" stroke="none"/><text x="682" y="411" class="micro" text-anchor="middle" fill="#fff" font-weight="700">frame B</text>
+<text x="22" y="464" class="body" font-weight="650">classification</text><line x1="176" y1="468" x2="732" y2="468" stroke="#c9d1ce" stroke-width="1"/><line x1="500" y1="450" x2="500" y2="478" stroke="#d84c2f" stroke-width="4"/><text x="507" y="464" class="micro" fill="#d84c2f" font-weight="700">A</text>
+<line x1="728" y1="450" x2="728" y2="478" stroke="#d84c2f" stroke-width="4"/><text x="735" y="464" class="micro" fill="#d84c2f" font-weight="700">A+B</text>
+<text x="22" y="522" class="body" font-weight="650">replacement queue</text><line x1="176" y1="526" x2="732" y2="526" stroke="#c9d1ce" stroke-width="1"/><rect x="514" y="509" width="210" height="26" rx="4" fill="#fff" stroke="#176f4e" stroke-width="2" stroke-dasharray="6 5"/><text x="619" y="527" class="micro" text-anchor="middle" fill="#176f4e" font-weight="700">|0&gt; / |1&gt; / loss</text>
+  <line x1="20" y1="574" x2="740" y2="574" stroke="#14211d" stroke-width="1.5"/>
+  <text x="22" y="608" class="body">649 + 770 nm Raman mapping: simultaneous fields transfer a selected ³P₀ spin state into ³P₂.</text>
+<text x="22" y="633" class="body">497 nm depump returns ³P₂ population to imageable ¹S₀; it is not a Raman pulse.</text>
+<text x="22" y="658" class="body">bright/dark → |0⟩; dark/bright → |1⟩; dark/dark → loss and replacement request.</text>
+  <text x="22" y="735" class="micro" fill="#56635f">Li et al. (2025), state-selective detection and feedback sequence.</text>
+</svg>

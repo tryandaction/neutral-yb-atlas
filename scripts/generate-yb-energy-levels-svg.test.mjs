@@ -62,3 +62,16 @@ test('uses standard Chinese atomic-physics terminology', async () => {
   assert.match(svg, /布居/)
   assert.match(svg, /再泵浦（repump）/)
 })
+
+test('uses a generic Lambda map while fixing the two-qubit basis to 3P0', async () => {
+  const svg = await readFile(svgPath, 'utf8')
+
+  assert.match(svg, /id="raman-lambda-control-map"/)
+  assert.match(svg, /¹S₀｜556\+556 nm → ³P₁/)
+  assert.match(svg, /³P₀｜649\+649 nm → 6s7s ³S₁/)
+  assert.match(svg, /³P₂｜770\+770 nm → 6s7s ³S₁/)
+  assert.match(svg, /³P₀↔³P₂｜649\+770 nm → 6s7s ³S₁/)
+  assert.match(svg, /两比特计算基：\|0⟩, \|1⟩ ∈ ³P₀/)
+  assert.doesNotMatch(svg, /编码 [AB]/)
+  assert.doesNotMatch(svg, /微波/)
+})

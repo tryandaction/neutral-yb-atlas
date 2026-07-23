@@ -1,13 +1,19 @@
-import { useState } from 'react'
-import cycleTimelineGraphic from '../../../assets/yb-replacement-cycle-timeline.svg'
+import { useRef, useState } from 'react'
 import type { Language } from '../../types/content'
 import { cycleStages } from './cycleTimelineData'
+import { cycleTimelineGraphics } from './cycleTimelineGraphics'
 import './experiment-cycle-timeline.css'
 
 export default function ExperimentCycleTimeline({ language }: { language: Language }) {
   const [selectedId, setSelectedId] = useState('supply')
+  const panelRefs = useRef<Record<string, HTMLElement | null>>({})
   const selectedIndex = cycleStages.findIndex((stage) => stage.id === selectedId)
   const selected = cycleStages[selectedIndex] ?? cycleStages[0]
+
+  const selectStage = (id: string) => {
+    setSelectedId(id)
+    panelRefs.current[id]?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' })
+  }
 
   return (
     <section className="experiment-cycle-timeline" id="experiment-cycle-timeline">
@@ -17,13 +23,23 @@ export default function ExperimentCycleTimeline({ language }: { language: Langua
       </header>
 
       <nav aria-label={language === 'zh' ? '实验周期阶段' : 'Experimental cycle stages'}>
-        {cycleStages.map((stage, index) => <button key={stage.id} type="button" aria-label={`${language === 'zh' ? '选择周期阶段：' : 'Select cycle stage: '}${stage.title[language]}`} aria-pressed={stage.id === selected.id} onClick={() => setSelectedId(stage.id)}><span>{String(index + 1).padStart(2, '0')}</span>{stage.short[language]}</button>)}
+        {cycleStages.map((stage, index) => <button key={stage.id} type="button" aria-label={`${language === 'zh' ? '选择周期阶段：' : 'Select cycle stage: '}${stage.title[language]}`} aria-pressed={stage.id === selected.id} onClick={() => selectStage(stage.id)}><span>{String(index + 1).padStart(2, '0')}</span>{stage.short[language]}</button>)}
       </nav>
 
-      <figure>
-        <img src={cycleTimelineGraphic} alt={language === 'zh' ? '¹⁷¹Yb 原子替换实验周期的光场时序图：横轴为相对时间，纵轴为各光场和反馈通道。' : 'Optical timing diagram for a 171Yb replacement-aware experimental cycle, with relative time on the horizontal axis and optical or feedback channels on the vertical axis.'} />
+      <div className="experiment-cycle-timeline__visual">
+        <div className="experiment-cycle-timeline__rail" aria-label={language === 'zh' ? '五段实验时序图' : 'Five-panel experimental timing diagram'}>
+          {cycleTimelineGraphics.map((graphic) => (
+            <figure
+              id={`cycle-panel-${graphic.id}`}
+              key={graphic.id}
+              ref={(element) => { panelRefs.current[graphic.id] = element }}
+            >
+              <img src={graphic.src} alt={graphic.alt[language]} />
+            </figure>
+          ))}
+        </div>
         <figcaption>{language === 'zh' ? '上部给出可并行的宏观周期，中下部展开 ³P₀ 制备与自旋分辨读出的关阱微周期。实色条表示光场或控制通道开启，虚线把亮/暗分类结果送入下一轮补原子队列。RF π 脉冲与 302 nm Rydberg π 脉冲仅作为独立标定参照，不属于 Li et al. (2025) 的替换序列。' : 'The upper panel gives the concurrent macrocycle; the lower panels expand the trap-off microcycles for ³P₀ preparation and spin-resolved readout. Solid bars mark enabled fields or controls, and the dashed path sends the bright/dark classification into the next replacement queue. RF and 302 nm Rydberg π pulses are independent calibration references, not steps in the Li et al. (2025) replacement sequence.'}</figcaption>
-      </figure>
+      </div>
 
       <article aria-live="polite">
         <span>{String(selectedIndex + 1).padStart(2, '0')} / 05</span><h3>{selected.title[language]}</h3><p>{selected.generic[language]}</p><div><small>{language === 'zh' ? 'Li et al. (2025) 实现实例' : 'Li et al. (2025) implementation example'}</small><p>{selected.implementation[language]}</p></div>
