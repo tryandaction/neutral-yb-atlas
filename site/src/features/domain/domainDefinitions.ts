@@ -79,13 +79,13 @@ export const domainDefinitions: Record<Exclude<RouteId, 'overview'>, DomainDefin
       { id: 'experiment', label: { zh: '原子计算周期', en: 'Atomic computation cycle' } },
       { id: 'experiment-pipeline-tutor', label: { zh: '装置如何改变原子状态', en: 'How apparatus changes atomic states' } },
       { id: 'experiment-cycle-timeline', label: { zh: '光场怎样构成一个周期', en: 'How optical fields form one cycle' } },
-      { id: 'experiment-visual-atlas', label: { zh: '实验教学图谱', en: 'Experimental plate atlas' } },
+      { id: 'experiment-visual-atlas', label: { zh: 'Yb 实验装置全链路', en: 'Yb apparatus path' } },
     ],
     contextTitle: { zh: '学习提示', en: 'Learning prompts' },
     contextItems: [
       { zh: '先问原子在这一步处于什么状态，再问哪个装置改变了哪个哈密顿量参数。', en: 'First identify the atomic state, then ask which apparatus changes which Hamiltonian parameter.' },
       { zh: '把控制时序、原子响应与最终测量并排理解，避免只记设备名称。', en: 'Read control timing, atomic response and final measurement together instead of memorizing component names.' },
-      { zh: '图中数值若为示意会明确标注；具体实验参数回到所引论文核对。', en: 'Illustrative values are labeled explicitly; verify experiment-specific parameters in the cited papers.' },
+      { zh: '装置特定参数均保留来源与适用范围；只有核对所引实验协议后，才比较不同系统的参数。', en: 'Apparatus-specific values retain their source and scope; compare parameters only after checking the cited protocol.' },
     ],
   },
   'fault-tolerance': {

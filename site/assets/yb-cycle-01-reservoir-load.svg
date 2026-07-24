@@ -5,22 +5,21 @@
   <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#14211d"/></marker><style>
     text { font-family: Inter, "Noto Sans", Arial, sans-serif; letter-spacing: 0; }
     .title { font-size: 27px; font-weight: 700; } .subtitle { font-size: 17px; }
-    .body { font-size: 17px; } .small { font-size: 15px; } .micro { font-size: 13px; } .stage { font-size: 10px; }
+    .body { font-size: 17px; } .small { font-size: 15px; } .micro { font-size: 13px; } .stage { font-size: 10px; } .param { font-size: 11px; }
   </style></defs>
   <rect width="760" height="760" fill="#ffffff"/>
   <text x="22" y="28" class="stage" fill="#d84c2f" font-weight="700">SUPPLY DOMAIN</text>
   <text x="22" y="58" class="title">Reservoir supply and scheduled loading</text>
   <text x="738" y="56" class="small" text-anchor="end" fill="#56635f" font-weight="700">01 / 05</text>
-  <rect x="20" y="82" width="136" height="34" rx="3" fill="#14211d" stroke="none"/><text x="88" y="104" class="stage" text-anchor="middle" fill="#ffffff" font-weight="700">RESERVOIR / LOAD</text>
-<rect x="164" y="82" width="136" height="34" rx="3" fill="#edf1ef" stroke="none"/><text x="232" y="104" class="stage" text-anchor="middle" fill="#56635f" font-weight="700">QUALIFY / COOL</text>
-<rect x="308" y="82" width="136" height="34" rx="3" fill="#edf1ef" stroke="none"/><text x="376" y="104" class="stage" text-anchor="middle" fill="#56635f" font-weight="700">PREPARE / HANDOFF</text>
-<rect x="452" y="82" width="136" height="34" rx="3" fill="#edf1ef" stroke="none"/><text x="520" y="104" class="stage" text-anchor="middle" fill="#56635f" font-weight="700">COMPUTE</text>
-<rect x="596" y="82" width="136" height="34" rx="3" fill="#edf1ef" stroke="none"/><text x="664" y="104" class="stage" text-anchor="middle" fill="#56635f" font-weight="700">READOUT / FEEDBACK</text>
-  <rect x="176" y="132" width="178" height="42" rx="3" fill="#eaf3ef" stroke="none"/><text x="265" y="151" class="small" text-anchor="middle" font-weight="700">maintain reservoir</text><text x="265" y="168" class="micro" text-anchor="middle" fill="#56635f">parallel background</text>
-<rect x="362" y="132" width="226" height="42" rx="3" fill="#eef3fb" stroke="none"/><text x="475" y="151" class="small" text-anchor="middle" font-weight="700">capture into mobile tweezers</text><text x="475" y="168" class="micro" text-anchor="middle" fill="#56635f">scheduled load 2 ms</text>
-<rect x="596" y="132" width="136" height="42" rx="3" fill="#f5f1fb" stroke="none"/><text x="664" y="151" class="small" text-anchor="middle" font-weight="700">hold for next step</text><text x="664" y="168" class="micro" text-anchor="middle" fill="#56635f">occupancy unknown</text>
-  <text x="22" y="232" class="body" font-weight="650">reservoir molasses</text><line x1="176" y1="236" x2="732" y2="236" stroke="#c9d1ce" stroke-width="1"/><rect x="184" y="219" width="396" height="26" rx="4" fill="#176f4e" stroke="none"/><text x="382" y="237" class="micro" text-anchor="middle" fill="#fff" font-weight="700">ON — reservoir only</text>
-<text x="22" y="290" class="body" font-weight="650">mobile tweezers</text><line x1="176" y1="294" x2="732" y2="294" stroke="#c9d1ce" stroke-width="1"/><rect x="362" y="277" width="226" height="26" rx="4" fill="#2864c7" stroke="none"/><text x="475" y="295" class="micro" text-anchor="middle" fill="#fff" font-weight="700">capture / dwell</text>
+  <rect x="20" y="78" width="712" height="62" rx="3" fill="#f3f7f5" stroke="#c9d5d0"/>
+  <text x="32" y="98" class="stage" fill="#176f4e" font-weight="700">REPORTED OPERATING POINT</text>
+  <text x="176" y="116" class="param" fill="#263732">556 nm molasses: two tones, 12 MHz apart; B=8.5 G; each tone Δ=−4.4 Γ₅₅₆</text>
+  <text x="176" y="134" class="param" fill="#263732">I=4 Iₛₐₜ,mol=1.68 mW cm⁻² per tone; 488 nm tweezers: 2.4 mW/trap, U₀/h=1.94 MHz</text>
+  <rect x="176" y="150" width="178" height="42" rx="3" fill="#eaf3ef" stroke="none"/><text x="265" y="169" class="small" text-anchor="middle" font-weight="700">maintain reservoir</text><text x="265" y="186" class="micro" text-anchor="middle" fill="#56635f">steady-state molasses</text>
+<rect x="362" y="150" width="226" height="42" rx="3" fill="#eef3fb" stroke="none"/><text x="475" y="169" class="small" text-anchor="middle" font-weight="700">capture into mobile tweezers</text><text x="475" y="186" class="micro" text-anchor="middle" fill="#56635f">scheduled load 2 ms</text>
+<rect x="596" y="150" width="136" height="42" rx="3" fill="#f5f1fb" stroke="none"/><text x="664" y="169" class="small" text-anchor="middle" font-weight="700">hold for qualify</text><text x="664" y="186" class="micro" text-anchor="middle" fill="#56635f">occupancy unknown</text>
+  <text x="22" y="232" class="body" font-weight="650">556 nm 1D molasses</text><line x1="176" y1="236" x2="732" y2="236" stroke="#c9d1ce" stroke-width="1"/><rect x="184" y="219" width="396" height="26" rx="4" fill="#176f4e" stroke="none"/><text x="382" y="237" class="micro" text-anchor="middle" fill="#fff" font-weight="700">two tones ON — reservoir only</text>
+<text x="22" y="290" class="body" font-weight="650">488 nm mobile tweezers</text><line x1="176" y1="294" x2="732" y2="294" stroke="#c9d1ce" stroke-width="1"/><rect x="362" y="277" width="226" height="26" rx="4" fill="#2864c7" stroke="none"/><text x="475" y="295" class="micro" text-anchor="middle" fill="#fff" font-weight="700">capture / dwell 2 ms</text>
 <rect x="596" y="277" width="128" height="26" rx="4" fill="#6845c6" stroke="none"/><text x="660" y="295" class="micro" text-anchor="middle" fill="#fff" font-weight="700">hold</text>
 <text x="22" y="348" class="body" font-weight="650">stationary array</text><line x1="176" y1="352" x2="732" y2="352" stroke="#c9d1ce" stroke-width="1"/><rect x="184" y="335" width="540" height="26" rx="4" fill="#14211d" stroke="none"/><text x="454" y="353" class="micro" text-anchor="middle" fill="#fff" font-weight="700">coherent compute remains spatially isolated</text>
 <text x="22" y="406" class="body" font-weight="650">camera</text><line x1="176" y1="410" x2="732" y2="410" stroke="#c9d1ce" stroke-width="1"/><rect x="184" y="393" width="540" height="26" rx="4" fill="#fff" stroke="#77827f" stroke-width="2" stroke-dasharray="6 5"/><text x="454" y="411" class="micro" text-anchor="middle" fill="#77827f" font-weight="700">OFF during loading</text>

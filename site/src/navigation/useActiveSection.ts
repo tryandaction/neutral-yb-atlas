@@ -86,7 +86,7 @@ export function useActiveSection(): RouteId {
       if (route) setActiveRoute(route)
     }, {
       rootMargin: '-18% 0px -55% 0px',
-      threshold: [0.05, 0.2, 0.4, 0.6, 0.8],
+      threshold: 0,
     })
 
     for (const element of routeByElement.keys()) observer.observe(element)
@@ -102,6 +102,7 @@ export function useActiveSection(): RouteId {
     if (main) layoutObserver?.observe(main)
 
     window.addEventListener('wheel', releasePinnedTarget, { passive: true })
+    window.addEventListener('pointerdown', releasePinnedTarget, { passive: true })
     window.addEventListener('touchstart', releasePinnedTarget, { passive: true })
     window.addEventListener('keydown', releasePinnedTarget)
 
@@ -109,6 +110,7 @@ export function useActiveSection(): RouteId {
       navigationVersion += 1
       window.removeEventListener('hashchange', handleHashChange)
       window.removeEventListener('wheel', releasePinnedTarget)
+      window.removeEventListener('pointerdown', releasePinnedTarget)
       window.removeEventListener('touchstart', releasePinnedTarget)
       window.removeEventListener('keydown', releasePinnedTarget)
       observer.disconnect()

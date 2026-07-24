@@ -21,6 +21,20 @@ it('keeps the experimental route focused on teaching visuals without an acceptan
   expect(document.querySelector('.experiment-workbench')).not.toBeInTheDocument()
 })
 
+it('names the final experimental section as an apparatus path rather than a plate atlas', () => {
+  renderRoute('experiment')
+
+  expect(screen.getByText('Yb apparatus path')).toBeInTheDocument()
+  expect(screen.queryByText('Experimental plate atlas')).not.toBeInTheDocument()
+})
+
+it('describes apparatus values through source scope rather than illustrative placeholders', () => {
+  renderRoute('experiment')
+
+  expect(screen.getByText('Apparatus-specific values retain their source and scope; compare parameters only after checking the cited protocol.')).toBeInTheDocument()
+  expect(screen.queryByText(/Illustrative values are labeled explicitly/)).not.toBeInTheDocument()
+})
+
 it('presents source-linked further reading without research registry controls', () => {
   renderRoute('evidence')
 

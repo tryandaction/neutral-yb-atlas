@@ -5,32 +5,32 @@
   <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#14211d"/></marker><style>
     text { font-family: Inter, "Noto Sans", Arial, sans-serif; letter-spacing: 0; }
     .title { font-size: 27px; font-weight: 700; } .subtitle { font-size: 17px; }
-    .body { font-size: 17px; } .small { font-size: 15px; } .micro { font-size: 13px; } .stage { font-size: 10px; }
+    .body { font-size: 17px; } .small { font-size: 15px; } .micro { font-size: 13px; } .stage { font-size: 10px; } .param { font-size: 11px; }
   </style></defs>
   <rect width="760" height="760" fill="#ffffff"/>
   <text x="22" y="28" class="stage" fill="#d84c2f" font-weight="700">QUALIFICATION DOMAIN</text>
   <text x="22" y="58" class="title">Move, collision filter, image, and cool</text>
   <text x="738" y="56" class="small" text-anchor="end" fill="#56635f" font-weight="700">02 / 05</text>
-  <rect x="20" y="82" width="136" height="34" rx="3" fill="#edf1ef" stroke="none"/><text x="88" y="104" class="stage" text-anchor="middle" fill="#56635f" font-weight="700">RESERVOIR / LOAD</text>
-<rect x="164" y="82" width="136" height="34" rx="3" fill="#14211d" stroke="none"/><text x="232" y="104" class="stage" text-anchor="middle" fill="#ffffff" font-weight="700">QUALIFY / COOL</text>
-<rect x="308" y="82" width="136" height="34" rx="3" fill="#edf1ef" stroke="none"/><text x="376" y="104" class="stage" text-anchor="middle" fill="#56635f" font-weight="700">PREPARE / HANDOFF</text>
-<rect x="452" y="82" width="136" height="34" rx="3" fill="#edf1ef" stroke="none"/><text x="520" y="104" class="stage" text-anchor="middle" fill="#56635f" font-weight="700">COMPUTE</text>
-<rect x="596" y="82" width="136" height="34" rx="3" fill="#edf1ef" stroke="none"/><text x="664" y="104" class="stage" text-anchor="middle" fill="#56635f" font-weight="700">READOUT / FEEDBACK</text>
-  <rect x="176" y="132" width="102" height="42" rx="3" fill="#eef3fb" stroke="none"/><text x="227" y="151" class="small" text-anchor="middle" font-weight="700">move</text><text x="227" y="168" class="micro" text-anchor="middle" fill="#56635f">0.5 ms</text>
-<rect x="286" y="132" width="142" height="42" rx="3" fill="#fff2ed" stroke="none"/><text x="357" y="151" class="small" text-anchor="middle" font-weight="700">LAC</text><text x="357" y="168" class="micro" text-anchor="middle" fill="#56635f">6 ms</text>
-<rect x="436" y="132" width="142" height="42" rx="3" fill="#edf4fc" stroke="none"/><text x="507" y="151" class="small" text-anchor="middle" font-weight="700">identify</text><text x="507" y="168" class="micro" text-anchor="middle" fill="#56635f">4 ms</text>
-<rect x="586" y="132" width="146" height="42" rx="3" fill="#eaf3ef" stroke="none"/><text x="659" y="151" class="small" text-anchor="middle" font-weight="700">cool</text><text x="659" y="168" class="micro" text-anchor="middle" fill="#56635f">6 ms</text>
+  <rect x="20" y="78" width="712" height="62" rx="3" fill="#f3f7f5" stroke="#c9d5d0"/>
+  <text x="32" y="98" class="stage" fill="#176f4e" font-weight="700">REPORTED OPERATING POINT</text>
+  <text x="176" y="116" class="param" fill="#263732">556 nm LAC: Δ≈−1.6 Γ₅₅₆; I≈1.2 Iₛₐₜ/tone; 6 ms; tweezer depth U/h=3.6 MHz</text>
+  <text x="176" y="134" class="param" fill="#263732">556 nm image: Δ≈−2.1 Γ₅₅₆; I≈4.8 Iₛₐₜ/tone; 4 ms; 488 nm trap 4.5 mW/site</text>
+  <rect x="176" y="150" width="102" height="42" rx="3" fill="#eef3fb" stroke="none"/><text x="227" y="169" class="small" text-anchor="middle" font-weight="700">move</text><text x="227" y="186" class="micro" text-anchor="middle" fill="#56635f">0.5 ms</text>
+<rect x="286" y="150" width="142" height="42" rx="3" fill="#fff2ed" stroke="none"/><text x="357" y="169" class="small" text-anchor="middle" font-weight="700">LAC</text><text x="357" y="186" class="micro" text-anchor="middle" fill="#56635f">6 ms</text>
+<rect x="436" y="150" width="142" height="42" rx="3" fill="#edf4fc" stroke="none"/><text x="507" y="169" class="small" text-anchor="middle" font-weight="700">identify</text><text x="507" y="186" class="micro" text-anchor="middle" fill="#56635f">4 ms</text>
+<rect x="586" y="150" width="146" height="42" rx="3" fill="#eaf3ef" stroke="none"/><text x="659" y="169" class="small" text-anchor="middle" font-weight="700">cool</text><text x="659" y="186" class="micro" text-anchor="middle" fill="#56635f">6 ms</text>
   <text x="22" y="232" class="body" font-weight="650">mobile tweezers</text><line x1="176" y1="236" x2="732" y2="236" stroke="#c9d1ce" stroke-width="1"/><rect x="184" y="219" width="94" height="26" rx="4" fill="#2864c7" stroke="none"/><text x="231" y="237" class="micro" text-anchor="middle" fill="#fff" font-weight="700">move 0.5 ms</text>
 <rect x="286" y="219" width="438" height="26" rx="4" fill="#6845c6" stroke="none"/><text x="505" y="237" class="micro" text-anchor="middle" fill="#fff" font-weight="700">hold selected sites</text>
-<text x="22" y="290" class="body" font-weight="650">LAC light</text><line x1="176" y1="294" x2="732" y2="294" stroke="#c9d1ce" stroke-width="1"/><rect x="286" y="277" width="142" height="26" rx="4" fill="#d84c2f" stroke="none"/><text x="357" y="295" class="micro" text-anchor="middle" fill="#fff" font-weight="700">LAC 6 ms</text>
-<text x="22" y="348" class="body" font-weight="650">imaging light</text><line x1="176" y1="352" x2="732" y2="352" stroke="#c9d1ce" stroke-width="1"/><rect x="436" y="335" width="142" height="26" rx="4" fill="#2864c7" stroke="none"/><text x="507" y="353" class="micro" text-anchor="middle" fill="#fff" font-weight="700">identification image 4 ms</text>
+<text x="22" y="290" class="body" font-weight="650">local 556 nm — LAC</text><line x1="176" y1="294" x2="732" y2="294" stroke="#c9d1ce" stroke-width="1"/><rect x="286" y="277" width="142" height="26" rx="4" fill="#d84c2f" stroke="none"/><text x="357" y="295" class="micro" text-anchor="middle" fill="#fff" font-weight="700">two-tone LAC 6 ms</text>
+<text x="22" y="348" class="body" font-weight="650">local 556 nm — image</text><line x1="176" y1="352" x2="732" y2="352" stroke="#c9d1ce" stroke-width="1"/><rect x="436" y="335" width="142" height="26" rx="4" fill="#2864c7" stroke="none"/><text x="507" y="353" class="micro" text-anchor="middle" fill="#fff" font-weight="700">occupancy image 4 ms</text>
 <text x="22" y="406" class="body" font-weight="650">camera</text><line x1="176" y1="410" x2="732" y2="410" stroke="#c9d1ce" stroke-width="1"/><rect x="442" y="393" width="130" height="26" rx="4" fill="#14211d" stroke="none"/><text x="507" y="411" class="micro" text-anchor="middle" fill="#fff" font-weight="700">expose / classify</text>
-<text x="22" y="464" class="body" font-weight="650">cooling light</text><line x1="176" y1="468" x2="732" y2="468" stroke="#c9d1ce" stroke-width="1"/><rect x="586" y="451" width="138" height="26" rx="4" fill="#176f4e" stroke="none"/><text x="655" y="469" class="micro" text-anchor="middle" fill="#fff" font-weight="700">cool 6 ms</text>
+<text x="22" y="464" class="body" font-weight="650">local + molasses 556 nm</text><line x1="176" y1="468" x2="732" y2="468" stroke="#c9d1ce" stroke-width="1"/><rect x="586" y="451" width="138" height="26" rx="4" fill="#176f4e" stroke="none"/><text x="655" y="469" class="micro" text-anchor="middle" fill="#fff" font-weight="700">+2.0 MHz; cool 6 ms</text>
 <text x="22" y="522" class="body" font-weight="650">controller</text><line x1="176" y1="526" x2="732" y2="526" stroke="#c9d1ce" stroke-width="1"/><line x1="430" y1="508" x2="430" y2="536" stroke="#d84c2f" stroke-width="4"/><text x="437" y="522" class="micro" fill="#d84c2f" font-weight="700">occupancy map</text>
 <line x1="580" y1="508" x2="580" y2="536" stroke="#d84c2f" stroke-width="4"/><text x="587" y="522" class="micro" fill="#d84c2f" font-weight="700">accept 1 atom</text>
   <line x1="20" y1="574" x2="740" y2="574" stroke="#14211d" stroke-width="1.5"/>
   <text x="22" y="608" class="body">Light-assisted collisions suppress multiple occupancy before the identification image.</text>
-<text x="22" y="633" class="body">The image produces a site-resolved occupancy record; rejected sites do not enter handoff.</text>
-<text x="22" y="658" class="body">The final 6 ms cooling stage prepares approximately 10 µK mobile-tweezer atoms.</text>
+<text x="22" y="633" class="body">The identification image 4 ms produces a site-resolved occupancy record before handoff.</text>
+<text x="22" y="658" class="body">Cooling: local 30 Iₛₐₜ; molasses 90 Iₛₐₜ; +2.0 MHz blue detuned; final T≈10 µK.</text>
+<text x="22" y="683" class="micro" fill="#56635f">LAC and imaging detuning/intensity are approximate operating points read from Li et al. Fig. 8.</text>
   <text x="22" y="735" class="micro" fill="#56635f">Li et al. (2025), replacement-sequence timing.</text>
 </svg>

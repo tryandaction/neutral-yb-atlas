@@ -1,232 +1,151 @@
-import { Maximize2, X } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { useRef, useState } from 'react'
+import apparatusImage from '../../assets/teaching-generated/yb-reloadable-apparatus.png'
 import type { Language } from '../../types/content'
-import WikiText from '../wiki/WikiText'
-import { atlasPlates, type AtlasPlate } from './visualAtlasData'
 import './experiment-visual-atlas.css'
 
-const lensScale = 2.5
+const stageGroups = [
+  {
+    range: '01–03',
+    zh: '原子束与预冷',
+    en: 'atomic beam and precooling',
+  },
+  {
+    range: '04–06',
+    zh: '转移与窄线冷却',
+    en: 'transfer and narrow-line cooling',
+  },
+  {
+    range: '07–09',
+    zh: '储备池、光镊与计算',
+    en: 'reservoir, tweezers and computation',
+  },
+] as const
 
-function lensAxisPosition(coordinate: number) {
-  const centeredPosition = (50 - coordinate * lensScale) / (1 - lensScale)
-  const boundedPosition = Math.min(100, Math.max(0, centeredPosition))
-  return `${boundedPosition.toFixed(2)}%`
-}
-
-function ImageStage({ plate, selectedId, annotationVisible, language, onSelect, onClear }: {
-  plate: AtlasPlate
-  selectedId: string
-  annotationVisible: boolean
-  language: Language
-  onSelect: (id: string) => void
-  onClear: () => void
-}) {
-  const selected = plate.hotspots.find((hotspot) => hotspot.id === selectedId) ?? plate.hotspots[0]
-  const calloutX = Math.min(94, Math.max(6, selected.x + (selected.x > 52 ? -9 : 9)))
-  const calloutY = Math.min(92, Math.max(8, selected.y - 10))
-
-  return (
-    <div
-      className="visual-atlas__image-stage"
-      data-testid="atlas-image-stage"
-      style={{ aspectRatio: plate.aspectRatio ?? '1672 / 941' }}
-      onClick={onClear}
-    >
-      <img src={plate.image} alt={plate.alt[language]} loading="lazy" />
-      {plate.masks?.map((mask) => (
-        <div
-          key={mask.id}
-          className="visual-atlas__correction-mask"
-          data-testid={`atlas-correction-mask-${mask.id}`}
-          style={{
-            left: `${mask.left}%`,
-            top: `${mask.top}%`,
-            width: `${mask.width}%`,
-            height: `${mask.height}%`,
-            background: mask.background,
-            color: mask.color ?? 'inherit',
-            fontSize: mask.fontSize,
-          }}
-        >
-          {mask.text?.split('\n').map((line) => <span key={line}>{line}</span>)}
-        </div>
-      ))}
-      <div
-        className="visual-atlas__hotspot-overlay"
-        data-testid="atlas-hotspot-overlay"
-        data-coordinate-system="normalized-percent"
-        style={{ color: plate.accent }}
-      >
-        {annotationVisible ? <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-          <defs>
-            <marker id={`atlas-arrow-${plate.id}`} markerWidth="5" markerHeight="5" refX="4.5" refY="2.5" orient="auto">
-              <path d="M0,0 L5,2.5 L0,5 Z" fill="currentColor" />
-            </marker>
-          </defs>
-          <line x1={calloutX} y1={calloutY} x2={selected.x} y2={selected.y} markerEnd={`url(#atlas-arrow-${plate.id})`} vectorEffect="non-scaling-stroke" />
-          <ellipse
-            data-testid="atlas-hotspot-ring"
-            data-hotspot={selected.id}
-            cx={selected.x}
-            cy={selected.y}
-            rx={selected.rx}
-            ry={selected.ry}
-            vectorEffect="non-scaling-stroke"
-          />
-        </svg> : null}
-        {plate.hotspots.map((hotspot) => (
-          <button
-            key={hotspot.id}
-            type="button"
-            className="visual-atlas__image-target"
-            aria-label={`${language === 'zh' ? '图中选择' : 'Select on figure'} ${hotspot.label[language]}`}
-            aria-pressed={annotationVisible && hotspot.id === selected.id}
-            style={{ left: `${hotspot.x}%`, top: `${hotspot.y}%` }}
-            onClick={(event) => {
-              event.stopPropagation()
-              onSelect(hotspot.id)
-            }}
-          />
-        ))}
-        {annotationVisible ? <span className="visual-atlas__hotspot-index" style={{ left: `${calloutX}%`, top: `${calloutY}%` }} aria-hidden="true">
-          {selected.index}
-        </span> : null}
-      </div>
-    </div>
-  )
-}
+const copy = {
+  zh: {
+    title: '从 Yb 原子束到可持续补充的计算阵列',
+    introduction: '原子流从宽线减速、窄线冷却和腔增强输运进入科学腔，再由移动光镊完成装载、成像、转移与阵列补充。图中实验参数按装置来源分别标注。',
+    imageAlt: '从原子源到可持续补充计算阵列的完整 171Yb 实验装置链',
+    viewportLabel: '171Yb 实验装置全流程横向图',
+    stageNavigation: '实验阶段定位',
+    previous: '查看上一组实验阶段',
+    next: '查看下一组实验阶段',
+    openPrefix: '打开阶段',
+    captionLead: '装载、冷却、输运与连续补充参数来自',
+    captionBridge: '；亚稳态量子比特 Rydberg 门接口来自',
+    captionTail: '。阵列重排在图中作为处理器级扩展，不作为 Li 等人装置已经演示的结果。',
+  },
+  en: {
+    title: 'From Yb atomic beam to a reloadable computation array',
+    introduction: 'The atomic flow passes through broad-line slowing, narrow-line cooling and cavity-enhanced transport before mobile tweezers load, image, transfer and replenish the science-chamber array. Apparatus-specific values retain separate source attribution.',
+    imageAlt: 'Complete 171Yb apparatus path from atomic source to a reloadable computation array',
+    viewportLabel: 'Complete horizontal view of the 171Yb experimental apparatus',
+    stageNavigation: 'Experimental stage navigation',
+    previous: 'View the previous experimental stage group',
+    next: 'View the next experimental stage group',
+    openPrefix: 'Open stages',
+    captionLead: 'Loading, cooling, transport and replacement parameters follow',
+    captionBridge: '; the metastable-qubit Rydberg gate interface follows',
+    captionTail: '. Array rearrangement is shown as a processor-level extension, not as a demonstrated result of the Li et al. apparatus.',
+  },
+} as const
 
 export default function ExperimentVisualAtlas({ language }: { language: Language }) {
-  const [plateId, setPlateId] = useState(atlasPlates[0].id)
-  const [hotspotId, setHotspotId] = useState(atlasPlates[0].hotspots[0].id)
-  const [annotationVisible, setAnnotationVisible] = useState(true)
-  const [fullOpen, setFullOpen] = useState(false)
-  const plate = atlasPlates.find((item) => item.id === plateId) ?? atlasPlates[0]
-  const selected = plate.hotspots.find((hotspot) => hotspot.id === hotspotId) ?? plate.hotspots[0]
+  const viewportRef = useRef<HTMLDivElement>(null)
+  const [activeGroup, setActiveGroup] = useState(0)
+  const text = copy[language]
 
-  useEffect(() => {
-    if (!fullOpen) return
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setFullOpen(false)
-    }
-    window.addEventListener('keydown', closeOnEscape)
-    return () => window.removeEventListener('keydown', closeOnEscape)
-  }, [fullOpen])
+  const moveToGroup = (index: number) => {
+    const viewport = viewportRef.current
+    if (!viewport) return
 
-  const selectPlate = (next: AtlasPlate) => {
-    setPlateId(next.id)
-    setHotspotId(next.hotspots[0].id)
-    setAnnotationVisible(true)
+    const nextIndex = Math.min(stageGroups.length - 1, Math.max(0, index))
+    const maxScroll = Math.max(0, viewport.scrollWidth - viewport.clientWidth)
+    const left = maxScroll * nextIndex / (stageGroups.length - 1)
+    viewport.scrollTo({ behavior: 'smooth', left })
+    setActiveGroup(nextIndex)
   }
 
-  const selectHotspot = (id: string) => {
-    setHotspotId(id)
-    setAnnotationVisible(true)
+  const trackVisibleGroup = () => {
+    const viewport = viewportRef.current
+    if (!viewport) return
+
+    const maxScroll = viewport.scrollWidth - viewport.clientWidth
+    if (maxScroll <= 0) {
+      setActiveGroup(0)
+      return
+    }
+
+    const nextIndex = Math.round((viewport.scrollLeft / maxScroll) * (stageGroups.length - 1))
+    setActiveGroup(Math.min(stageGroups.length - 1, Math.max(0, nextIndex)))
   }
 
   return (
     <section className="visual-atlas" id="experiment-visual-atlas">
       <header className="visual-atlas__header">
-        <h2>{language === 'zh' ? '交互实验图谱' : 'Interactive experimental plate atlas'}</h2>
-        <p>{language === 'zh'
-          ? '八张图版把真实设备、内部结构与操作顺序连接到同一学习路径。点击图中区域，查看它控制的物理过程、可观察信号与理解边界。'
-          : 'Eight plates connect real apparatus, internal structure and operating sequence in one learning path. Select a region to inspect its physical role, observable signal and scope.'}</p>
+        <h2>{text.title}</h2>
+        <p>{text.introduction}</p>
       </header>
 
-      <nav className="visual-atlas__plate-rail" aria-label={language === 'zh' ? '实验图版选择' : 'Experimental plate selection'}>
-        {atlasPlates.map((item) => (
+      <div className="visual-atlas__toolbar">
+        <nav className="visual-atlas__stage-nav" aria-label={text.stageNavigation}>
+          {stageGroups.map((group, index) => (
+            <button
+              key={group.range}
+              type="button"
+              aria-label={`${text.openPrefix} ${group.range.replace('–', ' to ')}: ${group[language]}`}
+              aria-pressed={activeGroup === index}
+              onClick={() => moveToGroup(index)}
+            >
+              <span>{group.range}</span>
+              <b>{group[language]}</b>
+            </button>
+          ))}
+        </nav>
+
+        <div className="visual-atlas__step-controls">
           <button
             type="button"
-            key={item.id}
-            aria-label={`${language === 'zh' ? '打开图版' : 'Open plate'} ${item.title[language]}`}
-            aria-pressed={item.id === plate.id}
-            onClick={() => selectPlate(item)}
+            aria-label={text.previous}
+            title={text.previous}
+            disabled={activeGroup === 0}
+            onClick={() => moveToGroup(activeGroup - 1)}
           >
-            <span>{item.number}</span>
-            <b>{item.shortTitle[language]}</b>
+            <ChevronLeft aria-hidden="true" />
           </button>
-        ))}
-      </nav>
-
-      <div className="visual-atlas__workspace">
-        <figure>
-          <ImageStage
-            plate={plate}
-            selectedId={selected.id}
-            annotationVisible={annotationVisible}
-            language={language}
-            onSelect={selectHotspot}
-            onClear={() => setAnnotationVisible(false)}
-          />
           <button
             type="button"
-            className="visual-atlas__expand"
-            aria-label={language === 'zh' ? '全屏查看当前图版' : 'View current plate fullscreen'}
-            title={language === 'zh' ? '全屏查看' : 'View fullscreen'}
-            onClick={() => setFullOpen(true)}
+            aria-label={text.next}
+            title={text.next}
+            disabled={activeGroup === stageGroups.length - 1}
+            onClick={() => moveToGroup(activeGroup + 1)}
           >
-            <Maximize2 aria-hidden="true" />
+            <ChevronRight aria-hidden="true" />
           </button>
-          {annotationVisible ? <div
-            className="visual-atlas__mobile-lens"
-            data-testid="atlas-mobile-lens"
-            data-focus-x={selected.x}
-            data-focus-y={selected.y}
-            role="img"
-            aria-label={`${language === 'zh' ? '选中区域放大' : 'Selected-region magnification'}: ${selected.label[language]}`}
-            style={{
-              backgroundImage: `url(${plate.image})`,
-              backgroundPosition: `${lensAxisPosition(selected.x)} ${lensAxisPosition(selected.y)}`,
-              color: plate.accent,
-              aspectRatio: plate.aspectRatio ?? '1672 / 941',
-            }}
-          >
-            <span>{selected.index}</span>
-            <b>{selected.label[language]}</b>
-          </div> : null}
-          <figcaption>{plate.caption[language]}</figcaption>
-        </figure>
-
-        <aside className="visual-atlas__inspector" aria-live="polite">
-          <div className="visual-atlas__scope"><span>{plate.number}</span><small>{plate.scope[language]}</small></div>
-          <h3>{selected.label[language]}</h3>
-          <p className="visual-atlas__summary"><WikiText text={selected.summary[language]} language={language} /></p>
-          <dl>
-            <div><dt>{language === 'zh' ? '操作' : 'Action'}</dt><dd><WikiText text={selected.action[language]} language={language} /></dd></div>
-            <div><dt>{language === 'zh' ? '学习线索' : 'Learning clue'}</dt><dd><WikiText text={selected.record[language]} language={language} /></dd></div>
-            <div><dt>{language === 'zh' ? '边界' : 'Boundary'}</dt><dd><WikiText text={selected.boundary[language]} language={language} /></dd></div>
-          </dl>
-          <div className="visual-atlas__hotspot-list">
-            {plate.hotspots.map((hotspot) => (
-              <button
-                type="button"
-                key={hotspot.id}
-                aria-label={`${language === 'zh' ? '定位' : 'Locate'} ${hotspot.label[language]}`}
-                aria-pressed={annotationVisible && hotspot.id === selected.id}
-                onClick={() => selectHotspot(hotspot.id)}
-              >
-                <span>{hotspot.index}</span>{hotspot.label[language]}
-              </button>
-            ))}
-          </div>
-        </aside>
+        </div>
       </div>
 
-      {fullOpen && (
-        <div className="visual-atlas__lightbox" role="dialog" aria-modal="true" aria-label={language === 'zh' ? '实验图版全屏视图' : 'Experimental plate fullscreen view'}>
-          <button type="button" aria-label={language === 'zh' ? '关闭全屏图版' : 'Close fullscreen plate'} onClick={() => setFullOpen(false)}><X aria-hidden="true" /></button>
-          <div className="visual-atlas__lightbox-stage">
-            <ImageStage
-              plate={plate}
-              selectedId={selected.id}
-              annotationVisible={annotationVisible}
-              language={language}
-              onSelect={selectHotspot}
-              onClear={() => setAnnotationVisible(false)}
-            />
-          </div>
+      <figure className="visual-atlas__figure">
+        <div
+          ref={viewportRef}
+          className="visual-atlas__viewport"
+          data-testid="apparatus-scroll-viewport"
+          role="region"
+          aria-label={text.viewportLabel}
+          tabIndex={0}
+          onScroll={trackVisibleGroup}
+        >
+          <img src={apparatusImage} alt={text.imageAlt} width="2172" height="724" loading="lazy" draggable="false" />
         </div>
-      )}
+        <figcaption>
+          {text.captionLead}{' '}
+          <a href="https://arxiv.org/abs/2506.15633" target="_blank" rel="noreferrer">Li et al. (2025)</a>
+          {text.captionBridge}{' '}
+          <a href="https://doi.org/10.1038/s41586-023-06438-1" target="_blank" rel="noreferrer">Ma et al. (2023)</a>
+          {text.captionTail}
+        </figcaption>
+      </figure>
     </section>
   )
 }

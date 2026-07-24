@@ -5,33 +5,33 @@
   <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#14211d"/></marker><style>
     text { font-family: Inter, "Noto Sans", Arial, sans-serif; letter-spacing: 0; }
     .title { font-size: 27px; font-weight: 700; } .subtitle { font-size: 17px; }
-    .body { font-size: 17px; } .small { font-size: 15px; } .micro { font-size: 13px; } .stage { font-size: 10px; }
+    .body { font-size: 17px; } .small { font-size: 15px; } .micro { font-size: 13px; } .stage { font-size: 10px; } .param { font-size: 11px; }
   </style></defs>
   <rect width="760" height="760" fill="#ffffff"/>
   <text x="22" y="28" class="stage" fill="#d84c2f" font-weight="700">STATE PREPARATION DOMAIN</text>
   <text x="22" y="58" class="title">Prepare ³P₀, transport, and hand off</text>
   <text x="738" y="56" class="small" text-anchor="end" fill="#56635f" font-weight="700">03 / 05</text>
-  <rect x="20" y="82" width="136" height="34" rx="3" fill="#edf1ef" stroke="none"/><text x="88" y="104" class="stage" text-anchor="middle" fill="#56635f" font-weight="700">RESERVOIR / LOAD</text>
-<rect x="164" y="82" width="136" height="34" rx="3" fill="#edf1ef" stroke="none"/><text x="232" y="104" class="stage" text-anchor="middle" fill="#56635f" font-weight="700">QUALIFY / COOL</text>
-<rect x="308" y="82" width="136" height="34" rx="3" fill="#14211d" stroke="none"/><text x="376" y="104" class="stage" text-anchor="middle" fill="#ffffff" font-weight="700">PREPARE / HANDOFF</text>
-<rect x="452" y="82" width="136" height="34" rx="3" fill="#edf1ef" stroke="none"/><text x="520" y="104" class="stage" text-anchor="middle" fill="#56635f" font-weight="700">COMPUTE</text>
-<rect x="596" y="82" width="136" height="34" rx="3" fill="#edf1ef" stroke="none"/><text x="664" y="104" class="stage" text-anchor="middle" fill="#56635f" font-weight="700">READOUT / FEEDBACK</text>
-  <rect x="176" y="132" width="250" height="42" rx="3" fill="#eaf3ef" stroke="none"/><text x="301" y="151" class="small" text-anchor="middle" font-weight="700">prepare ³P₀ 0.7 ms</text><text x="301" y="168" class="micro" text-anchor="middle" fill="#56635f">two distinct optical stages</text>
-<rect x="434" y="132" width="142" height="42" rx="3" fill="#eef3fb" stroke="none"/><text x="505" y="151" class="small" text-anchor="middle" font-weight="700">transport</text><text x="505" y="168" class="micro" text-anchor="middle" fill="#56635f">move 0.5 ms</text>
-<rect x="584" y="132" width="148" height="42" rx="3" fill="#f5f1fb" stroke="none"/><text x="658" y="151" class="small" text-anchor="middle" font-weight="700">handoff</text><text x="658" y="168" class="micro" text-anchor="middle" fill="#56635f">mobile → stationary</text>
+  <rect x="20" y="78" width="712" height="62" rx="3" fill="#f3f7f5" stroke="#c9d5d0"/>
+  <text x="32" y="98" class="stage" fill="#176f4e" font-weight="700">REPORTED OPERATING POINT</text>
+  <text x="176" y="116" class="param" fill="#263732">local 556 + 1539 nm Raman: Δ=10 MHz; Ω₅₅₆/2π=3.6 MHz; Ω₁₅₃₉/2π=2.8 MHz</text>
+  <text x="176" y="134" class="param" fill="#263732">1.8 µs period; 50% duty; 900 ns trap-off; 50 cycles per optical stage</text>
+  <rect x="176" y="150" width="250" height="42" rx="3" fill="#eaf3ef" stroke="none"/><text x="301" y="169" class="small" text-anchor="middle" font-weight="700">prepare ³P₀ 0.7 ms</text><text x="301" y="186" class="micro" text-anchor="middle" fill="#56635f">two sequential optical stages</text>
+<rect x="434" y="150" width="142" height="42" rx="3" fill="#eef3fb" stroke="none"/><text x="505" y="169" class="small" text-anchor="middle" font-weight="700">transport</text><text x="505" y="186" class="micro" text-anchor="middle" fill="#56635f">≈280 µm in 0.5 ms</text>
+<rect x="584" y="150" width="148" height="42" rx="3" fill="#f5f1fb" stroke="none"/><text x="658" y="169" class="small" text-anchor="middle" font-weight="700">handoff</text><text x="658" y="186" class="micro" text-anchor="middle" fill="#56635f">mobile → stationary</text>
   <text x="22" y="232" class="body" font-weight="650">trap intensity</text><line x1="176" y1="236" x2="732" y2="236" stroke="#c9d1ce" stroke-width="1"/><rect x="184" y="219" width="116" height="26" rx="4" fill="#fff" stroke="#77827f" stroke-width="2" stroke-dasharray="6 5"/><text x="242" y="237" class="micro" text-anchor="middle" fill="#77827f" font-weight="700">off 900 ns</text>
 <rect x="308" y="219" width="116" height="26" rx="4" fill="#fff" stroke="#77827f" stroke-width="2" stroke-dasharray="6 5"/><text x="366" y="237" class="micro" text-anchor="middle" fill="#77827f" font-weight="700">off 900 ns</text>
 <rect x="434" y="219" width="290" height="26" rx="4" fill="#6845c6" stroke="none"/><text x="579" y="237" class="micro" text-anchor="middle" fill="#fff" font-weight="700">ON — transport / handoff</text>
 <text x="22" y="290" class="body" font-weight="650">global σ+ 556 nm</text><line x1="176" y1="294" x2="732" y2="294" stroke="#c9d1ce" stroke-width="1"/><rect x="184" y="277" width="116" height="26" rx="4" fill="#176f4e" stroke="none"/><text x="242" y="295" class="micro" text-anchor="middle" fill="#fff" font-weight="700">pump ¹S₀ spin</text>
-<text x="22" y="348" class="body" font-weight="650">local 556 + 1539 nm</text><line x1="176" y1="352" x2="732" y2="352" stroke="#c9d1ce" stroke-width="1"/><rect x="308" y="335" width="116" height="26" rx="4" fill="#9c7415" stroke="none"/><text x="366" y="353" class="micro" text-anchor="middle" fill="#fff" font-weight="700">pump to ³P₀</text>
+<text x="22" y="348" class="body" font-weight="650">local 556 + 1539 nm</text><line x1="176" y1="352" x2="732" y2="352" stroke="#c9d1ce" stroke-width="1"/><rect x="308" y="335" width="116" height="26" rx="4" fill="#9c7415" stroke="none"/><text x="366" y="353" class="micro" text-anchor="middle" fill="#fff" font-weight="700">pump ³P₀</text>
 <text x="22" y="406" class="body" font-weight="650">microcycle count</text><line x1="176" y1="410" x2="732" y2="410" stroke="#c9d1ce" stroke-width="1"/><rect x="184" y="393" width="116" height="26" rx="4" fill="#14211d" stroke="none"/><text x="242" y="411" class="micro" text-anchor="middle" fill="#fff" font-weight="700">×50 each stage</text>
 <rect x="308" y="393" width="116" height="26" rx="4" fill="#14211d" stroke="none"/><text x="366" y="411" class="micro" text-anchor="middle" fill="#fff" font-weight="700">×50 each stage</text>
 <text x="22" y="464" class="body" font-weight="650">mobile position</text><line x1="176" y1="468" x2="732" y2="468" stroke="#c9d1ce" stroke-width="1"/><rect x="434" y="451" width="142" height="26" rx="4" fill="#2864c7" stroke="none"/><text x="505" y="469" class="micro" text-anchor="middle" fill="#fff" font-weight="700">move 0.5 ms</text>
 <rect x="584" y="451" width="140" height="26" rx="4" fill="#6845c6" stroke="none"/><text x="654" y="469" class="micro" text-anchor="middle" fill="#fff" font-weight="700">overlap / ramp</text>
-<text x="22" y="522" class="body" font-weight="650">stationary trap</text><line x1="176" y1="526" x2="732" y2="526" stroke="#c9d1ce" stroke-width="1"/><rect x="584" y="509" width="140" height="26" rx="4" fill="#14211d" stroke="none"/><text x="654" y="527" class="micro" text-anchor="middle" fill="#fff" font-weight="700">capture prepared atom</text>
+<text x="22" y="522" class="body" font-weight="650">stationary trap</text><line x1="176" y1="526" x2="732" y2="526" stroke="#c9d1ce" stroke-width="1"/><rect x="584" y="509" width="140" height="26" rx="4" fill="#14211d" stroke="none"/><text x="654" y="527" class="micro" text-anchor="middle" fill="#fff" font-weight="700">capture / handoff</text>
   <line x1="20" y1="574" x2="740" y2="574" stroke="#14211d" stroke-width="1.5"/>
   <text x="22" y="608" class="body">Stage 1 polarizes ¹S₀ nuclear spin; stage 2 transfers selected sites through ³D₁ to ³P₀.</text>
 <text x="22" y="633" class="body">Each optical step occupies its own 900 ns trap-off window; the stages are not simultaneous.</text>
 <text x="22" y="658" class="body">The handoff completes only after the stationary-site identity is written to the controller.</text>
+<text x="22" y="683" class="micro" fill="#56635f">Li et al. report the 556/1539 nm Rabi frequencies; individual beam powers are not reported.</text>
   <text x="22" y="735" class="micro" fill="#56635f">Li et al. (2025), preparation and transport sequence.</text>
 </svg>
