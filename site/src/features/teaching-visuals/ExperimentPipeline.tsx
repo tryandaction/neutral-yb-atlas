@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
+import apparatusImage from '../../assets/teaching-generated/yb-reloadable-apparatus.png'
 import type { Language } from '../../types/content'
 import Equation from '../article/Equation'
 import WikiText from '../wiki/WikiText'
@@ -107,9 +108,35 @@ const stages: Stage[] = [
   },
 ]
 
+const apparatusScrollRatio: Record<Stage['id'], number> = {
+  source: 0,
+  cooling: 0.28,
+  tweezers: 0.7,
+  rearrange: 0.86,
+  qubit: 0.92,
+  rydberg: 0.97,
+  measure: 1,
+}
+
 export default function ExperimentPipeline({ language }: { language: Language }) {
+  const viewportRef = useRef<HTMLDivElement>(null)
   const [selectedId, setSelectedId] = useState('source')
   const selected = stages.find((stage) => stage.id === selectedId) ?? stages[0]
+
+  const selectStage = (stageId: Stage['id']) => {
+    setSelectedId(stageId)
+
+    const viewport = viewportRef.current
+    if (!viewport) return
+
+    const maxScroll = Math.max(0, viewport.scrollWidth - viewport.clientWidth)
+    const left = maxScroll * apparatusScrollRatio[stageId]
+    if (typeof viewport.scrollTo === 'function') {
+      viewport.scrollTo({ behavior: 'smooth', left })
+    } else {
+      viewport.scrollLeft = left
+    }
+  }
 
   return (
     <section className="teaching-visual experiment-pipeline" id="experiment-pipeline-tutor">
@@ -118,33 +145,45 @@ export default function ExperimentPipeline({ language }: { language: Language })
         <p>{language === 'zh' ? '按原子真正经历的顺序阅读：每一步说明初态怎样被装置改变、怎样检验，以及它为下一步准备了什么。' : 'Read in the order experienced by the atom: each step shows how apparatus changes the initial state, how that change is tested and what it prepares next.'}</p>
       </header>
 
-      <figure className="apparatus-schematic">
-        <svg viewBox="0 0 1120 190" role="img" aria-labelledby="apparatus-title apparatus-desc">
-          <title id="apparatus-title">{language === 'zh' ? '中性 Yb 原子实验装置链' : 'Neutral-Yb apparatus chain'}</title>
-          <desc id="apparatus-desc">{language === 'zh' ? '原子炉、真空束流、MOT、光镊阵列、Rydberg 激发、成像和实时控制。' : 'Oven, vacuum beam, MOT, tweezer array, Rydberg excitation, imaging and real-time control.'}</desc>
-          <defs><marker id="apparatus-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" /></marker></defs>
-          <path d="M92 96 H1018" className="apparatus-schematic__vacuum" markerEnd="url(#apparatus-arrow)" />
-          <g className={selected.id === 'source' ? 'is-active' : ''}><path d="M34 70 H94 V122 H34 Z" /><path d="M44 62 H84" /><circle cx="104" cy="90" r="3" /><circle cx="115" cy="96" r="3" /><circle cx="126" cy="90" r="3" /><text x="28" y="152">{language === 'zh' ? '原子炉' : 'oven'}</text></g>
-          <g className={selected.id === 'cooling' ? 'is-active' : ''}><circle cx="238" cy="96" r="50" /><path d="M168 96 H308 M238 28 V164" className="apparatus-schematic__beam" /><text x="211" y="101">MOT</text><text x="188" y="174">399 / 556 nm</text></g>
-          <g className={selected.id === 'tweezers' || selected.id === 'rearrange' ? 'is-active' : ''}><path d="M392 54 L430 96 L392 138" /><circle cx="468" cy="78" r="5" /><circle cx="488" cy="78" r="5" /><circle cx="508" cy="78" r="5" /><circle cx="468" cy="102" r="5" /><circle cx="488" cy="102" r="5" /><circle cx="508" cy="102" r="5" /><text x="374" y="174">{language === 'zh' ? '高 NA 物镜 / 光镊阵列' : 'high-NA / tweezer array'}</text></g>
-          <g className={selected.id === 'qubit' ? 'is-active' : ''}><path d="M584 30 V78 M568 54 H600" className="apparatus-schematic__clock" /><text x="548" y="174">578 nm / RF</text></g>
-          <g className={selected.id === 'rydberg' ? 'is-active' : ''}><path d="M666 30 L696 78 M726 30 L696 78" className="apparatus-schematic__rydberg" /><text x="652" y="174">≈302 nm</text></g>
-          <g className={selected.id === 'measure' ? 'is-active' : ''}><path d="M790 58 H864 V132 H790 Z" /><circle cx="827" cy="95" r="20" /><path d="M864 96 H918" /><text x="785" y="174">{language === 'zh' ? '相机 / 分类' : 'camera / classify'}</text></g>
-          <g className={selected.id === 'measure' ? 'is-active' : ''}><rect x="936" y="60" width="130" height="72" /><path d="M950 80 H1050 M950 96 H1025 M950 112 H1040" /><text x="947" y="174">FPGA / AWG / QEC</text></g>
-          <text x="124" y="66" className="apparatus-schematic__label">UHV atomic beam</text><text x="742" y="66" className="apparatus-schematic__label">state-dependent control</text>
-        </svg>
-        <figcaption>{language === 'zh' ? '装置关系示意：光束、真空和控制链的位置不按实际实验台比例。选择下方阶段可高亮相应子系统。' : 'Apparatus relationship schematic; beams, vacuum and controls are not drawn to bench scale. Select a phase below to highlight its subsystem.'}</figcaption>
+      <figure className="pipeline-apparatus">
+        <div
+          ref={viewportRef}
+          className="pipeline-apparatus__viewport"
+          data-testid="pipeline-apparatus-viewport"
+          role="region"
+          aria-label={language === 'zh' ? '171Yb 实验装置全流程横向图' : 'Complete horizontal view of the 171Yb experimental apparatus'}
+          tabIndex={0}
+        >
+          <img
+            src={apparatusImage}
+            alt={language === 'zh' ? '从原子源到可持续补充计算阵列的完整 171Yb 实验装置链' : 'Complete 171Yb apparatus path from atomic source to a reloadable computation array'}
+            width="2172"
+            height="724"
+            loading="eager"
+            draggable="false"
+          />
+        </div>
+        <figcaption>
+          <span>{language === 'zh' ? '选择下方阶段，主图将定位到对应装置，并同步更新状态变化、操作顺序与验收方法。' : 'Select a stage below to position the apparatus view and update the state change, operating sequence and acceptance checks.'}</span>
+          <span>
+            {language === 'zh' ? '装载、冷却、输运与连续补充参数来自 ' : 'Loading, cooling, transport and replacement parameters follow '}
+            <a href="https://arxiv.org/abs/2506.15633" target="_blank" rel="noreferrer">Li et al. (2025)</a>
+            {language === 'zh' ? '；亚稳态量子比特 Rydberg 门接口来自 ' : '; the metastable-qubit Rydberg gate interface follows '}
+            <a href="https://doi.org/10.1038/s41586-023-06438-1" target="_blank" rel="noreferrer">Ma et al. (2023)</a>
+            {language === 'zh' ? '。图中重排是处理器级扩展，不代表 Li 等人的装置已经演示该结果。' : '. Rearrangement is shown as a processor-level extension, not as a demonstrated result of the Li et al. apparatus.'}
+          </span>
+        </figcaption>
       </figure>
 
       <div className="pipeline-track" role="list" aria-label={language === 'zh' ? '实验流程阶段' : 'Experimental pipeline stages'}>
         {stages.map((stage, index) => (
-          <button key={stage.id} type="button" aria-pressed={selected.id === stage.id} onClick={() => setSelectedId(stage.id)}>
+          <button key={stage.id} type="button" aria-pressed={selected.id === stage.id} aria-controls="pipeline-stage-detail" onClick={() => selectStage(stage.id)}>
             <span>{String(index + 1).padStart(2, '0')}</span><strong>{stage.short[language]}</strong><i aria-hidden="true" />
           </button>
         ))}
       </div>
 
-      <article className="teaching-card pipeline-card" aria-live="polite">
+      <article className="teaching-card pipeline-card" id="pipeline-stage-detail" aria-live="polite">
         <div className="pipeline-card__summary"><span>{language === 'zh' ? '原子状态路径' : 'ATOMIC STATE PATH'}</span><h3>{selected.title[language]}</h3><p><WikiText text={selected.objective[language]} language={language} /></p></div>
         <div className="pipeline-card__execution">
           <Equation source={selected.equation} />

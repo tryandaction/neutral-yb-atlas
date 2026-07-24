@@ -457,7 +457,7 @@
   background: #edf2ef;
 }
 
-.apparatus-schematic {
+.pipeline-apparatus {
   max-width: var(--max-width);
   margin: 0 auto 28px;
   border-top: 1px solid var(--ink);
@@ -465,52 +465,44 @@
   background: var(--white);
 }
 
-.apparatus-schematic svg {
+.pipeline-apparatus__viewport {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-gutter: stable;
+  scrollbar-color: var(--forest) #e7ecea;
+  overscroll-behavior-inline: contain;
+}
+
+.pipeline-apparatus__viewport:focus-visible {
+  outline: 2px solid var(--forest);
+  outline-offset: 3px;
+}
+
+.pipeline-apparatus__viewport img {
   display: block;
   width: 100%;
-  aspect-ratio: 1120 / 190;
+  min-width: 2172px;
+  height: auto;
+  user-select: none;
 }
 
-.apparatus-schematic figcaption {
+.pipeline-apparatus figcaption {
+  display: grid;
+  gap: 8px;
   padding: 9px 13px 11px;
   border-top: 1px solid var(--line);
-  color: var(--faint);
+  color: var(--muted);
   font-size: 11px;
+  line-height: 1.55;
 }
 
-.apparatus-schematic svg g {
-  fill: none;
-  stroke: var(--line-strong);
-  stroke-width: 2;
-  transition: stroke 160ms ease, stroke-width 160ms ease;
-}
-
-.apparatus-schematic svg g.is-active {
-  stroke: var(--vermilion);
-  stroke-width: 3;
-}
-
-.apparatus-schematic svg text {
-  fill: var(--muted);
-  stroke: none;
-  font: 11px var(--font-sans);
-}
-
-.apparatus-schematic svg g.is-active text {
-  fill: var(--ink);
+.pipeline-apparatus figcaption a {
+  color: var(--forest);
   font-weight: 700;
+  text-decoration-color: color-mix(in srgb, var(--forest) 45%, transparent);
+  text-underline-offset: 3px;
 }
-
-.apparatus-schematic__vacuum {
-  fill: none;
-  stroke: var(--line-strong);
-  stroke-width: 2;
-}
-
-.apparatus-schematic__beam { stroke: var(--blue); }
-.apparatus-schematic__clock { stroke: var(--vermilion); }
-.apparatus-schematic__rydberg { stroke: var(--violet); }
-.apparatus-schematic__label { fill: var(--faint); font-size: 10px; }
 
 /* Gate state tutor */
 .gate-tutor {
@@ -1041,7 +1033,6 @@
 
   .principles-tree__map,
   .principles-lenses,
-  .pipeline-track,
   .transition-list,
   .ecosystem-map__nodes {
     grid-template-columns: 1fr;
@@ -1116,20 +1107,29 @@
     border-right: 0;
   }
 
-  .pipeline-track button {
-    min-height: 80px;
-    border-right: 0;
+  .pipeline-track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-color: var(--forest) #e7ecea;
+    overscroll-behavior-inline: contain;
   }
 
-  .apparatus-schematic {
+  .pipeline-track button {
+    flex: 0 0 154px;
+    min-height: 80px;
+    border-right: 1px solid var(--line-strong);
+    border-bottom: 0;
+    scroll-snap-align: start;
+  }
+
+  .pipeline-apparatus {
     margin-right: -20px;
     margin-left: -20px;
-    overflow: hidden;
   }
 
-  .apparatus-schematic svg {
-    width: 190%;
-    max-width: none;
+  .pipeline-apparatus__viewport img {
+    min-width: 2172px;
   }
 
   .gate-step-list {
@@ -1153,9 +1153,9 @@
   }
 
   .pipeline-track button > i {
-    right: 20px;
-    bottom: -5px;
-    transform: rotate(135deg);
+    right: -5px;
+    bottom: 17px;
+    transform: rotate(45deg);
   }
 
   .teaching-card dl > div,

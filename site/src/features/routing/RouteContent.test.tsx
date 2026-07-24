@@ -17,14 +17,16 @@ it('keeps the experimental route focused on teaching visuals without an acceptan
   renderRoute('experiment')
 
   expect(document.getElementById('experiment-cycle-timeline')).toBeInTheDocument()
-  expect(document.getElementById('experiment-visual-atlas')).toBeInTheDocument()
+  expect(document.querySelector('.pipeline-apparatus')).toBeInTheDocument()
+  expect(document.querySelectorAll('img[alt*="171Yb"]').length).toBe(1)
   expect(document.querySelector('.experiment-workbench')).not.toBeInTheDocument()
 })
 
-it('names the final experimental section as an apparatus path rather than a plate atlas', () => {
+it('keeps the experimental outline focused on the integrated apparatus path', () => {
   renderRoute('experiment')
 
-  expect(screen.getByText('Yb apparatus path')).toBeInTheDocument()
+  expect(screen.getByText('How apparatus changes atomic states')).toBeInTheDocument()
+  expect(screen.queryByText('Yb apparatus path')).not.toBeInTheDocument()
   expect(screen.queryByText('Experimental plate atlas')).not.toBeInTheDocument()
 })
 

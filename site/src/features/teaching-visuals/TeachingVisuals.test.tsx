@@ -58,6 +58,29 @@ it('steps through the full apparatus pipeline and exposes acceptance evidence', 
   expect(screen.getByText(/移动后立即复核成像与温度/)).toBeInTheDocument()
 })
 
+it('uses the complete experimental apparatus image as the pipeline visual', () => {
+  render(<ExperimentPipeline language="en" />)
+
+  expect(screen.getByAltText('Complete 171Yb apparatus path from atomic source to a reloadable computation array')).toBeInTheDocument()
+  expect(document.querySelector('.apparatus-schematic')).not.toBeInTheDocument()
+})
+
+it('positions the apparatus image and explanation together when a stage is selected', async () => {
+  const user = userEvent.setup()
+  render(<ExperimentPipeline language="en" />)
+
+  const viewport = screen.getByTestId('pipeline-apparatus-viewport')
+  Object.defineProperty(viewport, 'scrollWidth', { configurable: true, value: 2400 })
+  Object.defineProperty(viewport, 'clientWidth', { configurable: true, value: 800 })
+  const scrollTo = vi.fn()
+  viewport.scrollTo = scrollTo
+
+  await user.click(screen.getByRole('button', { name: /Rydberg gate/ }))
+
+  expect(scrollTo).toHaveBeenCalledWith(expect.objectContaining({ behavior: 'smooth', left: expect.any(Number) }))
+  expect(screen.getByRole('heading', { name: 'Rydberg spectroscopy, blockade and entangling gates' })).toBeInTheDocument()
+})
+
 it('maps research domains to concrete handoff artifacts', async () => {
   const user = userEvent.setup()
   render(<ResearchEcosystem language="zh" />)
