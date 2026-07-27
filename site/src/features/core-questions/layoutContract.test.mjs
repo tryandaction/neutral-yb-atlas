@@ -6,7 +6,7 @@ const css = readFileSync('src/features/core-questions/coreQuestions.css', 'utf8'
 describe('core question map layout contracts', () => {
   it('uses a direct four-stage causal rail without reserving columns for arrows', () => {
     expect(css).toMatch(/\.computation-rail\s*\{[\s\S]*?grid-template-columns:\s*repeat\(4,\s*minmax\(0,\s*1fr\)\);/)
-    expect(css).toMatch(/\.computation-rail > li:not\(:last-child\)::after\s*\{[\s\S]*?right:\s*-26px;/)
+    expect(css).toMatch(/\.computation-rail > li:not\(:last-child\)::after\s*\{[\s\S]*?right:\s*-16px;/)
     expect(css).not.toMatch(/\.computation-path\s*\{[\s\S]*?28px/)
   })
 

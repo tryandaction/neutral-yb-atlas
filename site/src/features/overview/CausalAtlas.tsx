@@ -10,79 +10,68 @@ interface CausalStage {
   number: string
   title: LocalizedText
   equation: string
-  physical: LocalizedText
-  evidence: LocalizedText
+  description: LocalizedText
 }
 
 const stages: CausalStage[] = [
   {
-    id: 'logical-object',
+    id: 'specification',
     number: '01',
-    title: { zh: '逻辑对象', en: 'Logical object' },
+    title: { zh: '先定义要计算什么', en: 'Define the computation' },
     equation: String.raw`(\rho_L,\,U_L,\,\{E_m\})`,
-    physical: { zh: '输入态、目标变换、可区分输出', en: 'Input state, target transformation, distinguishable outputs' },
-    evidence: { zh: '正确性判据', en: 'Correctness criterion' },
+    description: {
+      zh: '给出输入态、目标变换和判定结果是否正确的条件。',
+      en: 'State the input, target transformation, and condition for a correct result.',
+    },
   },
   {
-    id: 'encoding',
+    id: 'atomic-dynamics',
     number: '02',
-    title: { zh: '编码到原子子空间', en: 'Encode into an atomic subspace' },
-    equation: String.raw`\rho_0=V\rho_LV^\dagger`,
-    physical: { zh: '逻辑空间嵌入选定原子能级', en: 'Logical space embedded in selected atomic levels' },
-    evidence: { zh: '制备误差、泄漏', en: 'Preparation error, leakage' },
-  },
-  {
-    id: 'dynamics',
-    number: '03',
-    title: { zh: '哈密顿量生成演化', en: 'Hamiltonian-generated evolution' },
+    title: { zh: '把目标写成原子演化', en: 'Realize it with atomic dynamics' },
     equation: String.raw`i\hbar\,\partial_t|\psi(t)\rangle=H[u(t)]|\psi(t)\rangle`,
-    physical: { zh: '振幅、相位和失谐确定 U(T)', en: 'Amplitude, phase and detuning determine U(T)' },
-    evidence: { zh: '过程矩阵、泄漏', en: 'Process matrix, leakage' },
+    description: {
+      zh: '选定原子计算子空间，再用控制场构造 H[u(t)]，使 U(T) 接近目标门。',
+      en: 'Choose an atomic subspace, then shape H[u(t)] so that U(T) approaches the target gate.',
+    },
   },
   {
-    id: 'channel',
-    number: '04',
-    title: { zh: '物理量子通道', en: 'Physical quantum channel' },
-    equation: String.raw`\mathcal E_{\mathrm{phys}}:\rho_0\mapsto\rho_T`,
-    physical: { zh: '相干控制 + 耗散 + 泄漏 + 损失', en: 'Coherent control + dissipation + leakage + loss' },
-    evidence: { zh: '通道保真度、故障相关性', en: 'Channel fidelity, fault correlations' },
-  },
-  {
-    id: 'record',
-    number: '05',
-    title: { zh: '量子态变成经典记录', en: 'Quantum state to classical record' },
+    id: 'measurement',
+    number: '03',
+    title: { zh: '把量子态变成记录', en: 'Turn the state into a record' },
     equation: String.raw`p(m)=\operatorname{Tr}(E_m\rho_T)`,
-    physical: { zh: 'POVM 生成经典记录分布', en: 'POVM generates the classical record distribution' },
-    evidence: { zh: '混淆矩阵、SPAM、擦除标记', en: 'Confusion matrix, SPAM, erasure flags' },
+    description: {
+      zh: '测量算符将末态映射为经典结果 m；误判、泄漏和擦除都必须进入记录。',
+      en: 'Measurement maps the final state to a classical outcome m; misclassification, leakage, and erasure belong in that record.',
+    },
   },
   {
     id: 'logical-result',
-    number: '06',
-    title: { zh: '可信逻辑结果', en: 'Trustworthy logical result' },
-    equation: String.raw`G_Lp_L(d)\leq\varepsilon_{\mathrm{task}}`,
-    physical: { zh: '译码与恢复得到逻辑通道', en: 'Decoding and recovery produce the logical channel' },
-    evidence: { zh: 'pL、成功率、结果成本', en: 'pL, success probability, result cost' },
+    number: '04',
+    title: { zh: '用纠错得到可信结果', en: 'Protect the result with correction' },
+    equation: String.raw`G_L\,p_L(d)\leq\varepsilon_{\mathrm{task}}`,
+    description: {
+      zh: '综合征和擦除记录进入译码器；任务规模 G_L 反推所需逻辑错误率 p_L(d)。',
+      en: 'Syndrome and erasure records enter a decoder; task size G_L sets the required logical error rate p_L(d).',
+    },
   },
 ]
-
-const feedbackEquation = String.raw`(s_{1:T},f_{1:T})\xrightarrow{\ D\ }\widehat e\xrightarrow{\ \mathcal R_{\widehat e}\ }\mathcal N_L`
 
 export default function CausalAtlas({ language }: CausalAtlasProps) {
   return (
     <section id="causal-atlas" className="causal-map" aria-labelledby="causal-map-title">
       <header className="causal-map__intro">
-        <span>{language === 'zh' ? '计算 · 物理 · 验收' : 'COMPUTATION · PHYSICS · ACCEPTANCE'}</span>
+        <span>{language === 'zh' ? '计算如何落到物理上' : 'From computation to physics'}</span>
         <h2 id="causal-map-title">
-          {language === 'zh' ? '从逻辑对象到可信结果' : 'From logical objects to trustworthy results'}
+          {language === 'zh' ? '四步看清可验证的量子计算' : 'Four steps to a verifiable quantum computation'}
         </h2>
         <p>
           {language === 'zh'
-            ? '数学对象经编码与哈密顿量演化，穿过实际噪声通道和测量，最终接受任务级检验。'
-            : 'A mathematical object is encoded, evolved by a Hamiltonian, passed through the physical channel and accepted at task level.'}
+            ? '每一步都回答一个不可省略的问题：目标是什么、原子如何实现、结果如何读取、错误如何被压到逻辑层。'
+            : 'Each step answers one indispensable question: what is the target, how do atoms realize it, how is it read out, and how are errors suppressed logically?'}
         </p>
       </header>
 
-      <ol className="causal-map__flow" aria-label={language === 'zh' ? '计算到可信结果的因果链' : 'Causal chain from computation to a trustworthy result'}>
+      <ol className="causal-map__flow" aria-label={language === 'zh' ? '从计算定义到逻辑结果的四步关系' : 'Four steps from a computation to a logical result'}>
         {stages.map((stage) => (
           <li key={stage.id} className={`causal-stage causal-stage--${stage.id}`} data-testid="causal-stage">
             <header>
@@ -90,21 +79,10 @@ export default function CausalAtlas({ language }: CausalAtlasProps) {
               <h3>{stage.title[language]}</h3>
             </header>
             <Equation source={stage.equation} />
-            <div className="causal-stage__outcomes">
-              <p className="causal-stage__physical"><span>{language === 'zh' ? '物理对象' : 'Physical realization'}</span>{stage.physical[language]}</p>
-              <p className="causal-stage__evidence"><span>{language === 'zh' ? '验收量' : 'Acceptance quantity'}</span>{stage.evidence[language]}</p>
-            </div>
+            <p>{stage.description[language]}</p>
           </li>
         ))}
       </ol>
-
-      <aside className="causal-map__feedback" aria-label={language === 'zh' ? '纠错反馈支路' : 'Error-correction feedback branch'}>
-        <div>
-          <span>{language === 'zh' ? '反馈支路' : 'FEEDBACK BRANCH'}</span>
-          <strong>{language === 'zh' ? '可见记录决定恢复，而不是直接暴露逻辑态' : 'Visible records determine recovery without revealing the logical state'}</strong>
-        </div>
-        <Equation source={feedbackEquation} />
-      </aside>
     </section>
   )
 }
