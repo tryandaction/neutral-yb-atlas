@@ -10,54 +10,45 @@ function renderWithWiki(node: React.ReactNode) {
   return render(<WikiProvider>{node}</WikiProvider>)
 }
 
-it('maps computation objects to mathematics, physics and acceptance', () => {
-  const { container } = renderWithWiki(<ComputationPhysicalMap language="zh" />)
+it('maps computation objects through four compact causal stages', () => {
+  const { container } = renderWithWiki(<ComputationPhysicalMap language="en" />)
 
-  expect(screen.getByRole('heading', { name: '计算怎样成为物理过程' })).toBeInTheDocument()
-  expect(screen.getByText('计算定义')).toBeInTheDocument()
-  expect(screen.getByText('数学对象')).toBeInTheDocument()
-  expect(container.querySelectorAll('.computation-physics-map .katex').length).toBeGreaterThanOrEqual(4)
+  expect(screen.getByRole('heading', { name: 'How computation becomes a physical process' })).toBeInTheDocument()
+  expect(container.querySelectorAll('.computation-rail__stage')).toHaveLength(4)
+  expect(container.querySelectorAll('.computation-rail__formula .katex')).toHaveLength(4)
+  expect(container.querySelector('.divincenzo-boundary')).toBeInTheDocument()
   expect(container.querySelector('[role="table"]')).not.toBeInTheDocument()
-  expect(screen.getByText(/DiVincenzo/)).toBeInTheDocument()
 })
 
 it('shows the two-stage decision for neutral atoms and 171Yb', () => {
-  renderWithWiki(<YbDecisionMap language="zh" />)
+  const { container } = renderWithWiki(<YbDecisionMap language="en" />)
 
-  expect(screen.getByRole('heading', { name: '为什么选择中性原子中的 ¹⁷¹Yb' })).toBeInTheDocument()
-  expect(screen.getByRole('heading', { name: '为什么是中性原子' })).toBeInTheDocument()
-  expect(screen.getByRole('heading', { name: '为什么是 ¹⁷¹Yb' })).toBeInTheDocument()
-  expect(screen.getByRole('heading', { name: '同一原子的功能分工' })).toBeInTheDocument()
-  expect(screen.getByRole('heading', { name: 'Rydberg 纠缠' })).toBeInTheDocument()
+  expect(container.querySelector('.yb-selection-tree')).toBeInTheDocument()
+  expect(container.querySelectorAll('.yb-selection-stage')).toHaveLength(2)
+  expect(container.querySelector('.yb-function-split')).toBeInTheDocument()
 })
 
 it('closes the loop from target gate to measured error channel', () => {
-  const { container } = renderWithWiki(<GateImplementationLoop language="zh" />)
+  const { container } = renderWithWiki(<GateImplementationLoop language="en" />)
 
-  expect(screen.getByRole('heading', { name: '量子门怎样从理论走到实验' })).toBeInTheDocument()
   expect(container.querySelector('.gate-control-loop')).toBeInTheDocument()
   expect(container.querySelectorAll('.gate-control-loop .katex').length).toBeGreaterThanOrEqual(6)
   expect(container.querySelector('code')).not.toBeInTheDocument()
-  expect(screen.getByRole('button', { name: '查看 Wiki：Rydberg 阻塞' })).toBeInTheDocument()
+  expect(container.querySelectorAll('.wiki-term').length).toBeGreaterThan(0)
 })
 
-it('separates engineering acceptance logic from the detailed apparatus and timing figures', () => {
-  const { container } = renderWithWiki(<ExperimentEngineeringMap language="zh" />)
+it('separates engineering closure from the detailed apparatus and timing figures', () => {
+  const { container } = renderWithWiki(<ExperimentEngineeringMap language="en" />)
 
-  expect(screen.getByText('实验系统怎样闭合为可重复周期')).toBeInTheDocument()
-  expect(screen.getByText('装置与光路')).toBeInTheDocument()
-  expect(screen.getByText('状态与运动')).toBeInTheDocument()
-  expect(screen.getByText('控制时序')).toBeInTheDocument()
-  expect(screen.getByText('原始记录与判据')).toBeInTheDocument()
-  expect(container.querySelector('.engineering-system-loop')).toBeInTheDocument()
+  expect(container.querySelector('.engineering-cycle')).toBeInTheDocument()
+  expect(container.querySelectorAll('.engineering-cycle__stage')).toHaveLength(4)
+  expect(container.querySelector('.engineering-cycle__feedback')).toBeInTheDocument()
   expect(container.querySelector('[role="table"]')).not.toBeInTheDocument()
 })
 
 it('connects physical faults to logical scale and trustworthy-result cost', () => {
-  const { container } = renderWithWiki(<FaultToleranceScaleMap language="zh" />)
+  const { container } = renderWithWiki(<FaultToleranceScaleMap language="en" />)
 
-  expect(screen.getByRole('heading', { name: '通用容错怎样转化为规模与成本' })).toBeInTheDocument()
-  expect(screen.getByText('条件示例')).toBeInTheDocument()
   expect(container.querySelector('.fault-channel-funnel')).toBeInTheDocument()
   expect(container.querySelectorAll('.fault-channel-funnel .katex').length).toBeGreaterThanOrEqual(6)
   expect(container.querySelector('code')).not.toBeInTheDocument()

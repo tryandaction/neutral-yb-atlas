@@ -172,85 +172,128 @@
   font: 700 15px/1 Arial, sans-serif;
 }
 
-/* Computation: aligned definition-to-physics paths */
+/* Computation: four direct cards, with no connector columns. */
 .computation-physics-map {
   border-top: 1px solid var(--ink);
 }
 
-.computation-physics-map__labels {
+.computation-rail {
   display: grid;
-  grid-template-columns: minmax(140px, .65fr) minmax(250px, 1.35fr) minmax(190px, 1fr) minmax(170px, .9fr);
-  gap: 28px;
-  padding: 12px 16px 11px;
-  border-bottom: 1px solid var(--ink);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 36px;
+  margin: 0;
+  padding: 14px 0 16px;
+  list-style: none;
+}
+
+.computation-rail__stage {
+  position: relative;
+  min-width: 0;
+  display: grid;
+  grid-template-rows: 70px 86px 1fr;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--forest);
+  background: var(--white);
+}
+
+.computation-rail__stage--gate { border-top-color: var(--violet); }
+.computation-rail__stage--measurement { border-top-color: #2776c7; }
+.computation-rail__stage--qec-cycle { border-top-color: var(--vermilion); }
+
+.computation-rail > li:not(:last-child)::after {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  right: -26px;
+  width: 16px;
+  height: 16px;
+  display: grid;
+  place-items: center;
+  background: transparent;
   color: var(--forest);
-  font-size: 11px;
+  content: '→';
+  font: 700 17px/1 Arial, sans-serif;
+  transform: translateY(-50%);
+}
+
+.computation-rail__stage > header {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 16px 16px 12px;
+}
+
+.computation-rail__stage > header > span {
+  flex: 0 0 auto;
+  color: var(--vermilion);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.computation-rail h3 {
+  margin: 0;
+  font: 500 20px/1.18 var(--font-display);
+}
+
+.computation-rail__formula {
+  min-width: 0;
+  display: grid;
+  align-items: center;
+  padding: 12px 16px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: #f3f6f4;
+  color: var(--forest);
+}
+
+.computation-rail__formula .equation {
+  font-size: 14px;
+  text-align: center;
+}
+
+.computation-rail__stage--gate .computation-rail__formula { background: #f5f3f8; color: #3a2a4c; }
+.computation-rail__stage--measurement .computation-rail__formula { background: #f1f6fb; color: #195b9f; }
+.computation-rail__stage--qec-cycle .computation-rail__formula { background: #fff5ef; color: #a84427; }
+
+.computation-rail dl {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+
+.computation-rail dl > div {
+  min-width: 0;
+  padding: 12px 16px;
+}
+
+.computation-rail dl > div + div {
+  border-top: 1px solid var(--line);
+  background: #fffbf8;
+}
+
+.computation-rail dt {
+  margin-bottom: 6px;
+  color: var(--forest);
+  font-size: 10px;
   font-weight: 800;
   text-transform: uppercase;
 }
 
-.computation-physics-map__paths {
-  position: relative;
-  display: grid;
-  grid-auto-rows: 1fr;
-}
-
-.computation-physics-map__paths::before {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 3px;
-  background: var(--forest);
-  content: '';
-}
-
-.computation-path {
-  display: grid;
-  grid-template-columns: minmax(140px, .65fr) 28px minmax(250px, 1.35fr) 28px minmax(190px, 1fr) 28px minmax(170px, .9fr);
-  align-items: stretch;
-  padding: 0 16px;
-  border-bottom: 1px solid var(--line);
-}
-
-.computation-path > .map-node {
-  display: flex;
-  min-height: 92px;
-  flex-direction: column;
-  justify-content: center;
-  padding: 15px 12px;
-}
-
-.computation-path h3 {
-  margin-top: 7px;
-  font: 500 18px/1.25 var(--font-display);
-}
-
-.computation-path p {
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.55;
-}
-
-.computation-path .map-node--math {
-  color: #292033;
-}
-
-.computation-path .map-node--acceptance {
-  padding-left: 16px;
-  border-left: 2px solid var(--vermilion);
-  background: #faf4ef;
+.computation-rail dd {
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.45;
 }
 
 .divincenzo-boundary {
   display: grid;
-  grid-template-columns: minmax(160px, .65fr) minmax(0, 3.35fr);
+  grid-template-columns: minmax(190px, .78fr) minmax(0, 3.22fr);
+  margin-top: 2px;
   border-bottom: 1px solid var(--ink);
   background: #edf3f0;
 }
 
 .divincenzo-boundary > div {
-  padding: 14px 16px;
+  padding: 13px 16px;
   border-right: 1px solid var(--line);
 }
 
@@ -279,9 +322,9 @@
 }
 
 .divincenzo-boundary li {
-  padding: 14px 12px;
+  padding: 13px 12px;
   border-right: 1px solid var(--line);
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.4;
 }
 
@@ -609,144 +652,124 @@
   line-height: 1.55;
 }
 
-/* Experiment: apparatus, timing and feedback close through the atom */
-.engineering-system-loop {
-  display: grid;
-  grid-template-columns: minmax(220px, 1fr) 42px minmax(260px, 1.12fr) 42px minmax(220px, 1fr);
-  grid-template-areas:
-    'apparatus drive atom observe measurement'
-    '. . control . .'
-    'feedback feedback feedback feedback feedback';
-  align-items: stretch;
+/* Experiment: one cycle from apparatus to a record, then feedback. */
+.engineering-cycle {
   border-top: 1px solid var(--ink);
   border-bottom: 1px solid var(--ink);
 }
 
-.engineering-domain,
-.engineering-atom-state {
+.engineering-cycle__track {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 14px 0;
+  list-style: none;
+}
+
+.engineering-cycle__stage {
+  position: relative;
   min-width: 0;
-  padding: 20px;
+  min-height: 232px;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  align-content: start;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--forest);
 }
 
-.engineering-domain--apparatus { grid-area: apparatus; }
-.engineering-domain--measurement { grid-area: measurement; }
-.engineering-domain--control {
-  grid-area: control;
-  margin-top: 20px;
-  border: 1px solid var(--forest);
-  background: #edf3f0;
+.engineering-cycle__stage--control { background: #edf3f0; }
+.engineering-cycle__stage--atom { border-color: var(--forest); background: var(--forest); color: var(--white); }
+.engineering-cycle__stage--measurement { border-top-color: var(--vermilion); background: #fffbf8; }
+
+.engineering-cycle__track > li:not(:last-child)::after {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  right: -16px;
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  background: var(--white);
+  color: var(--forest);
+  content: '→';
+  font: 700 18px/1 Arial, sans-serif;
+  transform: translateY(-50%);
 }
 
-.engineering-domain > span,
-.engineering-atom-state > span {
+.engineering-cycle__stage > span {
   color: var(--vermilion);
   font-size: 10px;
   font-weight: 800;
 }
 
-.engineering-domain h3,
-.engineering-atom-state h3 {
-  margin-top: 8px;
-  font: 500 20px/1.2 var(--font-display);
+.engineering-cycle__stage h3 {
+  margin-top: 9px;
+  font: 500 21px/1.16 var(--font-display);
 }
 
-.engineering-domain p,
-.engineering-atom-state p {
+.engineering-cycle__stage p {
   margin-top: 12px;
   color: var(--muted);
-  font-size: 13px;
-  line-height: 1.55;
+  font-size: 14px;
+  line-height: 1.48;
 }
 
-.engineering-domain__signal {
-  width: 42px;
-  margin-top: 18px;
-  padding: 7px 8px;
-  border: 1px solid var(--forest);
-  color: var(--forest);
-  font: 600 12px/1 ui-monospace, monospace;
-  text-align: center;
-}
-
-.engineering-atom-state {
-  grid-area: atom;
-  border-right: 1px solid var(--forest);
-  border-left: 1px solid var(--forest);
-  background: var(--forest);
-  color: var(--white);
-  text-align: center;
-}
-
-.engineering-atom-state > span {
-  color: #b8d4ca;
-}
-
-.engineering-atom-state p {
-  color: #dce9e4;
-}
-
-.engineering-atom-state .map-equation {
+.engineering-cycle__stage .map-equation {
+  align-self: end;
   margin-top: 16px;
-  color: var(--white);
+  color: var(--forest);
 }
 
-.engineering-atom-state .equation,
-.engineering-domain--control .equation {
-  text-align: center;
-}
+.engineering-cycle__stage .equation { font-size: 15px; text-align: center; }
 
-.engineering-link {
-  position: relative;
-  align-self: center;
-  height: 1px;
-  background: var(--forest);
-}
+.engineering-cycle__stage--atom > span { color: #b8d4ca; }
+.engineering-cycle__stage--atom p { color: #dce9e4; }
+.engineering-cycle__stage--atom .map-equation { color: var(--white); }
+.engineering-cycle__stage--atom .equation { font-size: 16px; }
 
-.engineering-link--drive { grid-area: drive; }
-.engineering-link--observe { grid-area: observe; }
-
-.engineering-feedback {
-  grid-area: feedback;
-  position: relative;
+.engineering-cycle__feedback {
   display: grid;
-  grid-template-columns: 1fr minmax(80px, 1.4fr) 1fr;
-  gap: 20px;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: 16px;
   align-items: center;
-  margin-top: 26px;
-  padding: 14px 20px;
-  border-top: 1px solid var(--line);
+  margin: 0 10px 14px;
+  padding: 13px 16px;
+  border-top: 1px solid var(--vermilion);
+  border-bottom: 1px solid var(--vermilion);
   background: #faf4ef;
 }
 
-.engineering-feedback span,
-.engineering-feedback p {
-  color: var(--muted);
-  font-size: 12px;
+.engineering-cycle__feedback span,
+.engineering-cycle__feedback p {
+  font-size: 13px;
   font-weight: 700;
+  line-height: 1.4;
 }
 
-.engineering-feedback i {
+.engineering-cycle__feedback span { color: var(--muted); }
+.engineering-cycle__feedback p { color: var(--ink); text-align: right; }
+
+.engineering-cycle__feedback i {
   position: relative;
+  width: clamp(88px, 14vw, 180px);
   height: 1px;
   background: var(--vermilion);
 }
 
-.engineering-feedback i::before {
+.engineering-cycle__feedback i::after {
   position: absolute;
   top: 50%;
   right: 0;
   width: 0;
   height: 0;
-  border-top: 4px solid transparent;
-  border-bottom: 4px solid transparent;
-  border-left: 6px solid var(--vermilion);
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 7px solid var(--vermilion);
   content: '';
   transform: translateY(-50%);
-}
-
-.engineering-feedback p {
-  color: var(--ink);
-  text-align: right;
 }
 
 /* Fault tolerance: many physical channels merge into one logical budget */
@@ -965,9 +988,10 @@
   .core-question-map { padding-inline: 28px; }
   .core-question-map__header { grid-template-columns: 130px minmax(280px, 1fr) minmax(240px, .72fr); gap: 20px; }
   .core-question-map__header h2 { font-size: 36px; }
-  .computation-physics-map__labels { grid-template-columns: minmax(120px, .6fr) minmax(210px, 1.3fr) minmax(160px, 1fr) minmax(150px, .9fr); }
-  .computation-path { grid-template-columns: minmax(120px, .6fr) 20px minmax(210px, 1.3fr) 20px minmax(160px, 1fr) 20px minmax(150px, .9fr); }
-  .map-equation .equation { font-size: 13px; }
+  .computation-rail { gap: 10px; }
+  .computation-rail h3 { font-size: 18px; }
+  .computation-rail__formula .equation { font-size: 14px; }
+  .engineering-cycle__stage { padding: 16px; }
 }
 
 @media (max-width: 900px) {
@@ -976,14 +1000,9 @@
   .core-question-map__header p { max-width: 720px; }
   .core-question-map__conclusion { grid-template-columns: 1fr; gap: 8px; }
 
-  .computation-physics-map__labels { display: none; }
-  .computation-physics-map__paths { grid-auto-rows: auto; }
-  .computation-path { grid-template-columns: minmax(125px, .65fr) 22px minmax(210px, 1.35fr); padding-right: 0; }
-  .computation-path > .map-node { min-height: 82px; }
-  .computation-path > .map-edge:nth-of-type(2) { display: none; }
-  .computation-path > .map-node--physical,
-  .computation-path > .map-node--acceptance { grid-column: 3; min-height: 64px; border-top: 1px solid var(--line); }
-  .computation-path > .map-edge:nth-of-type(3) { grid-column: 2; grid-row: 3; }
+  .computation-rail { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .computation-rail > li:nth-child(2)::after { display: none; }
+  .computation-rail > li:nth-child(3)::after { display: grid; }
 
   .divincenzo-boundary { grid-template-columns: 1fr; }
   .divincenzo-boundary > div { border-right: 0; border-bottom: 1px solid var(--line); }
@@ -1008,15 +1027,10 @@
   .gate-hamiltonian-branches { grid-template-columns: 1fr; }
   .gate-hamiltonian-branches article { border-right: 0; border-bottom: 1px solid var(--line); }
 
-  .engineering-system-loop {
-    grid-template-columns: 1fr;
-    grid-template-areas: 'apparatus' 'drive' 'atom' 'control' 'observe' 'measurement' 'feedback';
-  }
-  .engineering-link { width: 1px; height: 26px; justify-self: center; }
-  .engineering-link::after { content: none; }
-  .engineering-domain--control { margin: 20px 0; }
-  .engineering-feedback { grid-template-columns: 1fr; gap: 9px; }
-  .engineering-feedback p { text-align: left; }
+  .engineering-cycle__track { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .engineering-cycle__track > li:nth-child(2)::after { display: none; }
+  .engineering-cycle__track > li:nth-child(3)::after { display: grid; }
+  .engineering-cycle__feedback { margin-inline: 0; }
 
   .fault-sources { grid-template-columns: 1fr; }
   .fault-sources header { border-right: 0; border-bottom: 1px solid var(--line); }
@@ -1032,15 +1046,15 @@
   .core-question-map__header h2 { font-size: 31px; }
   .core-question-map__body { margin-top: 26px; }
 
-  .computation-path { grid-template-columns: 1fr; padding: 0; }
-  .computation-path > .map-edge { display: none !important; }
-  .computation-path > .map-node--math,
-  .computation-path > .map-node--physical,
-  .computation-path > .map-node--acceptance { border-top: 1px solid var(--line); }
-  .computation-path > .map-node--physical,
-  .computation-path > .map-node--acceptance { grid-column: 1; }
-  .computation-path > .map-node { min-height: 0; padding: 14px 16px; }
-  .computation-physics-map__paths::before { display: none; }
+  .computation-rail,
+  .engineering-cycle__track { grid-template-columns: 1fr; }
+  .computation-rail > li::after,
+  .engineering-cycle__track > li::after { display: none !important; }
+  .computation-rail__stage { min-height: 0; }
+  .engineering-cycle__stage { min-height: 0; }
+  .engineering-cycle__feedback { grid-template-columns: 1fr; gap: 10px; }
+  .engineering-cycle__feedback p { text-align: left; }
+  .engineering-cycle__feedback i { display: none; }
 
   .divincenzo-boundary ol,
   .yb-selection-stage__alternatives,

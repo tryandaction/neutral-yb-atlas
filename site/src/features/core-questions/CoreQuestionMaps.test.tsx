@@ -8,10 +8,12 @@ import FaultToleranceScaleMap from './FaultToleranceScaleMap'
 import GateImplementationLoop from './GateImplementationLoop'
 import YbDecisionMap from './YbDecisionMap'
 
-it('renders the computation correspondence as a connected map with typeset mathematics', () => {
+it('renders the computation correspondence as a compact causal rail with typeset mathematics', () => {
   const { container } = render(<ComputationPhysicalMap language="en" />)
 
   expect(container.querySelector('.computation-physics-map')).toBeInTheDocument()
+  expect(container.querySelectorAll('.computation-rail > li')).toHaveLength(4)
+  expect(container.querySelector('.computation-physics-map__labels')).not.toBeInTheDocument()
   expect(container.querySelectorAll('.computation-physics-map .katex').length).toBeGreaterThanOrEqual(4)
   expect(container.querySelector('[role="table"]')).not.toBeInTheDocument()
 })
@@ -20,7 +22,7 @@ it('uses a decision tree, a control loop, an engineering loop and a fault funnel
   const views = [
     { component: <YbDecisionMap language="en" />, selector: '.yb-selection-tree' },
     { component: <GateImplementationLoop language="en" />, selector: '.gate-control-loop' },
-    { component: <ExperimentEngineeringMap language="en" />, selector: '.engineering-system-loop' },
+    { component: <ExperimentEngineeringMap language="en" />, selector: '.engineering-cycle' },
     { component: <FaultToleranceScaleMap language="en" />, selector: '.fault-channel-funnel' },
   ]
 

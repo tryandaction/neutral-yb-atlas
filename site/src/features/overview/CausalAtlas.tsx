@@ -27,7 +27,7 @@ const stages: CausalStage[] = [
     id: 'encoding',
     number: '02',
     title: { zh: '编码到原子子空间', en: 'Encode into an atomic subspace' },
-    equation: String.raw`\rho_0=V\rho_LV^\dagger,\qquad V^\dagger V=I_L`,
+    equation: String.raw`\rho_0=V\rho_LV^\dagger`,
     physical: { zh: '逻辑空间嵌入选定原子能级', en: 'Logical space embedded in selected atomic levels' },
     evidence: { zh: '制备误差、泄漏', en: 'Preparation error, leakage' },
   },
@@ -35,7 +35,7 @@ const stages: CausalStage[] = [
     id: 'dynamics',
     number: '03',
     title: { zh: '哈密顿量生成演化', en: 'Hamiltonian-generated evolution' },
-    equation: String.raw`\begin{aligned}i\hbar\,\partial_t|\psi(t)\rangle&=H[u(t)]|\psi(t)\rangle\\U(T)&=\mathcal T\exp\!\left[-\frac{i}{\hbar}\int_0^T H[u(t)]\,dt\right]\end{aligned}`,
+    equation: String.raw`i\hbar\,\partial_t|\psi(t)\rangle=H[u(t)]|\psi(t)\rangle`,
     physical: { zh: '振幅、相位和失谐确定 U(T)', en: 'Amplitude, phase and detuning determine U(T)' },
     evidence: { zh: '过程矩阵、泄漏', en: 'Process matrix, leakage' },
   },
@@ -51,7 +51,7 @@ const stages: CausalStage[] = [
     id: 'record',
     number: '05',
     title: { zh: '量子态变成经典记录', en: 'Quantum state to classical record' },
-    equation: String.raw`p(m)=\operatorname{Tr}(E_m\rho_T),\qquad \sum_mE_m=I`,
+    equation: String.raw`p(m)=\operatorname{Tr}(E_m\rho_T)`,
     physical: { zh: 'POVM 生成经典记录分布', en: 'POVM generates the classical record distribution' },
     evidence: { zh: '混淆矩阵、SPAM、擦除标记', en: 'Confusion matrix, SPAM, erasure flags' },
   },
@@ -91,8 +91,8 @@ export default function CausalAtlas({ language }: CausalAtlasProps) {
             </header>
             <Equation source={stage.equation} />
             <div className="causal-stage__outcomes">
-              <p className="causal-stage__physical">{stage.physical[language]}</p>
-              <p className="causal-stage__evidence">{stage.evidence[language]}</p>
+              <p className="causal-stage__physical"><span>{language === 'zh' ? '物理对象' : 'Physical realization'}</span>{stage.physical[language]}</p>
+              <p className="causal-stage__evidence"><span>{language === 'zh' ? '验收量' : 'Acceptance quantity'}</span>{stage.evidence[language]}</p>
             </div>
           </li>
         ))}

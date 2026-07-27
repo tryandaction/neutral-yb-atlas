@@ -153,7 +153,7 @@
 }
 
 .causal-map {
-  padding: 52px max(5vw, 64px) 58px;
+  padding: 42px max(5vw, 64px) 46px;
   border-bottom: 1px solid var(--line);
   scroll-margin-top: var(--header-height);
 }
@@ -696,12 +696,13 @@
   }
 }
 
-/* Overview causal chain: one mathematical object per stage, one physical meaning, one test. */
+/* Overview causal chain: compact cards joined directly, not a spreadsheet. */
 .causal-map__flow {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
   margin: 0;
-  padding: 0;
+  padding: 14px 0;
   border-top: 1px solid var(--ink);
   border-bottom: 1px solid var(--ink);
   list-style: none;
@@ -711,46 +712,61 @@
   position: relative;
   min-width: 0;
   display: grid;
-  grid-template-rows: minmax(84px, auto) 96px auto;
-  border-right: 1px solid var(--line);
+  grid-template-rows: 72px 86px 1fr;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--forest);
+  background: var(--white);
 }
 
-.causal-stage:last-child {
-  border-right: 0;
-}
+.causal-stage--dynamics { border-top-color: var(--violet); }
+.causal-stage--record { border-top-color: #2776c7; }
+.causal-stage--logical-result { border-top-color: var(--vermilion); }
 
 .causal-stage:not(:last-child)::after {
-  content: none;
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  right: -22px;
+  width: 16px;
+  height: 16px;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  color: var(--forest);
+  content: '→';
+  font: 700 17px/1 Arial, sans-serif;
+  transform: translateY(-50%);
 }
+
+.causal-stage:nth-child(3n)::after { display: none; }
 
 .causal-stage > header {
   display: flex;
-  gap: 12px;
-  align-content: start;
-  padding: 20px 18px 16px;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 15px 14px 11px;
 }
 
 .causal-stage > header > span {
   flex: 0 0 auto;
-  padding-top: 4px;
   color: var(--vermilion);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 800;
 }
 
 .causal-stage h3 {
   margin: 0;
-  font: 400 22px/1.2 var(--font-display);
+  font: 500 20px/1.18 var(--font-display);
 }
 
 .causal-stage > .equation {
   min-width: 0;
-  min-height: 96px;
+  min-height: 86px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0;
-  padding: 12px 10px;
+  padding: 10px 8px;
   border-top: 1px solid var(--line);
   border-right: 0;
   border-bottom: 1px solid var(--line);
@@ -770,22 +786,17 @@
   white-space: normal;
 }
 
-.causal-stage--dynamics > .equation .katex {
-  font-size: 13px;
-}
-
 .causal-stage__outcomes {
   display: grid;
   grid-template-rows: auto auto;
 }
 
 .causal-stage__outcomes p {
-  position: relative;
-  min-height: 54px;
+  min-height: 0;
   margin: 0;
-  padding: 15px 16px 15px 40px;
+  padding: 11px 14px;
   color: var(--ink);
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.45;
 }
 
@@ -794,32 +805,33 @@
   background: #fafbfa;
 }
 
-.causal-stage__outcomes p::before {
-  position: absolute;
-  top: 17px;
-  left: 19px;
-  width: 3px;
-  height: 17px;
-  background: var(--forest);
-  content: '';
+.causal-stage__outcomes p > span {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--forest);
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
 }
 
-.causal-stage__outcomes .causal-stage__evidence::before {
-  background: var(--vermilion);
+.causal-stage__outcomes .causal-stage__evidence > span {
+  color: var(--vermilion);
 }
 
 .causal-map__feedback {
   display: grid;
-  grid-template-columns: minmax(320px, 0.9fr) minmax(440px, 1.1fr);
+  grid-template-columns: minmax(360px, 1fr) minmax(360px, 1fr);
   align-items: center;
-  border-bottom: 1px solid var(--ink);
+  margin-top: 2px;
+  border-top: 1px solid var(--forest);
+  border-bottom: 1px solid var(--forest);
   background: #eaf1ed;
 }
 
 .causal-map__feedback > * {
   min-width: 0;
   margin: 0;
-  padding: 18px 20px;
+  padding: 13px 16px;
 }
 
 .causal-map__feedback > * + * {
@@ -838,7 +850,7 @@
 }
 
 .causal-map__feedback strong {
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.45;
 }
 
@@ -853,54 +865,47 @@
 }
 
 .causal-map__feedback .equation .katex {
-  font-size: 17px;
+  font-size: 15px;
 }
 
 @media (max-width: 1350px) {
   .causal-map__flow {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
   }
 
   .causal-stage {
     border-bottom: 1px solid var(--line);
   }
 
-  .causal-stage:nth-child(3n) {
-    border-right: 0;
-  }
-
-  .causal-stage:nth-child(3),
-  .causal-stage:nth-child(6) {
-    border-bottom: 0;
-  }
+  .causal-stage:nth-child(3n)::after { display: none; }
 
   .causal-stage > .equation .katex { font-size: 15px; }
-  .causal-stage--dynamics > .equation .katex { font-size: 13px; }
 
   .causal-map__feedback {
     grid-template-columns: 1fr 1.25fr;
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 900px) {
   .causal-map__flow {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .causal-stage,
-  .causal-stage:nth-child(3n) {
+  .causal-stage:nth-child(even)::after { display: none; }
+
+  .causal-stage:nth-child(3)::after { display: grid; }
+}
+
+@media (max-width: 700px) {
+  .causal-map__flow { grid-template-columns: 1fr; }
+
+  .causal-stage {
     grid-template-rows: auto auto auto;
-    border-right: 0;
     border-bottom: 1px solid var(--line);
   }
 
-  .causal-stage:nth-child(3) {
-    border-bottom: 1px solid var(--line);
-  }
-
-  .causal-stage > header {
-    min-height: 0;
-  }
+  .causal-stage::after { display: none !important; }
 
   .causal-stage__outcomes {
     display: grid;

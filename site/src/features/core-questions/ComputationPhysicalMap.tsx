@@ -4,9 +4,9 @@ import CoreQuestionFrame from './CoreQuestionFrame'
 import MapEquation from './MapEquation'
 import { computationRows, divincenzoCriteria } from './coreQuestionData'
 
-const layerLabels = {
-  zh: ['计算定义', '数学对象', '物理实现', '可检验量'],
-  en: ['Computational definition', 'Mathematical object', 'Physical realization', 'Acceptance quantity'],
+const cardLabels = {
+  zh: { physical: '原子中的对应对象', acceptance: '如何验收' },
+  en: { physical: 'Atomic realization', acceptance: 'Acceptance quantity' },
 } as const
 
 export default function ComputationPhysicalMap({ language }: { language: Language }) {
@@ -26,31 +26,23 @@ export default function ComputationPhysicalMap({ language }: { language: Languag
       language={language}
     >
       <div className="computation-physics-map" aria-label={language === 'zh' ? '计算定义到物理实现的映射图' : 'Map from computational definitions to physical realizations'}>
-        <div className="computation-physics-map__labels" aria-hidden="true">
-          {layerLabels[language].map((label) => <span key={label}>{label}</span>)}
-        </div>
-        <div className="computation-physics-map__paths">
+        <ol className="computation-rail">
           {computationRows.map((row, index) => (
-            <article className={`computation-path computation-path--${row.id}`} key={row.id}>
-              <div className="map-node map-node--definition">
+            <li className={`computation-rail__stage computation-rail__stage--${row.id}`} key={row.id}>
+              <header>
                 <span>{String(index + 1).padStart(2, '0')}</span>
                 <h3>{row.object[language]}</h3>
-              </div>
-              <i className="map-edge" aria-hidden="true" />
-              <div className="map-node map-node--math">
+              </header>
+              <div className="computation-rail__formula">
                 <MapEquation source={row.definition} label={`${row.object[language]} formula`} />
               </div>
-              <i className="map-edge" aria-hidden="true" />
-              <div className="map-node map-node--physical">
-                <p>{row.physical[language]}</p>
-              </div>
-              <i className="map-edge" aria-hidden="true" />
-              <div className="map-node map-node--acceptance">
-                <p><WikiText text={row.acceptance[language]} language={language} /></p>
-              </div>
-            </article>
+              <dl>
+                <div><dt>{cardLabels[language].physical}</dt><dd>{row.physical[language]}</dd></div>
+                <div><dt>{cardLabels[language].acceptance}</dt><dd><WikiText text={row.acceptance[language]} language={language} /></dd></div>
+              </dl>
+            </li>
           ))}
-        </div>
+        </ol>
 
         <aside className="divincenzo-boundary" aria-label={language === 'zh' ? 'DiVincenzo 处理器必要条件' : 'DiVincenzo processor requirements'}>
           <div><strong>DiVincenzo</strong><span>{language === 'zh' ? '处理器必要条件' : 'processor requirements'}</span></div>
