@@ -16,10 +16,18 @@ it('provides a complete English map without Chinese copy', () => {
 })
 
 it('gives long English labels dedicated room without shrinking the whole map', () => {
-  expect(englishSvg).toContain('<text x="650" y="44" class="title" font-size="29" text-anchor="middle">')
+  expect(englishSvg).toContain('id="english-map-title"')
+  expect(englishSvg).toContain('<tspan x="620" y="31">171Yb nuclear-spin qubits</tspan>')
+  expect(englishSvg).toContain('<tspan x="620" y="57">Levels, Raman control and Rydberg interface</tspan>')
+  expect(englishSvg).toContain('id="autoionization-labels"')
+  expect(englishSvg).toContain('id="raman-parameter-table"')
+  expect(englishSvg).toContain('<text x="830" y="706" class="tiny" font-weight="700">')
+  expect(englishSvg).toContain('id="stage-a-populations"')
+  expect(englishSvg).toContain('id="gate-level-record-copy"')
   expect(englishSvg).toContain('556 nm: cooling, imaging, and')
   expect(englishSvg).toContain('ground-state Raman control')
-  expect(englishSvg).toContain('<text x="565" y="675" class="micro" font-size="14" fill="#53615d">|e⟩ real intermediate state</text>')
+  expect(englishSvg).not.toContain('After waiting: 25%')
+  expect(englishSvg).not.toContain('³P₀ dark: still in qubit manifold')
 })
 
 it('preserves the erasure-conversion diagram and the computational role cards', () => {

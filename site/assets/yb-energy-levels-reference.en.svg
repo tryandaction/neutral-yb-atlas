@@ -16,7 +16,10 @@
   </style></defs>
   <rect width="1600" height="1500" fill="#ffffff"/>
 
-  <text x="650" y="44" class="title" font-size="29" text-anchor="middle">¹⁷¹Yb nuclear-spin qubits: levels, Raman control and Rydberg interface</text>
+  <text id="english-map-title" x="620" class="title" font-size="26" text-anchor="middle">
+    <tspan x="620" y="31">171Yb nuclear-spin qubits</tspan>
+    <tspan x="620" y="57">Levels, Raman control and Rydberg interface</tspan>
+  </text>
   <rect x="20" y="62" width="250" height="48" rx="8" fill="#ffffff" stroke="#15211e" stroke-width="1.5"/>
   <text x="38" y="94" class="body" font-weight="700">¹⁷¹Yb: nuclear spin I = 1/2</text>
   <rect x="20" y="122" width="252" height="78" rx="7" fill="#fff9e8" stroke="#b7a26e" stroke-width="1.3"/>
@@ -40,7 +43,7 @@
   <circle cx="258" cy="200" r="9" fill="#fff" stroke="#5b33c5" stroke-width="3"/><text x="278" y="208" class="level">6s59s ³S₁</text>
   <text x="820" y="184" class="body" text-anchor="middle">|r⟩ = |6s59s ³S₁, F=3/2, mF=3/2⟩</text>
   <circle cx="738" cy="90" r="9" fill="#fff" stroke="#9c1743" stroke-width="3"/><text x="760" y="78" class="body">6p₁/₂ 59s autoionizing state</text>
-  <text x="1000" y="146" class="body">Yb⁺ + e⁻ continuum</text>
+  <text x="1018" y="162" class="micro">Yb⁺ + e⁻ continuum</text>
 
   <!-- Main optical transitions -->
   <line x1="250" y1="610" x2="250" y2="350" stroke="#1f5fd1" stroke-width="3" marker-start="url(#arrow-blue)" marker-end="url(#arrow-blue)"/>
@@ -59,24 +62,26 @@
   <text x="990" y="548" class="micro" text-anchor="middle" fill="#5b33c5" font-weight="700">Two-qubit basis: |0⟩, |1⟩ ∈ ³P₀</text>
   <text x="990" y="570" class="micro" text-anchor="middle" fill="#5b33c5" font-weight="700">302 nm: ³P₀ |1⟩ ↔ |r⟩</text>
   <line x1="990" y1="190" x2="990" y2="100" stroke="#9c1743" stroke-width="3" marker-end="url(#arrow-wine)"/>
-  <text x="858" y="126" class="small" fill="#9c1743" font-weight="700">about 369 nm</text>
-<text x="858" y="151" class="small" fill="#9c1743" font-weight="700">resonant ion excitation</text>
+  <g id="autoionization-labels">
+    <text x="968" y="116" class="small" text-anchor="end" fill="#9c1743" font-weight="700">about 369 nm</text>
+    <text x="968" y="140" class="small" text-anchor="end" fill="#9c1743" font-weight="700">resonant excitation</text>
+  </g>
   <path d="M1110 90 C1140 90 1145 138 1190 138" fill="none" stroke="#9c1743" stroke-width="3" marker-end="url(#arrow-wine)"/>
-  <text x="1095" y="116" class="micro" fill="#9c1743" font-weight="700">autoionization</text>
+  <text x="1090" y="112" class="micro" fill="#9c1743" font-weight="700">autoionization</text>
 
   <!-- Raman Lambda control map -->
   <g id="raman-lambda-control-map">
     <rect x="300" y="645" width="860" height="245" rx="9" fill="#f8faf9" stroke="#b9c3c0" stroke-width="1.5"/>
     <text x="320" y="675" class="card-title" fill="#15211e" font-weight="700">Raman Λ control interface</text>
 
-    <line x1="455" y1="696" x2="555" y2="696" class="thin-line"/>
-    <text x="565" y="675" class="micro" font-size="14" fill="#53615d">|e⟩ real intermediate state</text>
-    <line x1="455" y1="718" x2="555" y2="718" class="thin-line" stroke-dasharray="7 6"/>
-    <text x="570" y="723" class="micro" fill="#53615d">virtual level</text>
-    <line x1="440" y1="696" x2="440" y2="718" stroke="#15211e" stroke-width="1.5"/>
-    <line x1="435" y1="696" x2="445" y2="696" stroke="#15211e" stroke-width="1.5"/>
-    <line x1="435" y1="718" x2="445" y2="718" stroke="#15211e" stroke-width="1.5"/>
-    <text x="320" y="712" class="micro" font-weight="700">single-photon detuning Δ</text>
+    <line x1="500" y1="696" x2="600" y2="696" class="thin-line"/>
+    <text x="610" y="700" class="micro" font-size="14" fill="#53615d">|e⟩ real intermediate state</text>
+    <line x1="500" y1="718" x2="600" y2="718" class="thin-line" stroke-dasharray="7 6"/>
+    <text x="610" y="723" class="micro" fill="#53615d">virtual level</text>
+    <line x1="485" y1="696" x2="485" y2="718" stroke="#15211e" stroke-width="1.5"/>
+    <line x1="480" y1="696" x2="490" y2="696" stroke="#15211e" stroke-width="1.5"/>
+    <line x1="480" y1="718" x2="490" y2="718" stroke="#15211e" stroke-width="1.5"/>
+    <text x="320" y="706" class="micro" font-size="13" font-weight="700">single-photon detuning Δ</text>
     <line x1="340" y1="765" x2="420" y2="765" class="thin-line"/>
     <line x1="510" y1="765" x2="590" y2="765" class="thin-line"/>
     <text x="380" y="785" class="tiny" text-anchor="middle" font-weight="700">|0⟩</text>
@@ -86,24 +91,26 @@
     <text x="360" y="738" class="micro" fill="#187a44" font-weight="700">ωa, Ωa</text>
     <text x="525" y="738" class="micro" fill="#5b33c5" font-weight="700">ωb, Ωb</text>
 
-    <text x="650" y="706" class="tiny" font-weight="700">δ=(ωa−ωb)−ω01</text>
-    <text x="650" y="733" class="tiny">Ω₂γ≈ΩaΩb*/(2Δ)</text>
-    <text x="650" y="760" class="micro" fill="#53615d">condition: |Δ|≫|Ωa,b|, Γ</text>
+    <text x="830" y="706" class="tiny" font-weight="700">δ=(ωa−ωb)−ω01</text>
+    <text x="830" y="733" class="tiny">Ω₂γ≈ΩaΩb*/(2Δ)</text>
+    <text x="830" y="760" class="micro" fill="#53615d">condition: |Δ|≫|Ωa,b|, Γ</text>
     <line x1="310" y1="790" x2="1150" y2="790" stroke="#b9c3c0" stroke-width="1"/>
 
-    <rect x="312" y="797" width="836" height="19" rx="3" fill="#edf4f1" stroke="none" stroke-width="0"/>
-    <text x="320" y="812" class="micro" fill="#187a44" font-weight="700">¹S₀ | 556+556 nm → ³P₁(F′=1/2)</text>
-    <text x="700" y="812" class="micro">Δ/2π≈−5 GHz; Ω₂γ/2π≈7 kHz; magnetic RF: ωd=ωZ</text>
+    <g id="raman-parameter-table" font-size="14">
+      <rect x="312" y="797" width="836" height="19" rx="3" fill="#edf4f1" stroke="none" stroke-width="0"/>
+      <text x="320" y="812" fill="#187a44" font-weight="700">¹S₀ | 556+556 nm → ³P₁(F′=1/2)</text>
+      <text x="760" y="812">Δ/2π≈−5 GHz; Ω₂γ/2π≈7 kHz; RF: ωd=ωZ</text>
 
-    <text x="320" y="835" class="micro" fill="#e74b22" font-weight="700">³P₀ | 649+649 nm → 6s7s ³S₁</text>
-    <text x="700" y="835" class="micro">Jenkins 2022 proposal: local Raman; apparatus-specific parameters</text>
+      <text x="320" y="835" fill="#e74b22" font-weight="700">³P₀ | 649+649 nm → 6s7s ³S₁</text>
+      <text x="760" y="835">Jenkins 2022: proposed local Raman; apparatus-specific</text>
 
-    <rect x="312" y="843" width="836" height="19" rx="3" fill="#edf4f1" stroke="none" stroke-width="0"/>
-    <text x="320" y="858" class="micro" fill="#9c1743" font-weight="700">³P₂ | 770+770 nm → 6s7s ³S₁(F′=3/2,mF′=−3/2)</text>
-    <text x="760" y="858" class="micro">ΔQB/2π=+20 GHz; ΩQB/2π=2 MHz; B=10 G (model)</text>
+      <rect x="312" y="843" width="836" height="19" rx="3" fill="#edf4f1" stroke="none" stroke-width="0"/>
+      <text x="320" y="858" fill="#9c1743" font-weight="700">³P₂ | 770+770 nm → 6s7s ³S₁(F′=3/2,mF′=−3/2)</text>
+      <text x="760" y="858">ΔQB/2π=+20 GHz; ΩQB/2π=2 MHz; B=10 G</text>
 
-    <text x="320" y="881" class="micro" fill="#5b33c5" font-weight="700">³P₀↔³P₂ | 649+770 nm → 6s7s ³S₁</text>
-    <text x="700" y="881" class="micro">Δ/2π≈12 GHz; Ω₂γ/2π=1.08 MHz; B=8.5 G (Li 2025 mapping)</text>
+      <text x="320" y="881" fill="#5b33c5" font-weight="700">³P₀↔³P₂ | 649+770 nm → 6s7s ³S₁</text>
+      <text x="760" y="881">Δ/2π≈12 GHz; Ω₂γ/2π=1.08 MHz; B=8.5 G (Li 2025)</text>
+    </g>
   </g>
 
   <!-- Key parameter cards -->
@@ -121,9 +128,9 @@
 <text x="1227" y="330" class="tiny" fill="#15211e" font-weight="400">Muniz 2025</text>
   <rect x="1210" y="358" width="370" height="132" rx="8" fill="#ffffff" stroke="#e74b22" stroke-width="2"/>
 <text x="1227" y="385" class="card-title" fill="#e74b22" font-weight="700">578.4 nm: clock-state mapping</text>
-<text x="1227" y="409" class="tiny" fill="#15211e" font-weight="400">¹S₀ ↔ ³P₀; coherent shelving and clock control</text>
-<text x="1227" y="433" class="tiny" fill="#15211e" font-weight="400">Links electronic manifolds; not a Raman rotation</text>
-<text x="1227" y="457" class="tiny" fill="#15211e" font-weight="400">Optical-pumping initialization in Ma 2023</text>
+<text x="1227" y="409" class="tiny" fill="#15211e" font-weight="400">¹S₀ ↔ ³P₀; coherent shelving</text>
+<text x="1227" y="433" class="tiny" fill="#15211e" font-weight="400">Clock-state control; no Raman rotation</text>
+<text x="1227" y="457" class="tiny" fill="#15211e" font-weight="400">Initialization interface in Ma 2023</text>
   <rect x="1210" y="502" width="370" height="132" rx="8" fill="#ffffff" stroke="#5b33c5" stroke-width="2"/>
 <text x="1227" y="529" class="card-title" fill="#5b33c5" font-weight="700">302 nm: Rydberg two-qubit gate</text>
 <text x="1227" y="553" class="tiny" fill="#15211e" font-weight="400">302 nm: ³P₀ |1⟩ ↔ |r⟩</text>
@@ -132,8 +139,8 @@
   <rect x="1210" y="646" width="370" height="132" rx="8" fill="#ffffff" stroke="#9c1743" stroke-width="2"/>
 <text x="1227" y="673" class="card-title" fill="#9c1743" font-weight="700">about 369 nm: autoionization</text>
 <text x="1227" y="697" class="tiny" fill="#15211e" font-weight="400">6s59s ³S₁ → 6p₁/₂59s → Yb⁺+e⁻</text>
-<text x="1227" y="721" class="tiny" fill="#15211e" font-weight="400">State-selective removal for final spin readout</text>
-<text x="1227" y="745" class="tiny" fill="#15211e" font-weight="400">Role: convert Rydberg faults into erasure records</text>
+<text x="1227" y="721" class="tiny" fill="#15211e" font-weight="400">State-selective removal for spin readout</text>
+<text x="1227" y="745" class="tiny" fill="#15211e" font-weight="400">Role: Rydberg fault → erasure record</text>
 
   <!-- Decay and repump energy flow -->
   <line x1="0" y1="900" x2="1600" y2="900" stroke="#15211e" stroke-width="2"/>
@@ -144,9 +151,12 @@
     <text x="48" y="1012" class="section-title" fill="#5b33c5">Stage A: wait for Rydberg decay</text>
     <text x="48" y="1041" class="small" fill="#15211e" font-weight="400">Initial |r⟩: 6s59s ³S₁</text>
 <text x="48" y="1065" class="small" fill="#15211e" font-weight="400">Spontaneous decay: wait about 400 μs</text>
-    <text x="48" y="1102" class="micro" font-weight="700">After waiting: 25% ¹S₀ / 10% ³P₀ / 35% ³P₂ / 30% unassigned</text>
-    <line x1="78" y1="1140" x2="254" y2="1140" class="thin-line"/><text x="78" y="1127" class="small">|r⟩  6s59s ³S₁</text>
-    <path d="M254 1140 H292 V1400" fill="none" stroke="#15211e" stroke-width="2.5"/>
+    <g id="stage-a-populations" font-weight="700">
+      <text x="48" y="1098" class="micro">After waiting:</text>
+      <text x="48" y="1121" class="micro">25% ¹S₀ / 10% ³P₀ / 35% ³P₂ / 30% unassigned</text>
+    </g>
+    <line x1="78" y1="1155" x2="254" y2="1155" class="thin-line"/><text x="78" y="1142" class="small">|r⟩  6s59s ³S₁</text>
+    <path d="M254 1155 H292 V1400" fill="none" stroke="#15211e" stroke-width="2.5"/>
     <line x1="330" y1="1210" x2="505" y2="1210" class="thin-line"/><text x="340" y="1198" class="small" fill="#187a44" font-weight="700">³P₂  about 35%</text>
     <line x1="330" y1="1300" x2="505" y2="1300" class="thin-line"/><text x="340" y="1288" class="small" fill="#e74b22" font-weight="700">³P₀  about 10%</text>
     <line x1="330" y1="1380" x2="505" y2="1380" class="thin-line"/><text x="340" y="1368" class="small" fill="#1f5fd1" font-weight="700">¹S₀  about 25%</text>
@@ -177,7 +187,8 @@
 <text x="846" y="1285" class="tiny" fill="#15211e" font-weight="400">Final ³P₀: 19%</text>
 <text x="846" y="1308" class="tiny" fill="#15211e" font-weight="400">Unassigned: about 30%</text>
 <text x="846" y="1331" class="tiny" fill="#15211e" font-weight="400"></text>
-<text x="846" y="1354" class="tiny" fill="#15211e" font-weight="400">An alternate chain can use ³D₂.</text>
+<text x="846" y="1345" class="tiny" fill="#15211e" font-weight="400">Alternate repump:</text>
+<text x="846" y="1368" class="tiny" fill="#15211e" font-weight="400">a ³D₂ chain can be used.</text>
 
     <!-- Stage C -->
     <rect x="1092" y="980" width="480" height="484" rx="10" fill="#fbfdff" stroke="#1f5fd1" stroke-width="2"/>
@@ -192,16 +203,15 @@
   </g><text x="1283" y="1273" class="micro" text-anchor="middle" fill="#1f5fd1" font-weight="700">20 μs</text>
     <rect x="1330" y="1085" width="218" height="326" rx="8" fill="#fff" stroke="#15211e" stroke-width="1.5"/>
     <text x="1346" y="1115" class="card-title" font-weight="700">Gate-level record</text>
-    <text x="1346" y="1150" class="tiny" fill="#15211e" font-weight="400">¹S₀ bright: site visible</text>
-<text x="1346" y="1173" class="tiny" fill="#15211e" font-weight="400">³P₀ dark: still in qubit manifold</text>
-<text x="1346" y="1196" class="tiny" fill="#15211e" font-weight="400"></text>
-<text x="1346" y="1219" class="tiny" fill="#15211e" font-weight="400">Single-qubit gate faults:</text>
-<text x="1346" y="1242" class="tiny" fill="#15211e" font-weight="400">about 56% become erasures</text>
-<text x="1346" y="1265" class="tiny" fill="#15211e" font-weight="400"></text>
-<text x="1346" y="1288" class="tiny" fill="#15211e" font-weight="400">Two-qubit CZ faults:</text>
-<text x="1346" y="1311" class="tiny" fill="#15211e" font-weight="400">about 33% become erasures</text>
-<text x="1346" y="1334" class="tiny" fill="#15211e" font-weight="400"></text>
-<text x="1346" y="1357" class="tiny" fill="#15211e" font-weight="400">Gate-fault fractions ≠</text>
-<text x="1346" y="1380" class="tiny" fill="#15211e" font-weight="400">51% / 19% / 30% populations</text>
+    <g id="gate-level-record-copy" class="tiny" fill="#15211e" font-weight="400">
+      <text x="1346" y="1150">¹S₀ bright: site visible</text>
+      <text x="1346" y="1174">³P₀ dark: qubit manifold</text>
+      <text x="1346" y="1215">Single-qubit faults:</text>
+      <text x="1346" y="1238">about 56% are erasures</text>
+      <text x="1346" y="1280">Two-qubit CZ faults:</text>
+      <text x="1346" y="1303">about 33% are erasures</text>
+      <text x="1346" y="1345">These fault fractions differ from</text>
+      <text x="1346" y="1368">the 51% / 19% / 30% populations.</text>
+    </g>
   </g>
 </svg>
