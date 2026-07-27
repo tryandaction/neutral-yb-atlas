@@ -6,8 +6,20 @@ it('renders the contextual Yb reference map without the former hero blockade con
   render(<AtomicMap language="en" />)
 
   expect(screen.getByRole('heading', { name: '171Yb levels, control and readout map' })).toBeInTheDocument()
-  expect(screen.getByRole('img', { name: '171Yb level and optical-channel map' })).toBeInTheDocument()
+  expect(screen.getByRole('img', { name: '171Yb level and optical-channel map' })).toHaveAttribute(
+    'src',
+    expect.stringContaining('yb-energy-levels-reference.en.svg'),
+  )
   expect(screen.queryByText('Blockade probe')).not.toBeInTheDocument()
+})
+
+it('keeps the Chinese map when Chinese is selected', () => {
+  render(<AtomicMap language="zh" />)
+
+  expect(screen.getByRole('img', { name: '171Yb 能级与光学通道图' })).toHaveAttribute(
+    'src',
+    expect.stringMatching(/yb-energy-levels-reference\.svg$/),
+  )
 })
 
 it('opens and closes the full energy-level map', async () => {

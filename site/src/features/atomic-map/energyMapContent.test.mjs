@@ -1,7 +1,26 @@
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { expect, it } from 'vitest'
 
 const svg = readFileSync('assets/yb-energy-levels-reference.svg', 'utf8')
+const englishPath = 'assets/yb-energy-levels-reference.en.svg'
+const englishSvg = existsSync(englishPath) ? readFileSync(englishPath, 'utf8') : ''
+
+it('aligns the Rydberg level with the main energy ladder', () => {
+  expect(svg).toContain('<line x1="430" y1="200" x2="1120" y2="200" class="energy-line"/>')
+})
+
+it('provides a complete English map without Chinese copy', () => {
+  expect(englishSvg).toContain('Raman Λ control interface')
+  expect(englishSvg).toContain('Rydberg decay, 770 nm repumping and erasure detection')
+  expect(englishSvg).not.toMatch(/[\u3400-\u9fff]/)
+})
+
+it('gives long English labels dedicated room without shrinking the whole map', () => {
+  expect(englishSvg).toContain('<text x="650" y="44" class="title" font-size="29" text-anchor="middle">')
+  expect(englishSvg).toContain('556 nm: cooling, imaging, and')
+  expect(englishSvg).toContain('ground-state Raman control')
+  expect(englishSvg).toContain('<text x="565" y="675" class="micro" font-size="14" fill="#53615d">|e⟩ real intermediate state</text>')
+})
 
 it('preserves the erasure-conversion diagram and the computational role cards', () => {
   expect(svg).toContain('Rydberg 态衰变、770 nm 再泵浦（repump）与擦除检测（Ma 2023）')

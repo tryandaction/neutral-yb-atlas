@@ -1,11 +1,13 @@
 import { Maximize2, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import energyDiagram from '../../../assets/yb-energy-levels-reference.svg'
+import energyDiagramEnglish from '../../../assets/yb-energy-levels-reference.en.svg'
+import energyDiagramChinese from '../../../assets/yb-energy-levels-reference.svg'
 import type { Language } from '../../types/content'
 import './atomic-map.css'
 
 export default function AtomicMap({ language }: { language: Language }) {
   const [fullMapOpen, setFullMapOpen] = useState(false)
+  const energyDiagram = language === 'zh' ? energyDiagramChinese : energyDiagramEnglish
   const imageAlt = language === 'zh' ? '171Yb 能级与光学通道图' : '171Yb level and optical-channel map'
 
   useEffect(() => {
