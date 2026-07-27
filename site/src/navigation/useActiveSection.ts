@@ -79,10 +79,15 @@ export function useActiveSection(): RouteId {
     }
 
     const observer = new IntersectionObserver((entries) => {
+      const activationLine = window.innerHeight * 0.3
+      const routeAtLine = [...routeByElement.entries()].find(([element]) => {
+        const rect = element.getBoundingClientRect()
+        return rect.top <= activationLine && rect.bottom > activationLine
+      })?.[1]
       const mostVisible = entries
         .filter((entry) => entry.isIntersecting)
         .sort((left, right) => right.intersectionRatio - left.intersectionRatio)[0]
-      const route = mostVisible ? routeByElement.get(mostVisible.target) : undefined
+      const route = routeAtLine ?? (mostVisible ? routeByElement.get(mostVisible.target) : undefined)
       if (route) setActiveRoute(route)
     }, {
       rootMargin: '-18% 0px -55% 0px',

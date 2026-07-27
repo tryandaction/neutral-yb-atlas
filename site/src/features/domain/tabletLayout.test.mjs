@@ -9,12 +9,13 @@ describe('tablet-density layout', () => {
     expect(comparisonCss).toMatch(/@media\s*\(max-width:\s*900px\)[\s\S]*\.platform-routes\s*>\s*div[\s\S]*grid-template-columns:\s*repeat\(2/)
   })
 
-  it('reflows fault chains before five teaching steps become cramped', () => {
-    expect(faultToleranceCss).toMatch(/@media\s*\(max-width:\s*900px\)[\s\S]*\.fault-chain__steps\s*\{[\s\S]*grid-template-columns:\s*repeat\(2/)
+  it('reflows the five erasure inputs before they become cramped', () => {
+    expect(faultToleranceCss).toMatch(/@media\s*\(max-width:\s*900px\)[\s\S]*\.erasure-assessment__controls\s*\{[\s\S]*grid-template-columns:\s*repeat\(2/)
+    expect(faultToleranceCss).toMatch(/@media\s*\(max-width:\s*900px\)[\s\S]*\.erasure-assessment__controls \.resource-number:nth-child\(5\)[\s\S]*grid-column:\s*1\s*\/\s*-1/)
   })
 
-  it('keeps the six-step scale sequence visible without horizontal scrolling on phones', () => {
-    expect(faultToleranceCss).toMatch(/@media\s*\(max-width:\s*760px\)[\s\S]*\.scale-cost-logic__sequence\s*\{[\s\S]*grid-template-columns:\s*repeat\(2/)
-    expect(faultToleranceCss).not.toMatch(/@media\s*\(max-width:\s*760px\)[\s\S]*\.scale-cost-logic__sequence\s*\{[\s\S]*overflow-x:\s*auto/)
+  it('stacks estimator controls, results and assumptions on phones', () => {
+    expect(faultToleranceCss).toMatch(/@media\s*\(max-width:\s*760px\)[\s\S]*\.resource-estimator__controls,[\s\S]*\.resource-estimator__result,[\s\S]*\.resource-estimator__assumptions\s*\{[\s\S]*grid-template-columns:\s*1fr/)
+    expect(faultToleranceCss).toMatch(/@media\s*\(max-width:\s*760px\)[\s\S]*\.erasure-assessment__controls,[\s\S]*\.erasure-assessment__flow\s*\{\s*grid-template-columns:\s*1fr/)
   })
 })

@@ -1,19 +1,23 @@
 .wiki-term {
+  appearance: none;
   display: inline;
   margin: 0;
-  padding: 0 1px;
+  padding: 0;
   border: 0;
-  border-bottom: 1px dotted currentColor;
   background: transparent;
+  box-shadow: none;
   color: #0d5f68;
   font: inherit;
   line-height: inherit;
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
   cursor: help;
 }
 
 .wiki-term:hover,
 .wiki-term:focus-visible {
-  border-bottom-style: solid;
   color: var(--vermilion);
   outline: none;
 }

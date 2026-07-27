@@ -15,29 +15,13 @@ it('updates the resource judgment when the physical error crosses threshold', ()
   expect(screen.queryByText('13', { selector: 'output' })).not.toBeInTheDocument()
 })
 
-it('separates DiVincenzo implementation criteria from the fault-tolerance chain', () => {
+it('keeps the estimator focused on calculations instead of repeating the conceptual map', () => {
   render(<ResourceEstimator language="en" />)
 
-  expect(screen.getByRole('heading', { name: 'Universal computation needs a second chain' })).toBeInTheDocument()
-  expect(screen.getByText('decoder-visible record')).toBeInTheDocument()
   expect(screen.getByText(/model assumptions, not a Yb device prediction/i)).toBeInTheDocument()
-})
-
-it('makes each fault-tolerance link selectable and explains the selected link', () => {
-  render(<ResourceEstimator language="en" />)
-
-  const physicalFault = screen.getByRole('button', { name: 'Fault-tolerance link: physical fault' })
-  const trustworthyResult = screen.getByRole('button', { name: 'Fault-tolerance link: trustworthy result' })
-
-  expect(physicalFault).toHaveAttribute('aria-pressed', 'false')
-  expect(trustworthyResult).toHaveAttribute('aria-pressed', 'true')
-
-  fireEvent.click(physicalFault)
-
-  expect(physicalFault).toHaveAttribute('aria-pressed', 'true')
-  expect(trustworthyResult).toHaveAttribute('aria-pressed', 'false')
-  expect(screen.getByRole('heading', { name: 'Physical fault becomes a cycle channel' })).toBeInTheDocument()
-  expect(screen.getByText(/A decoder needs the fault type, location, timing and correlation/)).toBeInTheDocument()
+  expect(screen.queryByRole('heading', { name: 'Universal computation needs a second chain' })).not.toBeInTheDocument()
+  expect(screen.queryByRole('button', { name: /Fault-tolerance link:/ })).not.toBeInTheDocument()
+  expect(document.querySelector('.fault-chain')).toBeNull()
 })
 
 it('shows when erasure conversion is overwhelmed by detection latency', () => {

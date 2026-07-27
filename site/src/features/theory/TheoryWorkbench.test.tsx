@@ -11,6 +11,14 @@ it('shows named physical outputs without a synthetic fidelity or research verdic
   expect(screen.queryByText(/Qteach|operating region|next measurement|delivery contract/i)).not.toBeInTheDocument()
 })
 
+it('typesets the parameter map and proxy equations instead of spelling formulas in prose', () => {
+  render(<TheoryWorkbench language="en" />)
+
+  expect(document.querySelectorAll('.theory-workbench .katex').length).toBeGreaterThanOrEqual(2)
+  expect(screen.queryByText(/delta phi = 2 pi/i)).not.toBeInTheDocument()
+  expect(screen.queryByText(/Ω · V · Δ/)).not.toBeInTheDocument()
+})
+
 it('makes stronger blockade reduce maximum double excitation', () => {
   render(<TheoryWorkbench language="en" />)
   const output = screen.getByLabelText('Maximum double excitation')

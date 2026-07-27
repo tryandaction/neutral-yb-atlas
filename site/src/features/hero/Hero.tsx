@@ -12,7 +12,7 @@ export default function Hero({ language, mode }: HeroProps) {
   const layers = [
     { order: '01', title: { zh: '公理层', en: 'Postulates' }, body: { zh: '状态、测量、幺正演化、复合系统', en: 'State, measurement, unitary evolution, composite systems' }, href: '#first-principles-tree' },
     { order: '02', title: { zh: '物理层', en: 'Physics' }, body: { zh: '原子结构、光与物质、开放系统', en: 'Atomic structure, light–matter interaction, open systems' }, href: '#neutral-atoms' },
-    { order: '03', title: { zh: '器件层', en: 'Hardware' }, body: { zh: '光镊、Yb 能级、Rydberg 门、读出', en: 'Tweezers, Yb levels, Rydberg gates, readout' }, href: '#yb-energy-tutor' },
+    { order: '03', title: { zh: '器件层', en: 'Hardware' }, body: { zh: '光镊、Yb 能级、Rydberg 门、读出', en: 'Tweezers, Yb levels, Rydberg gates, readout' }, href: '#yb-complete-reference-map' },
     { order: '04', title: { zh: '系统层', en: 'System' }, body: { zh: '实验周期、通道表征、调度与 QEC', en: 'Experiment cycles, channel characterization, scheduling and QEC' }, href: '#experiment-pipeline-tutor' },
   ] as const
 

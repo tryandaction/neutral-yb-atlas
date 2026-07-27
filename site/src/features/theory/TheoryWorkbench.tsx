@@ -1,6 +1,7 @@
 import { RotateCcw } from 'lucide-react'
 import { useState } from 'react'
 import type { Language } from '../../types/content'
+import Equation from '../article/Equation'
 import ErrorBudget from './ErrorBudget'
 import PopulationChart from './PopulationChart'
 import { blockadeRatio, buildErrorBudget, buildTeachingObservables } from './model'
@@ -35,7 +36,12 @@ export default function TheoryWorkbench({ language }: { language: Language }) {
 
       <div className="theory-workbench__main">
         <header>
-          <div><span>Ω · V · Δ · t<sub>g</sub> · τ<sub>r</sub> · T → P<sub>rr</sub> · φ · ∫P<sub>r</sub>dt · P<sub>decay</sub></span><h2>{language === 'zh' ? '每个参数怎样改变可观察结果' : 'How each parameter changes an observable'}</h2></div>
+          <div>
+            <div className="theory-workbench__equation-map">
+              <Equation source={String.raw`(\Omega,V,\Delta,t_g,\tau_r,T)\longmapsto(P_{rr},\phi,\int_0^{t_g}P_r(t)\,dt,P_{\mathrm{decay}})`} />
+            </div>
+            <h2>{language === 'zh' ? '每个参数怎样改变可观察结果' : 'How each parameter changes an observable'}</h2>
+          </div>
           <div className="theory-workbench__commands">
             <button type="button" onClick={() => setParameters(defaults)} title={language === 'zh' ? '恢复默认参数' : 'Reset parameters'} aria-label={language === 'zh' ? '恢复默认参数' : 'Reset parameters'}><RotateCcw aria-hidden="true" /></button>
           </div>
@@ -57,7 +63,10 @@ export default function TheoryWorkbench({ language }: { language: Language }) {
               <Observable label={language === 'zh' ? '衰变概率' : 'Decay probability'} symbol="Pdecay" value={`${(observables.decayProbability * 100).toFixed(3)}%`} scale={observables.decayProbability} scaleMax={0.04} />
               <Observable label={language === 'zh' ? 'Doppler 频移尺度' : 'Doppler frequency scale'} symbol="σD" value={`${observables.dopplerRmsKhz.toFixed(1)} kHz rms`} scale={observables.dopplerRmsKhz} scaleMax={100} />
             </div>
-            <p className="theory-proxy-note">{language === 'zh' ? '相位模型采用 δφ = 2πΔ∫Prdt；衰变采用 1 − exp(−∫Prdt/τr)。它们用于展示依赖关系，不代替完整主方程、脉冲标定或门层析。' : 'The phase model uses delta phi = 2 pi Delta integral Pr dt; decay uses 1 - exp(-integral Pr dt / tau_r). These show parameter dependence and do not replace a full master equation, pulse calibration or gate tomography.'}</p>
+            <div className="theory-proxy-note">
+              <Equation source={String.raw`\begin{aligned}\delta\phi&=2\pi\Delta\!\int_0^{t_g}P_r(t)\,dt\\P_{\mathrm{decay}}&=1-\exp\!\left[-\frac{1}{\tau_r}\int_0^{t_g}P_r(t)\,dt\right]\end{aligned}`} />
+              <p>{language === 'zh' ? '这两个代理量只展示参数依赖，不代替完整主方程、脉冲标定或门层析。' : 'These proxies expose parameter dependence; they do not replace a full master equation, pulse calibration or gate tomography.'}</p>
+            </div>
 
             <h3>{language === 'zh' ? '模型参数' : 'Model parameters'}</h3>
             <Parameter label="Ωmax / 2π" affects="population · exposure" value={parameters.omegaMHz} min={1} max={8} step={0.1} unit="MHz" onChange={(value) => setParameter('omegaMHz', value)} />

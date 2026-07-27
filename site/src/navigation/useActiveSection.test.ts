@@ -129,3 +129,24 @@ it('tracks a long section even when its visible ratio is below five percent', ()
 
   expect(result.current).toBe('experiment')
 })
+
+it('selects the section crossing the reading line instead of a visible sliver of the previous section', () => {
+  vi.stubGlobal('IntersectionObserver', IntersectionObserverMock)
+  window.history.replaceState(null, '', '#domain-fault-tolerance')
+  document.body.innerHTML = '<section id="domain-experiment"></section><section id="domain-fault-tolerance"></section>'
+
+  const { result } = renderHook(() => useActiveSection())
+  const experimentSection = document.getElementById('domain-experiment') as HTMLElement
+  const faultSection = document.getElementById('domain-fault-tolerance') as HTMLElement
+  vi.spyOn(experimentSection, 'getBoundingClientRect').mockReturnValue({ top: -7400, bottom: 230 } as DOMRect)
+  vi.spyOn(faultSection, 'getBoundingClientRect').mockReturnValue({ top: 230, bottom: 8000 } as DOMRect)
+
+  act(() => {
+    emitEntries([
+      { target: experimentSection, isIntersecting: true, intersectionRatio: 0.02 } as unknown as IntersectionObserverEntry,
+      { target: faultSection, isIntersecting: true, intersectionRatio: 0.01 } as unknown as IntersectionObserverEntry,
+    ])
+  })
+
+  expect(result.current).toBe('fault-tolerance')
+})

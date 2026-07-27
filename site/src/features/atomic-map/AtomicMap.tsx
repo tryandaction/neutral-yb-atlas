@@ -21,13 +21,13 @@ export default function AtomicMap({ language }: { language: Language }) {
     <section className="atomic-reference" id="yb-complete-reference-map">
       <header>
         <div>
-          <span>REFERENCE / COMPLETE MAP</span>
-          <h2>{language === 'zh' ? '完整 171Yb 能级参考图' : 'Complete 171Yb level reference map'}</h2>
+          <span>LEVELS / CONTROL / READOUT</span>
+          <h2>{language === 'zh' ? '171Yb 能级、控制与读出图' : '171Yb levels, control and readout map'}</h2>
         </div>
         <p>
           {language === 'zh'
-            ? '本图集中核对 171Yb 能级、Raman 控制、Rydberg 接口以及衰变—再泵浦—擦除检测关系；可使用左上角按钮查看完整大图。'
-            : 'Use this reference to cross-check the 171Yb levels, Raman control, Rydberg interface, and decay–repump–erasure sequence; open the full view from the upper-left control.'}
+            ? '唯一能级主图：从计算基、Raman 控制与 Rydberg 门接口，一直读到衰变、再泵浦和擦除检测。左上角可展开完整大图。'
+            : 'The single level-map reference, connecting the computational basis and Raman control to the Rydberg gate interface, decay, repumping and erasure detection. Expand it from the upper-left control.'}
         </p>
       </header>
 

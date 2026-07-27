@@ -100,6 +100,25 @@
   font: 400 34px var(--font-display);
 }
 
+.theory-workbench__equation-map .equation {
+  width: fit-content;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #87a49d;
+  text-align: left;
+}
+
+.theory-workbench__equation-map .katex-display {
+  margin: 0;
+  text-align: left;
+}
+
+.theory-workbench__equation-map .katex {
+  font-size: 13px;
+}
+
 .theory-workbench__commands {
   display: flex;
   gap: 6px;
@@ -211,16 +230,22 @@
 }
 
 .theory-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 18px;
+  align-content: start;
   padding: 24px;
   background: #173f3a;
 }
 
 .theory-controls h3 {
+  grid-column: 1 / -1;
   margin: 23px 0 8px;
   font: 400 18px var(--font-display);
 }
 
 .theory-metrics {
+  grid-column: 1 / -1;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1px;
@@ -228,6 +253,7 @@
 }
 
 .theory-observables {
+  grid-column: 1 / -1;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   border-top: 1px solid #35534e;
@@ -254,10 +280,33 @@
 .theory-observables__track > i { display: block; height: 100%; background: var(--vermilion); transition: width 180ms ease-out; }
 
 .theory-proxy-note {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 8px;
   margin: 12px 0 0;
   color: #92aba5;
   font-size: 10px;
   line-height: 1.5;
+}
+
+.theory-proxy-note .equation {
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid #35534e;
+  background: #102d29;
+  color: #c9ddd7;
+}
+
+.theory-proxy-note .equation .katex-display {
+  margin: 0;
+}
+
+.theory-proxy-note .equation .katex {
+  font-size: 11px;
+}
+
+.theory-proxy-note p {
+  margin: 0;
 }
 
 .theory-metrics div {
@@ -274,6 +323,7 @@
 .theory-metrics strong { color: var(--yellow); font: 400 17px var(--font-display); }
 
 .theory-parameter {
+  min-width: 0;
   padding: 11px 0;
   border-top: 1px solid #35534e;
 }
@@ -343,6 +393,7 @@
   .population-chart__topline { flex-wrap: wrap; gap: 10px; }
   .population-chart svg { height: 240px; }
   .theory-controls { padding: 20px 16px; }
+  .theory-workbench__equation-map .katex { font-size: 10px; }
   .error-budget { grid-column: auto; grid-template-columns: 1fr; }
   .error-budget__header, .error-budget__row { border-right: 0; border-bottom: 1px solid #35534e; }
   .theory-verdict { grid-template-columns: 1fr 1fr; }
@@ -354,6 +405,8 @@
 
 @media (max-width: 430px) {
   .theory-workbench__main { padding-inline: 12px; }
+  .theory-controls { grid-template-columns: 1fr; }
+  .theory-proxy-note .equation .katex { font-size: 10px; }
   .theory-verdict { grid-template-columns: 1fr; }
   .theory-verdict > p { grid-column: auto; }
   .theory-observables { grid-template-columns: 1fr; }

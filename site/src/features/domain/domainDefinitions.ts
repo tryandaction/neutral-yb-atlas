@@ -16,14 +16,13 @@ export interface DomainDefinition {
 
 export const domainDefinitions: Record<Exclude<RouteId, 'overview'>, DomainDefinition> = {
   foundations: {
-    title: { zh: '从计算定义到物理实现', en: 'From computation to physical implementation' },
+    title: { zh: '计算与物理实现', en: 'Computation and physical implementation' },
     thesis: {
-      zh: '先用可检验的测量统计定义计算，再逐项检查 DiVincenzo 五项处理器条件；只有在此基础上，才能在固定纠错任务下比较中性原子与其他硬件路线。',
-      en: 'Define computation through testable measurement statistics, then examine the five DiVincenzo processor conditions one by one; only then compare neutral atoms with other hardware routes under a fixed correction task.',
+      zh: '状态、门和测量只有同时具备数学定义、物理实现与验收量，才构成可验证计算。',
+      en: 'States, gates and measurements form verifiable computation only when mathematical definitions, physical implementations and acceptance quantities agree.',
     },
     outline: [
-      { id: 'quantum-foundations', label: { zh: '计算与物理实现准则', en: 'Computation and implementation criteria' } },
-      { id: 'neutral-atoms', label: { zh: '为什么选择中性原子', en: 'Why choose neutral atoms' } },
+      { id: 'core-computation-map', label: { zh: '计算怎样成为物理过程', en: 'Computation as a physical process' } },
     ],
     contextTitle: { zh: '判定框架', en: 'Decision frame' },
     contextItems: [
@@ -33,15 +32,14 @@ export const domainDefinitions: Record<Exclude<RouteId, 'overview'>, DomainDefin
     ],
   },
   'yb-platform': {
-    title: { zh: '为什么在中性原子中选择 171Yb', en: 'Why choose 171Yb among neutral atoms' },
+    title: { zh: '¹⁷¹Yb 中性原子平台', en: 'The ¹⁷¹Yb neutral-atom platform' },
     thesis: {
-      zh: '171Yb 以最小核自旋空间承载信息，以多电子流形分配冷却、门和读出；只有当错误标记的解码收益超过检测与复位开销时，这种职责分离才成为纠错优势。',
-      en: '171Yb stores information in a minimal nuclear-spin space and divides cooling, gates and readout across electronic manifolds; this separation becomes a QEC advantage only when decoder gains from fault flags exceed detection and reset overhead.',
+      zh: '平台价值取决于核自旋存储与多电子流形控制的职责分离能否降低完整周期的逻辑错误。',
+      en: 'Platform value depends on whether separating nuclear-spin storage from multi-manifold control lowers full-cycle logical error.',
     },
     outline: [
-      { id: 'yb-platform', label: { zh: 'Rb、Cs、Sr 与 Yb', en: 'Rb, Cs, Sr and Yb' } },
-      { id: 'yb-energy-tutor', label: { zh: '能级与实验通道', en: 'Levels and laboratory channels' } },
-      { id: 'yb-complete-reference-map', label: { zh: '完整参考图', en: 'Complete reference map' } },
+      { id: 'core-yb-decision-map', label: { zh: '中性原子与 ¹⁷¹Yb 决策', en: 'Neutral atoms and ¹⁷¹Yb decision' } },
+      { id: 'yb-complete-reference-map', label: { zh: '能级、控制与读出', en: 'Levels, control and readout' } },
       { id: 'species-comparison', label: { zh: '物种比较', en: 'Species comparison' } },
     ],
     contextTitle: { zh: '平台判定', en: 'Platform test' },
@@ -52,13 +50,13 @@ export const domainDefinitions: Record<Exclude<RouteId, 'overview'>, DomainDefin
     ],
   },
   'gates-theory': {
-    title: { zh: '量子门与理论—实验闭环', en: 'Quantum gates and the theory–experiment loop' },
+    title: { zh: '量子门：理论与实验', en: 'Quantum gates: theory and experiment' },
     thesis: {
       zh: '门设计从目标幺正开始，以可产生的哈密顿量为中介，以能够区分误差机制的测量结束。',
       en: 'Gate design starts from a target unitary, passes through a realizable Hamiltonian and ends with measurements that discriminate error mechanisms.',
     },
     outline: [
-      { id: 'gates', label: { zh: '从能级到量子门', en: 'From levels to gates' } },
+      { id: 'core-gate-loop', label: { zh: '理论到实验闭环', en: 'Theory-to-experiment loop' } },
       { id: 'rydberg-gate-tutor', label: { zh: 'Rydberg 阻塞门', en: 'Rydberg blockade gate' } },
       { id: 'theory', label: { zh: '可测模型', en: 'Measurable model' } },
     ],
@@ -70,13 +68,13 @@ export const domainDefinitions: Record<Exclude<RouteId, 'overview'>, DomainDefin
     ],
   },
   experiment: {
-    title: { zh: '实验循环：原子状态怎样被准备、控制和读出', en: 'Experimental cycle: how atomic states are prepared, controlled and read' },
+    title: { zh: '实验系统与工程闭环', en: 'Experimental systems and engineering closure' },
     thesis: {
-      zh: '沿着原子真正经历的顺序，把装载、重排、编码、门、成像、解码与复位连接为一个可重复周期；每一步都用可观测量说明状态怎样改变。',
-      en: 'Follow the order experienced by the atoms, connecting loading, rearrangement, encoding, gates, imaging, decoding and reset into a repeatable cycle; each step explains the state change through observables.',
+      zh: '装置、时序与控制记录必须通过共同的原子端验收量闭合为可重复周期。',
+      en: 'Apparatus, timing and control records must close through shared at-atom acceptance quantities to form a repeatable cycle.',
     },
     outline: [
-      { id: 'experiment', label: { zh: '原子计算周期', en: 'Atomic computation cycle' } },
+      { id: 'core-experiment-map', label: { zh: '工程验收闭环', en: 'Engineering acceptance loop' } },
       { id: 'experiment-pipeline-tutor', label: { zh: '装置如何改变原子状态', en: 'How apparatus changes atomic states' } },
       { id: 'experiment-cycle-timeline', label: { zh: '光场怎样构成一个周期', en: 'How optical fields form one cycle' } },
     ],
@@ -88,16 +86,14 @@ export const domainDefinitions: Record<Exclude<RouteId, 'overview'>, DomainDefin
     ],
   },
   'fault-tolerance': {
-    title: { zh: '通用容错如何转化为规模与成本', en: 'How universal fault tolerance becomes scale and cost' },
+    title: { zh: '容错、规模与可信结果成本', en: 'Fault tolerance, scale and trustworthy-result cost' },
     thesis: {
-      zh: '通用门集只是起点；物理通道必须经过容错电路与解码形成可缩放的逻辑错误率，并与吞吐、可用率共同决定一次可信结果的成本。',
-      en: 'A universal gate set is only the start; physical channels must pass through fault-tolerant circuits and decoding to produce a scalable logical error rate, which combines with throughput and availability to determine cost per trustworthy result.',
+      zh: '逻辑错误率、纠错时空体积、吞吐和可用率共同决定有效规模与可信结果成本。',
+      en: 'Logical error, correction spacetime, throughput and availability jointly determine useful scale and trustworthy-result cost.',
     },
     outline: [
-      { id: 'fault-tolerance', label: { zh: '从通用门集到逻辑错误', en: 'Universal gates to logical error' } },
+      { id: 'core-fault-scale-map', label: { zh: '容错规模与成本', en: 'Fault-tolerant scale and cost' } },
       { id: 'resource-estimator', label: { zh: '资源估算', en: 'Resource estimate' } },
-      { id: 'scale-chain', label: { zh: '规模与吞吐', en: 'Scale and throughput' } },
-      { id: 'cost-chain', label: { zh: '可信结果成本', en: 'Cost per trustworthy result' } },
     ],
     contextTitle: { zh: '容错判据', en: 'Fault-tolerance test' },
     contextItems: [

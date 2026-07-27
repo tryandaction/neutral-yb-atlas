@@ -5,7 +5,7 @@ import AtomicMap from './AtomicMap'
 it('renders the contextual Yb reference map without the former hero blockade controls', () => {
   render(<AtomicMap language="en" />)
 
-  expect(screen.getByRole('heading', { name: 'Complete 171Yb level reference map' })).toBeInTheDocument()
+  expect(screen.getByRole('heading', { name: '171Yb levels, control and readout map' })).toBeInTheDocument()
   expect(screen.getByRole('img', { name: '171Yb level and optical-channel map' })).toBeInTheDocument()
   expect(screen.queryByText('Blockade probe')).not.toBeInTheDocument()
 })

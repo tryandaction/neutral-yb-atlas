@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import App from './App'
 import { contributionIssueUrl } from './features/contribution/contribution'
@@ -10,6 +10,22 @@ it('renders the causal overview at the root destination', async () => {
   expect(await screen.findByRole('heading', { name: '中性 Yb 原子计算' }, { timeout: 20000 })).toBeInTheDocument()
 }, 30000)
 
+it('keeps the document language synchronized with the selected copy', async () => {
+  window.history.replaceState(null, '', '#/')
+  const user = userEvent.setup()
+  render(<App />)
+
+  await screen.findByRole('heading', { name: '中性 Yb 原子计算' }, { timeout: 20000 })
+  expect(document.documentElement).toHaveAttribute('lang', 'zh-CN')
+
+  await user.click(screen.getByRole('button', { name: 'English' }))
+  await screen.findByRole('heading', { name: 'Neutral Yb Atomic Computing' })
+  await waitFor(() => expect(document.documentElement).toHaveAttribute('lang', 'en'))
+
+  await user.click(screen.getByRole('button', { name: '中文' }))
+  await waitFor(() => expect(document.documentElement).toHaveAttribute('lang', 'zh-CN'))
+}, 30000)
+
 it('renders a continuous atlas and lands legacy deep links on their page section', async () => {
   window.history.replaceState(null, '', '#/experiment')
   render(<App />)
@@ -17,7 +33,7 @@ it('renders a continuous atlas and lands legacy deep links on their page section
   expect(await screen.findByRole('heading', { name: '中性 Yb 原子计算' }, { timeout: 20000 })).toBeInTheDocument()
   expect(screen.getByRole('link', { name: '实验系统' })).toHaveAttribute('aria-current', 'page')
   expect(screen.getByRole('link', { name: '实验系统' })).toHaveAttribute('href', '#domain-experiment')
-  expect(await screen.findByRole('heading', { name: '实验循环：原子状态怎样被准备、控制和读出' }, { timeout: 20000 })).toBeInTheDocument()
+  expect(await screen.findByRole('heading', { name: '实验系统与工程闭环' }, { timeout: 20000 })).toBeInTheDocument()
 }, 30000)
 
 it('provides further reading grouped by learning topic', async () => {
@@ -51,13 +67,16 @@ it('offers a reviewed contribution path without editable source text', async () 
   expect(document.querySelector('.workspace-drawer')).toBeNull()
 }, 30000)
 
-it('places the complete reference map after the interactive Yb energy tutor', async () => {
+it('renders the complete Yb reference map without the redundant energy tutor', async () => {
   window.history.replaceState(null, '', '#/yb-platform')
   render(<App />)
 
-  const tutor = await screen.findByRole('heading', { name: 'Yb 能级与实验通道教学图' }, { timeout: 20000 })
-  const reference = screen.getByRole('heading', { name: '完整 171Yb 能级参考图' })
-  expect(tutor.compareDocumentPosition(reference) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+  const referenceMap = await waitFor(
+    () => document.querySelector('.atomic-reference__image-stage'),
+    { timeout: 20000 },
+  )
+  expect(document.querySelector('.energy-tutor')).toBeNull()
+  expect(referenceMap?.querySelectorAll('img')).toHaveLength(1)
 }, 30000)
 
 it('opens contextual Wiki entries from the loaded research content', async () => {
