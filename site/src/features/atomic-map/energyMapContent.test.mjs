@@ -17,8 +17,9 @@ it('provides a complete English map without Chinese copy', () => {
 
 it('gives long English labels dedicated room without shrinking the whole map', () => {
   expect(englishSvg).toContain('id="english-map-title"')
-  expect(englishSvg).toContain('<tspan x="620" y="31">171Yb nuclear-spin qubits</tspan>')
-  expect(englishSvg).toContain('<tspan x="620" y="57">Levels, Raman control and Rydberg interface</tspan>')
+  expect(englishSvg).toContain(
+    '<text id="english-map-title" x="620" y="44" class="title" style="font-size:26px" text-anchor="middle">171Yb nuclear-spin qubits: levels, Raman control and Rydberg interface</text>',
+  )
   expect(englishSvg).toContain('id="autoionization-labels"')
   expect(englishSvg).toContain('id="raman-parameter-table"')
   expect(englishSvg).toContain('<text x="830" y="706" class="tiny" font-weight="700">')
@@ -28,6 +29,36 @@ it('gives long English labels dedicated room without shrinking the whole map', (
   expect(englishSvg).toContain('ground-state Raman control')
   expect(englishSvg).not.toContain('After waiting: 25%')
   expect(englishSvg).not.toContain('³P₀ dark: still in qubit manifold')
+})
+
+it('keeps the lower English labels inside their diagram regions', () => {
+  expect(englishSvg).toContain('<text x="760" y="877">Δ/2π≈12 GHz; Ω₂γ/2π=1.08 MHz; B=8.5 G (Li 2025)</text>')
+  expect(englishSvg).toContain('<text x="1283" y="1290" class="micro" text-anchor="middle"')
+  expect(englishSvg).toContain('style="font-size:19px">Stage C: 399 nm imaging and erasure record</text>')
+  expect(englishSvg).toContain('>unassigned ≈ 30%</text>')
+  expect(englishSvg).toContain('<text x="1346" y="1335">Fault fractions differ from</text>')
+  expect(englishSvg).toContain('<text x="1346" y="1358">post-repump populations</text>')
+  expect(englishSvg).toContain('<text x="1346" y="1381">(51% / 19% / 30%).</text>')
+  expect(englishSvg).not.toContain('These fault fractions differ from')
+})
+
+it('separates the upper English annotations from neighboring energy labels', () => {
+  expect(englishSvg).toContain('not to scale; hyperfine and')
+  expect(englishSvg).toContain('Zeeman structure omitted.')
+  expect(englishSvg).toContain('<text x="108" y="470" class="body"')
+  expect(englishSvg).toContain('<text x="555" y="574" class="small"')
+  expect(englishSvg).toContain(
+    '<text x="968" y="120" class="small" text-anchor="end" fill="#9c1743" font-weight="700">about 369 nm resonant excitation</text>',
+  )
+  expect(englishSvg).not.toContain('>resonant excitation</text>')
+  expect(englishSvg).toContain('<text x="1090" y="78" class="micro"')
+  expect(englishSvg).not.toContain('Hyperfine and Zeeman structure omitted.')
+})
+
+it('keeps the English nuclear-spin badge and Raman beam labels inside their own space', () => {
+  expect(englishSvg).toContain('<text x="38" y="94" class="body" style="font-size:18px" font-weight="700">¹⁷¹Yb: nuclear spin I = 1/2</text>')
+  expect(englishSvg).toContain('<text x="610" y="746" class="micro" fill="#5b33c5" font-weight="700">ωb, Ωb</text>')
+  expect(englishSvg).not.toContain('<text x="525" y="738" class="micro" fill="#5b33c5" font-weight="700">ωb, Ωb</text>')
 })
 
 it('preserves the erasure-conversion diagram and the computational role cards', () => {
