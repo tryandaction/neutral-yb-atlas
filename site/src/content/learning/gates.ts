@@ -2,6 +2,7 @@ import type { Chapter } from '../../types/content'
 
 const rydbergSource = { id: 'wilson-2019', citation: 'Wilson et al., Trapped Arrays of Alkaline Earth Rydberg Atoms in Optical Tweezers (2019)', url: 'https://doi.org/10.1103/PhysRevLett.123.033201' }
 const gateSource = { id: 'ma-2023', citation: 'Ma et al., High-fidelity gates and mid-circuit erasure conversion in an atomic qubit (2023)', url: 'https://doi.org/10.1038/s41586-023-06438-1' }
+const saffmanSource = { id: 'saffman-2010', citation: 'Saffman, Walker and Molmer, Quantum information with Rydberg atoms, Rev. Mod. Phys. 82, 2313 (2010)', url: 'https://doi.org/10.1103/RevModPhys.82.2313' }
 
 export const gatesChapter: Chapter = {
   id: 'gates',
@@ -23,7 +24,7 @@ export const gatesChapter: Chapter = {
       ],
       measurement: { zh: '依次测单原子谱、偏振选择规则、Rabi 振荡与流形分辨读出，建立控制旋钮到原子参数的映射。', en: 'Measure single-atom spectra, polarization selection rules, Rabi oscillations and manifold-resolved readout to map control settings to atomic parameters.' },
       boundary: { zh: '能级图给出允许通道，不给出实际耦合强度、光移、相噪或门保真度；这些量必须由具体状态和装置标定。', en: 'A level diagram gives allowed channels, not actual coupling, light shifts, phase noise or gate fidelity; these require state- and device-specific calibration.' },
-      sources: [rydbergSource, gateSource],
+      sources: [rydbergSource, gateSource, saffmanSource],
       nextQuestion: { zh: '单个原子在振幅、相位和失谐控制下怎样演化？', en: 'How does one atom evolve under amplitude, phase and detuning control?' },
     },
     {
@@ -75,7 +76,7 @@ export const gatesChapter: Chapter = {
       },
       measurement: { zh: '联合测双原子谱、最大双激发、门后 Rydberg 残余和条件相位；改变距离、角度、Ω 与 Δ 检查模型是否同时预测这些量。', en: 'Jointly measure pair spectra, maximum double excitation, residual Rydberg population and conditional phase; vary distance, angle, Omega and Delta and require one model to predict them together.' },
       boundary: { zh: 'V/Ω 大只说明阻塞条件较强，不等于 CZ 保真度高。衰变、相位噪声、泄漏和控制不均匀可以在强阻塞下继续限制门。', en: 'Large V/Omega indicates strong blockade, not high CZ fidelity. Decay, phase noise, leakage and control inhomogeneity can remain limiting under strong blockade.' },
-      sources: [rydbergSource, gateSource],
+      sources: [rydbergSource, gateSource, saffmanSource],
       nextQuestion: { zh: '哪些测量能分别检验布居映射、相干条件相位、泄漏和损失？', en: 'Which measurements separately test population mapping, coherent conditional phase, leakage and loss?' },
     },
     {

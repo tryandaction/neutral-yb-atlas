@@ -2,9 +2,37 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import ExperimentPipeline from './ExperimentPipeline'
 import FirstPrinciplesTree from './FirstPrinciplesTree'
+import GateCircuitAtlas from './GateCircuitAtlas'
 import ResearchEcosystem from './ResearchEcosystem'
 import RydbergGateTutor from './RydbergGateTutor'
 import YbEnergyTutor from './YbEnergyTutor'
+
+it('renders the English gate grammar with standard circuit examples', () => {
+  render(<GateCircuitAtlas language="en" scope="foundations" />)
+
+  expect(screen.getByRole('heading', { name: 'From bit gates to executable computation' })).toBeInTheDocument()
+  expect(screen.getByRole('img', { name: 'Reversible half-adder circuit' })).toBeInTheDocument()
+  expect(screen.getByRole('img', { name: 'Bell-state preparation circuit' })).toBeInTheDocument()
+  expect(screen.getByRole('img', { name: 'CZ and local Hadamards implement CNOT' })).toBeInTheDocument()
+  expect(screen.getByText('CNOT = (I ⊗ H) CZ (I ⊗ H)')).toBeInTheDocument()
+})
+
+it('renders the Chinese circuit atlas without falling back to English copy', () => {
+  render(<GateCircuitAtlas language="zh" scope="foundations" />)
+
+  expect(screen.getByRole('heading', { name: '从比特门到可执行计算' })).toBeInTheDocument()
+  expect(screen.getByRole('heading', { name: '经典：保留输入的可逆半加器' })).toBeInTheDocument()
+  expect(screen.getByRole('heading', { name: '量子：H 与 CNOT 制备 Bell 态' })).toBeInTheDocument()
+})
+
+it('renders the English syndrome-extraction circuit and decoder lookup', () => {
+  render(<GateCircuitAtlas language="en" scope="fault" />)
+
+  expect(screen.getByRole('heading', { name: 'From parity checks to a correction decision' })).toBeInTheDocument()
+  expect(screen.getByRole('img', { name: 'Three-qubit bit-flip syndrome extraction circuit' })).toBeInTheDocument()
+  expect(screen.getByText(/s12 = q1 ⊕ q2/)).toBeInTheDocument()
+  expect(screen.getByText('00: no X error')).toBeInTheDocument()
+})
 
 it('switches first-principles lenses and follows the physical-carrier deduction', async () => {
   const user = userEvent.setup()
@@ -29,7 +57,7 @@ it('links each Yb transition to its role, observable and laboratory hardware', a
   expect(screen.getByText(/超稳腔|钟激光/)).toBeInTheDocument()
 })
 
-it('steps through blockade, conditional phase and return to the computational subspace', async () => {
+it.skip('legacy step selector was intentionally replaced by a fixed mechanism map', async () => {
   const user = userEvent.setup()
   render(<RydbergGateTutor language="zh" />)
 
@@ -37,6 +65,85 @@ it('steps through blockade, conditional phase and return to the computational su
   await user.click(screen.getByRole('button', { name: /03 条件相位/ }))
   expect(screen.getByRole('heading', { name: '条件相位累积' })).toBeInTheDocument()
   expect(screen.getByText(/V.*Ω.*有限阻塞/)).toBeInTheDocument()
+})
+
+it.skip('superseded static Rydberg atlas', () => {
+  render(<RydbergGateTutor language="en" />)
+
+  expect(screen.getByRole('heading', { name: 'From a switchable interaction to a two-qubit logic gate' })).toBeInTheDocument()
+  expect(screen.getByRole('heading', { name: 'The Förster defect selects R^-3 or R^-6 behavior' })).toBeInTheDocument()
+  expect(screen.getByText(/10\^12 contrast/)).toBeInTheDocument()
+  expect(screen.getByText(/diag\(1, -1, -1, -1\)/)).toBeInTheDocument()
+  expect(screen.queryByRole('button')).not.toBeInTheDocument()
+})
+
+it.skip('superseded Rydberg mechanism-map interaction', async () => {
+  const user = userEvent.setup()
+  render(<RydbergGateTutor language="en" />)
+
+  expect(screen.getByRole('heading', { name: 'Rydberg blockade: from interaction switch to CZ' })).toBeInTheDocument()
+  expect(screen.getByRole('img', { name: /Blockade changes the path/ })).toBeInTheDocument()
+  expect(screen.getByText(/three-pulse sequence first gives diag/)).toBeInTheDocument()
+
+  await user.click(screen.getByRole('button', { name: /Pair-state shift/ }))
+  expect(screen.getByRole('img', { name: /Dipole coupling shifts/ })).toBeInTheDocument()
+  expect(screen.getByText(/Saffman Fig. 9/)).toBeInTheDocument()
+
+  await user.click(screen.getByRole('button', { name: /Blockade sequence/ }))
+  expect(screen.getByRole('img', { name: /Blockade changes the path/ })).toBeInTheDocument()
+})
+
+it.skip('superseded abstract blockade timeline', async () => {
+  const user = userEvent.setup()
+  render(<RydbergGateTutor language="en" />)
+
+  expect(screen.getByRole('heading', { name: 'Rydberg-blockade CZ: trace one input state' })).toBeInTheDocument()
+  expect(screen.getByText('|rr⟩ detuned by B: blocked')).toBeInTheDocument()
+  expect(screen.getByText('Raw blockade sequence')).toBeInTheDocument()
+  expect(screen.getByText('Compensate the two known local Z phases')).toBeInTheDocument()
+
+  const zeroOne = screen.getByRole('button', { name: /\|01⟩/ })
+  await user.click(zeroOne)
+  expect(zeroOne).toHaveAttribute('aria-pressed', 'true')
+  expect(screen.getByText('resonant 2π: phase −1')).toBeInTheDocument()
+  expect(screen.getByText(/target \|1⟩ completes a 2π loop/)).toBeInTheDocument()
+
+  await user.click(screen.getByRole('button', { name: /\|10⟩/ }))
+  expect(screen.getAllByText('−i|r0⟩')).toHaveLength(2)
+  expect(screen.getByText(/two control π pulses together leave a −1 phase/)).toBeInTheDocument()
+
+  await user.click(screen.getByRole('button', { name: /\|00⟩/ }))
+  expect(screen.getByText('Neither qubit has a driven |1⟩ component')).toBeInTheDocument()
+})
+
+it('contrasts blocked and unblocked |11> pair-state dynamics', async () => {
+  const user = userEvent.setup()
+  render(<RydbergGateTutor language="en" />)
+
+  expect(screen.getByRole('heading', { name: 'How Rydberg blockade produces CZ' })).toBeInTheDocument()
+  expect(screen.getByRole('heading', { name: 'What does blockade change?' })).toBeInTheDocument()
+  expect(screen.getByRole('img', { name: 'Rydberg pair-state dynamics for input |11> with blockade' })).toBeInTheDocument()
+  expect(screen.getByText(/Interaction energy B moves \|rr> off resonance/)).toBeInTheDocument()
+
+  const noBlockade = screen.getByRole('button', { name: 'Without blockade' })
+  await user.click(noBlockade)
+  expect(noBlockade).toHaveAttribute('aria-pressed', 'true')
+  expect(screen.getByRole('img', { name: 'Rydberg pair-state dynamics for input |11> without blockade' })).toBeInTheDocument()
+  expect(screen.getAllByText(/two-atom evolution factorizes/)).toHaveLength(1)
+
+  const zeroOne = screen.getByRole('button', { name: /\|01⟩/ })
+  await user.click(zeroOne)
+  expect(zeroOne).toHaveAttribute('aria-pressed', 'true')
+  expect(screen.getByRole('img', { name: 'Rydberg pair-state dynamics for input |01>' })).toBeInTheDocument()
+  expect(screen.getByText(/target atom follows the one-atom/)).toBeInTheDocument()
+
+  await user.click(screen.getByRole('button', { name: /\|10⟩/ }))
+  expect(screen.getByRole('img', { name: 'Rydberg pair-state dynamics for input |10>' })).toBeInTheDocument()
+  expect(screen.getByText(/control atom follows the one-atom/)).toBeInTheDocument()
+
+  await user.click(screen.getByRole('button', { name: /\|00⟩/ }))
+  expect(screen.getByRole('img', { name: 'Rydberg pair-state dynamics for input |00>' })).toBeInTheDocument()
+  expect(screen.getByText(/no \|1> component driven by the gate light/)).toBeInTheDocument()
 })
 
 it('steps through the full apparatus pipeline and exposes acceptance evidence', async () => {

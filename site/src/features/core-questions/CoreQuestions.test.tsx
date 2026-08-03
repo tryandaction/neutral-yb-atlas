@@ -26,6 +26,9 @@ it('shows the two-stage decision for neutral atoms and 171Yb', () => {
   expect(container.querySelector('.yb-selection-tree')).toBeInTheDocument()
   expect(container.querySelectorAll('.yb-selection-stage')).toHaveLength(2)
   expect(container.querySelector('.yb-function-split')).toBeInTheDocument()
+  expect(screen.getByText('Yb: two J = 0 storage manifolds')).toBeInTheDocument()
+  expect(screen.getByText('¹⁷¹Yb: I = 1/2')).toBeInTheDocument()
+  expect(screen.getByText('The ¹⁷¹Yb computation chain')).toBeInTheDocument()
 })
 
 it('closes the loop from target gate to measured error channel', () => {

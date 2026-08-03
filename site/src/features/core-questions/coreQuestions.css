@@ -383,6 +383,7 @@
 }
 
 .yb-selection-stage {
+  --yb-selection-columns: repeat(3, minmax(0, 1fr));
   border-top: 1px solid var(--ink);
   border-bottom: 1px solid var(--ink);
 }
@@ -402,7 +403,7 @@
 
 .yb-selection-stage__alternatives {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: var(--yb-selection-columns);
   border-top: 1px solid var(--line);
 }
 
@@ -422,28 +423,39 @@
 }
 
 .yb-selection-stage strong {
-  font-size: 14px;
+  font-size: 15px;
+  line-height: 1.35;
 }
 
 .yb-selection-stage p {
   margin-top: 7px;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.5;
 }
 
 .yb-selection-stage__choice {
   display: grid;
-  grid-template-columns: 190px minmax(0, 1fr);
-  gap: 20px;
-  padding: 15px 16px;
+  grid-template-columns: var(--yb-selection-columns);
+  gap: 0;
+  align-items: center;
+  padding: 0;
   border-top: 1px solid var(--forest);
   background: var(--forest);
   color: var(--white);
 }
 
+.yb-selection-stage__choice strong {
+  padding: 16px 24px;
+  font-size: 15px;
+  line-height: 1.35;
+}
+
 .yb-selection-stage__choice p {
   margin: 0;
+  grid-column: 2 / -1;
+  padding: 16px 24px;
+  border: 0;
   color: #dce9e4;
 }
 
@@ -476,13 +488,13 @@
 
 .yb-function-split article h3 {
   margin-top: 7px;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .yb-function-split article p {
   margin-top: 8px;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.5;
 }
 
@@ -1055,7 +1067,9 @@
   .yb-function-split article,
   .fault-sources li,
   .fault-conditions > div { border-right: 0; border-bottom: 1px solid var(--line); }
-  .yb-selection-stage__choice { grid-template-columns: 1fr; gap: 7px; }
+  .yb-selection-stage { --yb-selection-columns: 1fr; }
+  .yb-selection-stage__choice { gap: 0; }
+  .yb-selection-stage__choice p { grid-column: auto; padding-top: 0; }
   .yb-function-split article:last-child { grid-column: 1; }
   .gate-control-loop__principle .equation { font-size: 14px; }
   .gate-hamiltonian-branches .equation,

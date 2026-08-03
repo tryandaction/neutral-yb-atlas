@@ -16,6 +16,7 @@ import ExperimentCycleTimeline from '../experiment-timeline/ExperimentCycleTimel
 import ResourceEstimator from '../fault-tolerance/ResourceEstimator'
 import OverviewPage from '../overview/OverviewPage'
 import ExperimentPipeline from '../teaching-visuals/ExperimentPipeline'
+import GateCircuitAtlas from '../teaching-visuals/GateCircuitAtlas'
 import RydbergGateTutor from '../teaching-visuals/RydbergGateTutor'
 import TheoryWorkbench from '../theory/TheoryWorkbench'
 
@@ -34,7 +35,7 @@ function RouteContent(props: RouteContentProps) {
   let content
   switch (route) {
     case 'foundations':
-      content = <ComputationPhysicalMap language={language} />
+      content = <><ComputationPhysicalMap language={language} /><GateCircuitAtlas language={language} scope="foundations" /></>
       break
     case 'yb-platform':
       content = <><YbDecisionMap language={language} /><AtomicMap language={language} /><div id="species-comparison"><SpeciesComparison language={language} /></div></>
@@ -46,7 +47,7 @@ function RouteContent(props: RouteContentProps) {
       content = <><ExperimentEngineeringMap language={language} /><ExperimentPipeline language={language} /><ExperimentCycleTimeline language={language} /></>
       break
     case 'fault-tolerance':
-      content = <><FaultToleranceScaleMap language={language} /><ResourceEstimator language={language} /></>
+      content = <><FaultToleranceScaleMap language={language} /><GateCircuitAtlas language={language} scope="fault" /><ResourceEstimator language={language} /></>
       break
     case 'evidence':
       content = <EvidenceBrowser language={language} entries={evidenceEntries} />

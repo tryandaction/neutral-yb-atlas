@@ -106,31 +106,31 @@ export const ybRoles: YbRole[] = [
     id: 'storage', role: { zh: '存储', en: 'Storage' }, manifold: '¹S₀',
     function: { zh: '核自旋计算基', en: 'Nuclear-spin computational basis' },
     cost: { zh: '磁场与差分光移控制', en: 'Field and differential-shift control' },
-    logicalValue: { zh: '长时间保存逻辑信息', en: 'Long-lived logical memory' },
+    logicalValue: { zh: 'J = 0 中的核自旋安静存储', en: 'Quiet nuclear-spin storage in J = 0' },
   },
   {
     id: 'metastable', role: { zh: '亚稳态接口', en: 'Metastable interface' }, manifold: '³P₀',
     function: { zh: '相干映射与门接口', en: 'Coherent mapping and gate interface' },
     cost: { zh: '钟激光与映射误差', en: 'Clock laser and mapping error' },
-    logicalValue: { zh: '隔离存储与操作职责', en: 'Separates storage from operation' },
+    logicalValue: { zh: '钟跃迁完成相干映射', en: 'Clock transfer provides coherent mapping' },
   },
   {
     id: 'rydberg', role: { zh: 'Rydberg 纠缠', en: 'Rydberg entanglement' }, manifold: '|r⟩',
     function: { zh: '强条件相互作用', en: 'Strong conditional interaction' },
     cost: { zh: '衰减、Doppler 与激光噪声', en: 'Decay, Doppler and laser noise' },
-    logicalValue: { zh: '并行双比特门', en: 'Parallel two-qubit gates' },
+    logicalValue: { zh: '仅在门期间开启条件相位', en: 'Conditional phase only during a gate' },
   },
   {
     id: 'cool-image', role: { zh: '冷却与成像', en: 'Cooling and imaging' }, manifold: '¹P₁ / ³P₁',
     function: { zh: '装载、冷却、占据判别', en: 'Loading, cooling, occupancy detection' },
     cost: { zh: '散射加热与读出回扰', en: 'Scattering heat and measurement back-action' },
-    logicalValue: { zh: '可重复阵列周期', en: 'Repeatable array cycles' },
+    logicalValue: { zh: '将运动与占据变成可见信号', en: 'Makes motion and occupancy visible' },
   },
   {
     id: 'erasure', role: { zh: '擦除标记', en: 'Erasure flag' }, manifold: '¹S₀ / ³P₀ / loss',
     function: { zh: '区分在码、泄漏与损失', en: 'Distinguishes code, leakage and loss' },
     cost: { zh: '误报、漏报与检测延迟', en: 'False flags, misses and latency' },
-    logicalValue: { zh: '把未知错误变为已知位置', en: 'Converts hidden faults to known locations' },
+    logicalValue: { zh: '把部分泄漏转化为已知位置', en: 'Turns some leakage into known locations' },
   },
 ]
 

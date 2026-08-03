@@ -1,85 +1,163 @@
 import { useState } from 'react'
 import type { Language } from '../../types/content'
-import Equation from '../article/Equation'
 import './teaching-visuals.css'
 
-const steps = [
-  {
-    id: 'prepare', order: '01', short: { zh: '制备', en: 'Prepare' }, title: { zh: '定义计算基与脉冲参考', en: 'Define the computational basis and pulse reference' },
-    state: '|c,t⟩ ∈ {|00⟩,|01⟩,|10⟩,|11⟩}', equation: String.raw`|\psi_0\rangle=\sum_{c,t\in\{0,1\}}a_{ct}|ct\rangle`,
-    mechanism: { zh: '先分别锁定每个原子的 |1⟩↔|r⟩ Rabi 频率、失谐、相位和光移。两原子门不能从未校准的单原子耦合直接开始。', en: 'First lock each atom’s |1⟩↔|r⟩ Rabi rate, detuning, phase and light shift. A two-atom gate cannot begin from uncalibrated single-atom coupling.' },
-    check: { zh: '单原子 Rabi、Ramsey、空间均匀性、关光后回到计算子空间的概率。', en: 'Single-atom Rabi, Ramsey, spatial uniformity and return probability after the light is removed.' },
-  },
-  {
-    id: 'blockade', order: '02', short: { zh: '建立阻塞', en: 'Blockade' }, title: { zh: '控制原子进入 Rydberg 态并移动目标共振', en: 'Excite the control atom and shift the target resonance' },
-    state: '|r1⟩ ↔ |rr⟩ detuned by V', equation: String.raw`H_{rr}/\hbar=V|rr\rangle\langle rr|+\frac{\Omega}{2}(|r1\rangle\langle rr|+\mathrm{h.c.})`,
-    mechanism: { zh: '控制原子处于 |r⟩ 时，双激发 |rr⟩ 被相互作用 V 移出共振。只有 V 远大于有效驱动和噪声展宽时，目标激发才被抑制。', en: 'When the control is in |r⟩, interaction V shifts |rr⟩ off resonance. Target excitation is suppressed only when V exceeds the effective drive and noise-broadened linewidth.' },
-    check: { zh: '双原子谱、|rr⟩ 布居上限、距离与角度扫描、阻塞半径以及目标原子残余 Rabi。', en: 'Two-atom spectra, |rr⟩ population bound, distance/angle scans, blockade radius and residual target Rabi oscillation.' },
-  },
-  {
-    id: 'phase', order: '03', short: { zh: '条件相位', en: 'Conditional phase' }, title: { zh: '条件相位累积', en: 'Conditional phase accumulation' },
-    state: '|11⟩ → e^{iφ11}|11⟩', equation: String.raw`\phi_{CZ}=\phi_{11}-\phi_{10}-\phi_{01}+\phi_{00}=\pi\ (\mathrm{mod}\ 2\pi)`,
-    mechanism: { zh: 'V/Ω 决定阻塞强度，但有限阻塞仍产生双激发泄漏与相位偏差；Doppler、AC Stark 位移、激光相噪和脉冲边沿同时改变条件相位。', en: 'V/Ω sets blockade strength, but finite blockade still produces double-excitation leakage and phase error; Doppler shifts, AC Stark shifts, laser phase noise and pulse edges also alter the conditional phase.' },
-    check: { zh: '用 Ramsey 型条件相位扫描恢复 φCZ，并同步记录损失、泄漏和无条件单比特相位。', en: 'Recover φCZ with a Ramsey-style conditional-phase scan while recording loss, leakage and unconditional single-qubit phases.' },
-  },
-  {
-    id: 'return', order: '04', short: { zh: '解激发', en: 'Return' }, title: { zh: '回到计算子空间并重构门通道', en: 'Return to the computational subspace and reconstruct the gate channel' },
-    state: 'UCZ = diag(1,1,1,-1)', equation: String.raw`\mathcal E_{CZ}(\rho)=U_{CZ}\rho U_{CZ}^{\dagger}+\mathcal E_{\mathrm{leak}}+\mathcal E_{\mathrm{loss}}+\cdots`,
-    mechanism: { zh: '解激发不是结束：必须检查残余 Rydberg 布居、运动加热、原子损失和相干相位，并把可见擦除与隐藏 Pauli 故障分开。', en: 'De-excitation is not the endpoint: residual Rydberg population, motional heating, atom loss and coherent phase must be checked, with visible erasures separated from hidden Pauli faults.' },
-    check: { zh: '真值表、Bell 奇偶振荡、重复门序列、随机/循环基准，以及按损失、泄漏、擦除和 SPAM 分解的结果。', en: 'Truth table, Bell parity oscillation, repeated gates, randomized/cycle benchmarking and results partitioned by loss, leakage, erasure and SPAM.' },
-  },
-] as const
+type Copy = { zh: string; en: string }
+type InputKey = '00' | '01' | '10' | '11'
+type GateCase = { input: InputKey; title: Copy; summary: Copy }
+
+const selectCopy = (language: Language, value: Copy) => value[language]
+
+const gateCases: GateCase[] = [
+  { input: '00', title: { zh: '无光耦合', en: 'No optical coupling' }, summary: { zh: '|00⟩ 不含被门光驱动的 |1⟩ 成分。', en: '|00> contains no |1> component driven by the gate light.' } },
+  { input: '01', title: { zh: '目标原子回路', en: 'Target-atom loop' }, summary: { zh: '只有目标原子经历 |1⟩↔|r⟩ 的单原子闭合演化。', en: 'Only the target atom follows the one-atom |1>↔|r> loop.' } },
+  { input: '10', title: { zh: '控制原子回路', en: 'Control-atom loop' }, summary: { zh: '只有控制原子经历 |1⟩↔|r⟩ 的单原子闭合演化。', en: 'Only the control atom follows the one-atom |1>↔|r> loop.' } },
+  { input: '11', title: { zh: '双原子相互作用通道', en: 'Pair-interaction channel' }, summary: { zh: '两个原子同时可被驱动；阻塞只在这一分支改变演化。', en: 'Both atoms can be driven; blockade changes only this branch.' } },
+]
+
+function PulseEnvelope({ language }: { language: Language }) {
+  return (
+    <div className="cz-gate__pulse-envelope">
+      <div>
+        <span>{selectCopy(language, { zh: '同一束全局门光', en: 'One global gate field' })}</span>
+        <strong>{selectCopy(language, { zh: '302 nm 整形 Rydberg 脉冲', en: 'Shaped 302 nm Rydberg pulse' })}</strong>
+      </div>
+      <svg viewBox="0 0 260 48" aria-hidden="true"><path d="M4 40 C35 40 42 8 70 8 S106 40 132 28 S166 8 190 18 S221 40 256 13" /></svg>
+      <code>Ω(t)e<sup>iφ(t)</sup></code>
+    </div>
+  )
+}
+
+function PairStateDiagram({ input, language, blockadeEnabled }: { input: InputKey; language: Language; blockadeEnabled: boolean }) {
+  const singleBranch = input === '01' || input === '10'
+  const pairBranch = input === '11'
+  const singleLabel = input === '01' ? '|01⟩' : '|10⟩'
+  const rLabel = input === '01' ? '|0r⟩' : '|r0⟩'
+  const gateMode = blockadeEnabled ? selectCopy(language, { zh: '有阻塞', en: 'with blockade' }) : selectCopy(language, { zh: '无阻塞', en: 'without blockade' })
+
+  return (
+    <figure className="cz-gate__figure">
+      <div className="cz-gate__figure-head">
+        <span>{selectCopy(language, { zh: '选择输入态；只有 |11⟩ 会进入双原子相互作用通道。', en: 'Choose an input; only |11> enters the two-atom interaction channel.' })}</span>
+        <strong>{pairBranch ? `${selectCopy(language, { zh: '输入 |11⟩，', en: 'Input |11>, ' })}${gateMode}` : selectCopy(language, { zh: `输入 |${input}⟩`, en: `Input |${input}>` })}</strong>
+      </div>
+      <PulseEnvelope language={language} />
+      <svg className="cz-gate__diagram cz-gate__diagram--pair" viewBox="0 0 1000 330" role="img" aria-label={selectCopy(language, {
+        zh: `输入 |${input}⟩${pairBranch ? `，${gateMode}` : ''}的 Rydberg 成对态演化`,
+        en: `Rydberg pair-state dynamics for input |${input}>${pairBranch ? ` ${gateMode}` : ''}`,
+      })}>
+        <defs>
+          <marker id="cz-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8Z" fill="#6951c7" /></marker>
+          <marker id="cz-arrow-muted" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8Z" fill="#a7b5b0" /></marker>
+        </defs>
+        <text x="64" y="44" className="cz-svg__atom-label">{selectCopy(language, { zh: '所选计算分支', en: 'Selected computational branch' })}</text>
+        <line x1="64" x2="322" y1="248" y2="248" className="cz-svg__logic-line" />
+        <text x="193" y="238" textAnchor="middle" className="cz-svg__pair-label">|{input}⟩</text>
+        <circle cx="193" cy="248" r="9" className="cz-svg__population" />
+        {input !== '00' && <line x1="332" x2="484" y1="248" y2="248" className="cz-svg__entry-path" />}
+
+        {input === '00' && <>
+          <line x1="438" x2="886" y1="248" y2="248" className="cz-svg__muted-path" />
+          <text x="662" y="174" textAnchor="middle" className="cz-svg__note">{selectCopy(language, { zh: '|00⟩ 不含可被门光耦合的 |1⟩。', en: '|00> contains no |1> component that the gate light can couple.' })}</text>
+        </>}
+
+        {singleBranch && <>
+          <line x1="522" x2="808" y1="108" y2="108" className="cz-svg__rydberg-line" />
+          <line x1="522" x2="808" y1="248" y2="248" className="cz-svg__logic-line" />
+          <text x="666" y="95" textAnchor="middle" className="cz-svg__pair-label">{rLabel}</text>
+          <text x="666" y="238" textAnchor="middle" className="cz-svg__pair-label">{singleLabel}</text>
+          <line x1="666" x2="666" y1="230" y2="126" markerEnd="url(#cz-arrow)" className="cz-svg__arrow" />
+          <line x1="694" x2="694" y1="126" y2="230" markerEnd="url(#cz-arrow)" className="cz-svg__arrow" />
+          <text x="713" y="176" className="cz-svg__pulse-label">Ω(t), φ(t)</text>
+        </>}
+
+        {pairBranch && blockadeEnabled && <>
+          <line x1="505" x2="795" y1="164" y2="164" className="cz-svg__rydberg-line" />
+          <line x1="505" x2="795" y1="248" y2="248" className="cz-svg__logic-line" />
+          <line x1="505" x2="795" y1="74" y2="74" className="cz-svg__pair-line" />
+          <text x="650" y="154" textAnchor="middle" className="cz-svg__pair-label">|W⟩ = (|r1⟩ + |1r⟩)/√2</text>
+          <text x="650" y="238" textAnchor="middle" className="cz-svg__pair-label">|11⟩</text>
+          <text x="650" y="61" textAnchor="middle" className="cz-svg__pair-label">|rr⟩</text>
+          <line x1="622" x2="622" y1="230" y2="182" markerEnd="url(#cz-arrow)" className="cz-svg__arrow" />
+          <line x1="650" x2="650" y1="182" y2="230" markerEnd="url(#cz-arrow)" className="cz-svg__arrow" />
+          <text x="670" y="207" className="cz-svg__pulse-label">√2 Ω(t)</text>
+          <line x1="622" x2="622" y1="146" y2="92" markerEnd="url(#cz-arrow-muted)" className="cz-svg__arrow cz-svg__arrow--blocked" />
+          <text x="640" y="114" className="cz-svg__blocked-label">{selectCopy(language, { zh: 'B/ℏ 使其失谐', en: 'detuned by B/ℏ' })}</text>
+          <line x1="812" x2="812" y1="74" y2="104" className="cz-svg__shift" />
+          <text x="825" y="96" className="cz-svg__shift-label">B</text>
+          <text x="650" y="306" textAnchor="middle" className="cz-svg__blocked-note">{selectCopy(language, { zh: '|rr⟩ 被移出共振：|11⟩ 走不同闭合路径。', en: '|rr> is shifted off resonance: |11> follows a different closed path.' })}</text>
+        </>}
+
+        {pairBranch && !blockadeEnabled && <>
+          <line x1="505" x2="795" y1="74" y2="74" className="cz-svg__rydberg-line" />
+          <text x="650" y="61" textAnchor="middle" className="cz-svg__pair-label">|rr⟩</text>
+          <line x1="505" x2="795" y1="248" y2="248" className="cz-svg__logic-line" />
+          <text x="650" y="238" textAnchor="middle" className="cz-svg__pair-label">|11⟩</text>
+          <line x1="525" x2="650" y1="164" y2="164" className="cz-svg__rydberg-line" />
+          <line x1="650" x2="775" y1="164" y2="164" className="cz-svg__rydberg-line" />
+          <text x="585" y="154" textAnchor="middle" className="cz-svg__pair-label">|r1⟩</text>
+          <text x="715" y="154" textAnchor="middle" className="cz-svg__pair-label">|1r⟩</text>
+          <line x1="585" x2="585" y1="230" y2="182" markerEnd="url(#cz-arrow)" className="cz-svg__arrow" />
+          <line x1="715" x2="715" y1="230" y2="182" markerEnd="url(#cz-arrow)" className="cz-svg__arrow" />
+          <line x1="585" x2="585" y1="146" y2="92" markerEnd="url(#cz-arrow)" className="cz-svg__arrow" />
+          <line x1="715" x2="715" y1="146" y2="92" markerEnd="url(#cz-arrow)" className="cz-svg__arrow" />
+          <text x="585" y="207" textAnchor="middle" className="cz-svg__pulse-label">Ω(t)</text>
+          <text x="715" y="207" textAnchor="middle" className="cz-svg__pulse-label">Ω(t)</text>
+          <text x="650" y="306" textAnchor="middle" className="cz-svg__note">{selectCopy(language, { zh: '无阻塞：两个原子独立经历 |1⟩↔|r⟩，图中不引入 |W⟩ 或 √2Ω(t)。', en: 'Without blockade: each atom follows its own |1>↔|r> path; no |W> or √2Ω(t) is used in this product-state view.' })}</text>
+        </>}
+      </svg>
+      <figcaption>{selectCopy(language, {
+        zh: '图中只画门期间实际耦合的成对态；门末 Rydberg 布居必须回到计算空间。',
+        en: 'The diagram draws only the pair states coupled during the gate; Rydberg population must return to the computational space at the end.',
+      })}</figcaption>
+    </figure>
+  )
+}
+
+function BlockadeReadout({ language, blockadeEnabled, onChange }: { language: Language; blockadeEnabled: boolean; onChange: (enabled: boolean) => void }) {
+  const enabled = selectCopy(language, { zh: '有阻塞', en: 'With blockade' })
+  const disabled = selectCopy(language, { zh: '无阻塞', en: 'Without blockade' })
+  return (
+    <section className="cz-gate__blockade-readout" aria-labelledby="cz-blockade-readout-title">
+      <div className="cz-gate__blockade-readout-head">
+        <h3 id="cz-blockade-readout-title">{selectCopy(language, { zh: '阻塞改变了什么？', en: 'What does blockade change?' })}</h3>
+        <div role="group" aria-label={selectCopy(language, { zh: '切换阻塞条件', en: 'Toggle blockade condition' })}>
+          <button type="button" aria-pressed={!blockadeEnabled} onClick={() => onChange(false)}>{disabled}</button>
+          <button type="button" aria-pressed={blockadeEnabled} onClick={() => onChange(true)}>{enabled}</button>
+        </div>
+      </div>
+      <p>{blockadeEnabled
+        ? selectCopy(language, { zh: '相互作用能 B 将 |rr⟩ 移出共振。|11⟩ 因而不同于 |01⟩、|10⟩；校正局域相位后，留下条件相位 γ = π，即 CZ。', en: 'Interaction energy B moves |rr> off resonance. The |11> path then differs from |01> and |10>; after local phase calibration, the conditional phase is γ = π: CZ.' })
+        : selectCopy(language, { zh: '|rr⟩ 未移位，双原子演化分解为两个单原子演化；图中用乘积态路径表示，不引入 |W⟩ 或 √2Ω(t)。|11⟩ 只积累局域相位，γ = 0，不能产生纠缠。', en: '|rr> is unshifted, so the two-atom evolution factorizes into one-atom evolutions; the diagram uses product-state paths, not |W> or √2Ω(t). |11> acquires only local phases, γ = 0, and cannot entangle.' })}</p>
+    </section>
+  )
+}
 
 export default function RydbergGateTutor({ language }: { language: Language }) {
-  const [selectedId, setSelectedId] = useState('prepare')
-  const selected = steps.find((step) => step.id === selectedId) ?? steps[0]
+  const [selectedInput, setSelectedInput] = useState<InputKey>('11')
+  const [blockadeEnabled, setBlockadeEnabled] = useState(true)
+  const selected = gateCases.find((item) => item.input === selectedInput) ?? gateCases[3]
 
   return (
     <section className="teaching-visual gate-tutor" id="rydberg-gate-tutor">
       <header className="teaching-visual__header">
-        <div><span>GATE / STATE EVOLUTION</span><h2>{language === 'zh' ? 'Rydberg 阻塞 CZ 的逐步教学图' : 'Step-by-step Rydberg-blockade CZ tutor'}</h2></div>
-        <p>{language === 'zh' ? '门不是一条抽象箭头。选择步骤，观察计算态、Rydberg 态、相互作用位移和实验验收怎样对应。' : 'A gate is not an abstract arrow. Select a step to connect computational states, Rydberg excitation, interaction shift and laboratory acceptance.'}</p>
+        <div><span>RYDBERG / TWO-QUBIT GATE</span><h2>{selectCopy(language, { zh: 'Rydberg 阻塞如何产生 CZ', en: 'How Rydberg blockade produces CZ' })}</h2></div>
+        <p>{selectCopy(language, { zh: '同一束门光驱动四个计算分支；只有 |11⟩ 能进入双原子相互作用通道。', en: 'One gate field drives all four computational branches; only |11> reaches the two-atom interaction channel.' })}</p>
       </header>
 
-      <div className="gate-tutor__workspace">
-        <div className="gate-step-list" role="list" aria-label={language === 'zh' ? '阻塞门步骤' : 'Blockade-gate steps'}>
-          {steps.map((step) => (
-            <button key={step.id} type="button" aria-label={`${step.order} ${step.short[language]}`} aria-pressed={selected.id === step.id} onClick={() => setSelectedId(step.id)}>
-              <span>{step.order}</span><strong>{step.short[language]}</strong><small>{step.state}</small>
-            </button>
-          ))}
+      <div className="cz-gate">
+        <div className="cz-gate__inputs" role="group" aria-label={selectCopy(language, { zh: '选择输入计算基态', en: 'Choose an input computational basis state' })}>
+          {gateCases.map((item) => <button key={item.input} type="button" aria-pressed={item.input === selected.input} onClick={() => setSelectedInput(item.input)}><span>|{item.input}⟩</span><small>{selectCopy(language, item.title)}</small></button>)}
         </div>
-
-        <figure className="gate-schematic" data-step={selected.id}>
-          <svg viewBox="0 0 820 390" role="img" aria-labelledby="gate-title gate-desc">
-            <title id="gate-title">{language === 'zh' ? '双原子 Rydberg 阻塞门状态图' : 'Two-atom Rydberg blockade state diagram'}</title>
-            <desc id="gate-desc">{language === 'zh' ? '控制原子和目标原子的计算态、Rydberg 态、激光驱动与相互作用位移。' : 'Computational and Rydberg levels, laser drives and interaction shift for control and target atoms.'}</desc>
-            <text x="166" y="34" className="gate-schematic__atom-label">{language === 'zh' ? '控制原子 c' : 'control atom c'}</text>
-            <text x="570" y="34" className="gate-schematic__atom-label">{language === 'zh' ? '目标原子 t' : 'target atom t'}</text>
-            <line x1="100" x2="330" y1="282" y2="282" className="gate-schematic__level" /><text x="65" y="288">|1⟩</text>
-            <line x1="500" x2="730" y1="282" y2="282" className="gate-schematic__level" /><text x="742" y="288">|1⟩</text>
-            <line x1="100" x2="330" y1="104" y2="104" className="gate-schematic__level is-rydberg" /><text x="65" y="110">|r⟩</text>
-            <line x1="500" x2="730" y1="104" y2="104" className="gate-schematic__level is-rydberg" /><text x="742" y="110">|r⟩</text>
-            <path d="M215 268 L215 120" className="gate-schematic__drive control-drive" /><path d="M615 268 L615 120" className="gate-schematic__drive target-drive" />
-            <text x="226" y="198" className="gate-schematic__omega">Ωc(t)</text><text x="626" y="198" className="gate-schematic__omega">Ωt(t)</text>
-            <path d="M330 104 C395 55 435 55 500 104" className="gate-schematic__interaction" />
-            <text x="394" y="66" className="gate-schematic__v">V(R,θ)</text>
-            <circle cx="215" cy={selected.id === 'blockade' || selected.id === 'phase' ? 104 : 282} r="14" className="gate-schematic__atom control-atom" />
-            <circle cx="615" cy="282" r="14" className="gate-schematic__atom target-atom" />
-            <text x="350" y="344" className="gate-schematic__state">{selected.state}</text>
-          </svg>
-          <figcaption>{language === 'zh' ? '能级与脉冲示意，不按真实能量和时间比例绘制。V 的数值与方向依赖必须由目标 Rydberg 态和几何锁定。' : 'Schematic levels and pulses are not to energy or time scale. Lock the value and angular dependence of V to the target Rydberg state and geometry.'}</figcaption>
-        </figure>
+        {selected.input === '11' && <BlockadeReadout language={language} blockadeEnabled={blockadeEnabled} onChange={setBlockadeEnabled} />}
+        <PairStateDiagram input={selected.input} language={language} blockadeEnabled={blockadeEnabled} />
+        <div className="cz-gate__explanation"><span>{selectCopy(language, { zh: `分支 |${selected.input}⟩`, en: `Branch |${selected.input}>` })}</span><p>{selectCopy(language, selected.summary)}</p></div>
       </div>
 
-      <article className="teaching-card gate-card" aria-live="polite">
-        <div className="teaching-card__title"><span>{selected.order}</span><div><small>{selected.state}</small><h3>{selected.title[language]}</h3></div></div>
-        <div className="teaching-card__equation"><Equation source={selected.equation} /></div>
-        <dl>
-          <div><dt>{language === 'zh' ? '物理机制' : 'Mechanism'}</dt><dd>{selected.mechanism[language]}</dd></div>
-          <div><dt>{language === 'zh' ? '实验验收' : 'Acceptance'}</dt><dd>{selected.check[language]}</dd></div>
-        </dl>
-      </article>
+      <footer className="gate-tutor__source">
+        <strong>{selectCopy(language, { zh: '实现依据：', en: 'Implementation basis: ' })}</strong>
+        <a href="https://doi.org/10.1103/PhysRevX.15.011009" target="_blank" rel="noreferrer">Peper <em>et al.</em>, <em>Spectroscopy and Modeling of <sup>171</sup>Yb Rydberg States for High-Fidelity Two-Qubit Gates</em>, Phys. Rev. X 15, 011009 (2025)</a>
+      </footer>
     </section>
   )
 }
